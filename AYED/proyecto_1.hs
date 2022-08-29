@@ -47,7 +47,7 @@ pertenece e (x:xs) = (e == x) || pertenece e xs
     -- a)
 paratodo' :: [a] -> (a -> Bool) -> Bool
 paratodo' [] t = True
-paratodo' (x:xs) t = t x && paratodo' xs t
+paratodo' (x:xs) t = (t x) && (paratodo' xs t)
 
     -- b)
 existe' :: [a] -> (a -> Bool) -> Bool
@@ -122,27 +122,28 @@ paresF xs = filter even xs
 igual :: Eq a => a -> a -> Bool
 igual x y = x == y
 
--- primIgualesA :: Eq a => a -> [a] -> [a]
--- primIgualesA a [] = []
--- primIgualesA a (x:xs)
---     |(x == a) = a : primIgualesA a xs
---     | otherwise = []
-    -- con takeWhile
 primIgualesA :: Eq a => a -> [a] -> [a]
-primIgualesA x xs = takeWhile ( igual x) xs
+primIgualesA a [] = []
+primIgualesA a (x:xs)
+    | (x == a) = a : primIgualesA a xs
+    | otherwise = []
+    -- con takeWhile
+--primIgualesA :: Eq a => a -> [a] -> [a]
+ --primIgualesA x xs = takeWhile ( igual x) xs
 
 -- 11)
     -- a)
     -- con recursión
--- primIguales :: [a] -> [a]
--- primIguales [] = []
--- primIguales (x:xs)
---     | x == xs!!0 = x : primIguales xs
---     | otherwise = []
+--primIguales :: Eq a => [a] -> [a]
+--primIguales [] = []
+--primIguales (x:(y:xs))
+ --   | x == y = x : primIguales (y:xs)
+ --   | otherwise = (x:[])
 
     -- con takeWhile
 primIguales :: Eq a => [a] -> [a]
-primIguales (x:xs) = takeWhile (igual x ) xs
+primIguales (x:xs) = takeWhile ( == x ) (x:xs)
+
 
 -- 12)
 cuantGen :: (b -> b -> b) -> b -> [a] -> (a -> b) -> b
@@ -155,35 +156,101 @@ paratodoGen xs t = cuantGen (&&) True xs t
 existeGen :: [a] -> (a -> Bool) -> Bool
 existeGen xs t = cuantGen (||) False xs t
 
-sumatoriaGen :: [a] -> (a -> Int) -> Int
-sumatoriaGen xs t = cuantGen (+) 0 xs t
+sumatoriaGen :: [Int] -> Int
+sumatoriaGen xs = cuantGen (+) 0 xs id
 
-productoriaGen :: [a] -> (a -> Int) -> Int
-productoriaGen xs t = cuantGen (*) 1 xs t
+productoriaGen :: [Int] -> Int
+productoriaGen xs = cuantGen (*) 1 xs id
 
--- 13)
-
-
--- 14)
 {-
+-- 13)
+    a)
+f :: (a, b) -> ...
+f (x, y) = ...
+Esta bien tipado y el patron cubre todos los casos de definicion
+
+    b)
+f :: [(a, b)] -> ...
+(*)f (a, b) = ...
+Esta mal tipado porque la funcion recibe como argumento una lista de tuplas y en este caso se esta usando como parametro una tupla sola.
+
+    c)
+f :: [(a,b)] ->  ...
+f (x:xs) = ...
+Esta bien tipado pero el patron no cubre todos los casos porque no logra acceder a cada elemento de la tupla.
+
+    d)
+f :: [(a,b)] -> ...
+f ((x, y) : ((a, b) : xs)) = ...
+Esta bien tipado y el patron cubre todos los casos de definicion.
+
+    e)
+f :: [(Int, a)] -> ...
+f [(0, a)] = ...
+Esta bien tipado y el patron no cubre todos los casos de definicion porque al usar el 0 como parametro queda restringido el 0 como el unico Int que se puede usar.
+
+    f)
+f :: [(Int, a)] -> ..
+f ((x, 1) : xs) = ...
+Esta bien tipado y el patron no cubre todos los casos de definicion porque al usar el 1 como parametro queda restringido el 1 como el unico "a" que se puede usar.
+
+    g)
+f :: (Int -> Int) -> Int -> ...
+f a b = ...
+Esta bien tipado y el patron cubre todos los casos de definición.
+
+    h)
+f :: (Int -> Int) -> Int -> ...
+f a 3 = ...
+Esta bien tipado y el patron no cubre todos los casos de definicion porque al usar el 3 como parametro queda restringido el 3 como el unico Int que se puede usar.
+
+    i)
+f :: (Int -> Int) -> Int -> ...
+f 0 1 2 = ...
+Esta mal tipado porque el primer argumento requiere una funcion Int -> Int y pasa un 0 como parametro.
+-}
+
+
+
+{-
+-- 14)
+
     a)
 f :: (a, b) -> b
 f (a,b) = b
+alternativa
+f (a, b) = id b
 
     b)
 f :: (a, b) -> c
-f (a,b) = c
+f (a, b) = c
+alternativa
+f (a, b)
+    | a > b = (b, a)
+    | oterwise = (a, b)
 
     c)  
 f :: (a -> b) -> a -> b
-f g a = b para g :: (a -> b)
+f g a = b
+alternativa
+f g a = g a 
+
+--para g :: (a -> b)
 
     d)
 f :: (a -> b) -> [a] -> [b]
-f g [a] = [b] para g :: (a -> b)
+f g [a] = [b] 
+--para g :: (a -> b)
+--alternativa
+f :: (a -> b) -> [a] -> [b]
+map g a = b
 
     e)
 f :: (a -> b) -> (b -> c) -> a -> c
-f g t a = c para g :: (a -> b) y t :: (b -> c)
+f g t a = c 
+--alternativa
+
+para g :: (a -> b) y t :: (b -> c)
+
 
 -}
