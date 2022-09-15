@@ -1,0 +1,130 @@
+
+-- 1 )
+  -- a )
+data Carrera = Matematica | Fisica | Computacion | Astronomia deriving (Eq, Show)
+
+titulo :: Carrera -> String
+titulo Matematica = "Licenciatura en Matematica"
+titulo Fisica = "Licenciatura en Fisica"
+titulo Computacion = "Licenciatura en Computacion"
+titulo Astronomia = "Licenciatura en Astronomia"
+
+  -- b )
+data NotaBasica = Do | Re | Mi | Fa | Sol | La | Si deriving (Eq, Ord, Show, Bounded)
+
+cifradoAmericano :: NotaBasica -> Char
+cifradoAmericano Do = 'C'
+cifradoAmericano Re = 'D'
+cifradoAmericano Mi = 'E'
+cifradoAmericano Fa = 'F'
+cifradoAmericano Sol = 'G'
+cifradoAmericano La = 'A'
+cifradoAmericano Si = 'B'
+
+-- 3)
+  -- a)
+minimoElemento :: Ord a => [a] -> a
+minimoElemento [] = error "Solo para listas no vacias"
+minimoElemento (x:[]) = x
+minimoElemento (x:xs) = min (x) (minimoElemento xs) 
+
+  -- b)
+minimoElemento' :: (Bounded a, Ord a) => [a] -> a
+minimoElemento' [] = maxBound
+minimoElemento' (x:xs) = x `min` minimoElemento xs
+
+  -- c)
+-- minimoElemento' ([Fa, La, Sol, Re, Fa] :: [NotaBasica])
+
+ -- 4)
+  -- a)
+type Ingreso = Int
+
+data Cargo = Titular | Asociado | Adjunto | Asistente | Auxiliar deriving (Eq, Show)
+data Area = Administrativa | Enseñanza | Economica | Postgrado deriving (Eq, Show)
+
+data Persona = Decane | Docente Cargo | NoDocente Area | Estudiante Carrera Ingreso deriving (Eq, Show)
+
+  -- b)
+{-
+El constructor Docente es de tipo Docente :: Cargo -> Persona.
+-}
+
+  -- c)
+cuantos_doc :: [Persona] -> Cargo -> Int
+cuantos_doc [] c = 0
+cuantos_doc (x:xs) c 
+  | (x == Docente c) = 1 + cuantos_doc xs c
+  | otherwise = cuantos_doc xs c
+
+  -- d)
+cuantos_doc' :: [Persona] -> Cargo -> Int
+cuantos_doc' xs c = length (filter (== Docente c) xs)
+
+-- 5)
+  -- a)
+data Alteracion = Bemol | Sostenido | Natural deriving (Eq)
+data NotaMusical = Nota NotaBasica Alteracion deriving (Eq)
+
+sonido :: NotaBasica -> Int
+sonido Do = 1
+sonido Re = 3
+sonido Mi = 5
+sonido Fa = 6
+sonido Sol = 8
+sonido La = 10
+sonido Si = 12
+ 
+  -- b)
+sonidoCromatico :: NotaMusical -> Int
+sonidoCromatico (Nota b a)
+  | a == Bemol = (sonido b) - 1
+  | a == Sostenido = (sonido b) + 1
+  | a == Natural = (sonido b) 
+
+
+nota1 = Nota Si Bemol -- deberia ser 11
+nota2 = Nota Do Sostenido -- deberia ser 2
+nota3 = Nota Sol Natural --deberia ser 8
+nota4 = Nota Mi Sostenido -- debeseria ser 6
+nota5 = Nota Fa Natural -- deberia ser 6
+
+mostrarNota :: NotaMusical -> NotaBasica
+mostrarNota (Nota b a) = b
+
+  -- d)
+instance Ord NotaMusical
+  where
+       n1 <= n2 = sonidoCromatico n1 <= sonidoCromatico n2
+
+-- 6)
+  -- a)
+primerElemento :: [a] -> Maybe a
+primerElemento [] = Nothing
+primerElemento xs = Just (xs!!0)
+
+-- 7)
+data Cola = VaciaC | Encolada Persona Cola deriving Show
+
+  -- a)
+
+mostrarC :: Cola -> [Persona]
+mostrarC VaciaC = []
+mostrarC (Encolada p c) = p : mostrarC c
+
+atender :: Cola -> Maybe Cola
+atender VaciaC = Nothing
+atender c
+  | c == (Encolada p VaciaC) = Just(p) 
+  | otherwise = atender c
+  
+encolar :: Persona -> Cola -> Cola
+encolar p VaciaC = VaciaC
+encolar p c = Encolada p c
+
+-- busca :: Cola -> Cargo -> Maybe Persona
+-- busca VaciaC cargo = Nothing
+-- busca () cargo
+--   | 
+
+cola = Docente Titular `Encolada` (Decane `Encolada` (NoDocente Administrativa `Encolada` VaciaC))
