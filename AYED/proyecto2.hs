@@ -112,30 +112,28 @@ mostrarC :: Cola -> [Persona]
 mostrarC VaciaC = []
 mostrarC (Encolada p c) = p : mostrarC c
 
-atender :: Cola -> Cola
-atender (Encolada p VaciaC) = VaciaC
-atender (Encolada p c) = Encolada p (atender c)
+-- atender :: Cola -> Maybe Cola
+-- atender VaciaC = Nothing
+-- atender (Encolada p VaciaC) = VaciaC
+-- atender (Encolada p c) = Just(Encolada p (atender c))
+
+atender :: Cola -> Maybe Cola
+atender VaciaC = Nothing
+atender (Encolada p c) = Just(c)
 
 encolar :: Persona -> Cola -> Cola
-encolar p VaciaC = (Encolada p VaciaC)
-encolar p c = (Encolada p c)
+encolar p VaciaC = Encolada p VaciaC
+encolar p (Encolada k c) = Encolada k (encolar p c)
 
--- busca :: Cola -> Cargo -> Maybe Persona
--- busca VaciaC cargo = Nothing
--- busca (Encolada p c) cargo 
---   | (p == cargo) = Just(p)
---   | otherwise = busca c cargo
+busca :: Cola -> Cargo -> Maybe Persona
+busca VaciaC cargo = Nothing
+busca (Encolada (Docente p) c) cargo 
+  | ( p == cargo) = Just(Docente p)
+  | otherwise = busca c cargo
+busca (Encolada p c) cargo = busca c cargo
 
 cola = Docente Titular `Encolada` (Decane `Encolada` (NoDocente Administrativa `Encolada` VaciaC))
 cola2 = Docente Titular `Encolada` (Docente Adjunto `Encolada` (Docente Asociado `Encolada` VaciaC))
--- mostrarCargo :: [Persona] -> [Cargo]
--- mostrarCargo [] = []
--- mostrarCargo (x:xs)
---   | x == (Docente c)  = c : mostrarCargo xs
---   | otherwise = mostrarCargo xs
-
--- cargo = Titular
--- p = Docente cargo
 
   -- b)
 {-
@@ -143,7 +141,7 @@ La cola se parece a una lista
 -}
 
 -- 8)
-data ListaAsoc a b = Vacia | Nodo a b (ListaAsoc a b)
+data ListaAsoc a b = Vacia | Nodo a b (ListaAsoc a b) deriving Show
 
   -- a)
 type Guia_Telefonica = ListaAsoc String String
@@ -152,6 +150,10 @@ type Padron = ListaAsoc Int String
 
 
   -- b)
+la1 = Nodo 1 2 (Nodo 3 4 (Vacia))
+la2 = Nodo "pepe" "carlos" (Vacia)
+la3 = Nodo 15 20 (Vacia)
+
     -- 1)
 la_long :: ListaAsoc a b -> Int
 la_long Vacia = 0
@@ -160,7 +162,8 @@ la_long (Nodo a b (l)) = 1 + la_long l
     -- 2)
 la_concat :: ListaAsoc a b -> ListaAsoc a b -> ListaAsoc a b
 la_concat (Nodo a b (Vacia)) l2 = Nodo a b (l2)
-la_concat (Nodo a b (l1)) l2 = la_concat l1 l2
+la_concat (Nodo a b (l1)) l2 = Nodo a b (la_concat l1 l2)
+la_concat _ _ = Vacia
 
 la_agregar :: ListaAsoc a b -> a -> b -> ListaAsoc a b
 la_agregar (lista) a b = Nodo a b (lista)
@@ -168,6 +171,7 @@ la_agregar (lista) a b = Nodo a b (lista)
 la_pares :: ListaAsoc a b -> [(a,b)]
 la_pares Vacia = []
 la_pares (Nodo a b (lista)) = (a,b) : la_pares lista
+
 
 la_busca :: Eq a => ListaAsoc a b -> a -> Maybe b
 la_busca Vacia clave = Nothing
@@ -180,3 +184,31 @@ la_borrar clave Vacia = Vacia
 la_borrar clave (Nodo a b lista)
   | clave == a = lista
   | otherwise = la_borrar clave lista
+
+
+-- 9)
+
+data Arbol a = Hoja | Rama (Arbol a) a (Arbol a) deriving (Show, Eq)
+
+type Prefijos = Arbol String
+can, cana, canario, canas, cant, cantar, canto :: Prefijos
+can = Rama cana "can" cant
+cana = Rama canario "a" canas
+canario = Rama Hoja "rio" Hoja
+canas = Rama Hoja "s" Hoja
+cant = Rama cantar "t" canto
+cantar = Rama Hoja "ar" Hoja
+canto = Rama Hoja "o" Hoja
+
+  -- a)
+a_long :: Arbol a -> Int
+a_long Hoja = 0
+a_long (Rama (np) a (nh)) =  1 + a_long (np) + a_long (nh)
+
+  -- b)
+a_hojas :: Eq a => Arbol a -> Int
+a_hojas Hoja = 0
+a_hojas (Rama np a nh)
+  | np == Rama Hoja a Hoja = 1 + a_hojas np
+  | nh == Rama Hoja a Hoja = 1 + a_hojas nh
+  | otherwise = a_hojas np + a_hojas nh
