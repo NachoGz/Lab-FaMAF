@@ -104,7 +104,7 @@ primerElemento [] = Nothing
 primerElemento xs = Just (xs!!0)
 
 -- 7)
-data Cola = VaciaC | Encolada Persona Cola deriving Show
+data Cola = VaciaC | Encolada Persona Cola deriving (Show, Eq)
 
   -- a)
 
@@ -112,19 +112,71 @@ mostrarC :: Cola -> [Persona]
 mostrarC VaciaC = []
 mostrarC (Encolada p c) = p : mostrarC c
 
-atender :: Cola -> Maybe Cola
-atender VaciaC = Nothing
-atender c
-  | c == (Encolada p VaciaC) = Just(p) 
-  | otherwise = atender c
-  
+atender :: Cola -> Cola
+atender (Encolada p VaciaC) = VaciaC
+atender (Encolada p c) = Encolada p (atender c)
+
 encolar :: Persona -> Cola -> Cola
-encolar p VaciaC = VaciaC
-encolar p c = Encolada p c
+encolar p VaciaC = (Encolada p VaciaC)
+encolar p c = (Encolada p c)
 
 -- busca :: Cola -> Cargo -> Maybe Persona
 -- busca VaciaC cargo = Nothing
--- busca () cargo
---   | 
+-- busca (Encolada p c) cargo 
+--   | (p == cargo) = Just(p)
+--   | otherwise = busca c cargo
 
 cola = Docente Titular `Encolada` (Decane `Encolada` (NoDocente Administrativa `Encolada` VaciaC))
+cola2 = Docente Titular `Encolada` (Docente Adjunto `Encolada` (Docente Asociado `Encolada` VaciaC))
+-- mostrarCargo :: [Persona] -> [Cargo]
+-- mostrarCargo [] = []
+-- mostrarCargo (x:xs)
+--   | x == (Docente c)  = c : mostrarCargo xs
+--   | otherwise = mostrarCargo xs
+
+-- cargo = Titular
+-- p = Docente cargo
+
+  -- b)
+{-
+La cola se parece a una lista
+-}
+
+-- 8)
+data ListaAsoc a b = Vacia | Nodo a b (ListaAsoc a b)
+
+  -- a)
+type Guia_Telefonica = ListaAsoc String String
+type Diccionario = ListaAsoc String String
+type Padron = ListaAsoc Int String
+
+
+  -- b)
+    -- 1)
+la_long :: ListaAsoc a b -> Int
+la_long Vacia = 0
+la_long (Nodo a b (l)) = 1 + la_long l
+
+    -- 2)
+la_concat :: ListaAsoc a b -> ListaAsoc a b -> ListaAsoc a b
+la_concat (Nodo a b (Vacia)) l2 = Nodo a b (l2)
+la_concat (Nodo a b (l1)) l2 = la_concat l1 l2
+
+la_agregar :: ListaAsoc a b -> a -> b -> ListaAsoc a b
+la_agregar (lista) a b = Nodo a b (lista)
+
+la_pares :: ListaAsoc a b -> [(a,b)]
+la_pares Vacia = []
+la_pares (Nodo a b (lista)) = (a,b) : la_pares lista
+
+la_busca :: Eq a => ListaAsoc a b -> a -> Maybe b
+la_busca Vacia clave = Nothing
+la_busca (Nodo a b lista) clave
+  | a == clave = Just(b)
+  | otherwise = la_busca lista clave
+
+la_borrar :: Eq a => a -> ListaAsoc a b -> ListaAsoc a b
+la_borrar clave Vacia = Vacia
+la_borrar clave (Nodo a b lista)
+  | clave == a = lista
+  | otherwise = la_borrar clave lista
