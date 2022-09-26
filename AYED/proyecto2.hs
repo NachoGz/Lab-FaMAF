@@ -207,8 +207,27 @@ a_long (Rama (np) a (nh)) =  1 + a_long (np) + a_long (nh)
 
   -- b)
 a_hojas :: Eq a => Arbol a -> Int
+
 a_hojas Hoja = 0
 a_hojas (Rama np a nh)
-  | np == Rama Hoja a Hoja = 1 + a_hojas np
-  | nh == Rama Hoja a Hoja = 1 + a_hojas nh
+  | np == Hoja && nh == Hoja = 2 + a_hojas np + a_hojas nh
   | otherwise = a_hojas np + a_hojas nh
+
+
+type Numeros = Arbol Int
+uno,dos,tres,cuatro,cinco,seis,siete :: Numeros
+uno = Rama dos 1 cinco
+dos = Rama tres 2 cuatro
+tres = Rama Hoja 3 Hoja
+cuatro = Rama Hoja 4 Hoja
+cinco = Rama seis 5 siete
+seis = Rama Hoja 6 Hoja
+siete = Rama Hoja 7 Hoja
+
+a_inc :: Num a => Arbol a -> Arbol a
+a_inc Hoja = Hoja
+a_inc (Rama np a nh) = Rama (a_inc(np)) (a+1) (a_inc(nh))
+
+a_map :: (a -> b) -> Arbol a -> Arbol b
+a_map f Hoja = Hoja
+a_map f (Rama np a nh) = Rama (a_map f (np)) (f a) (a_map f (nh))
