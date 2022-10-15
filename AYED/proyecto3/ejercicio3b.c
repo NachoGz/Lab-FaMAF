@@ -12,7 +12,7 @@ int main()
     x = x + y;
     y = y + y;
 
-    printf("Valor final de x:%d\n", x);
-    printf("Valor final de y:%d\n", y);
+    printf("Valor final de x: %d\n", x);
+    printf("Valor final de y: %d\n", y);
     return 0;
 }
