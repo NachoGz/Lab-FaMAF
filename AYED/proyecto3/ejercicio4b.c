@@ -30,10 +30,10 @@ int main()
         m = z;
     }
 
-    printf("Valor final de x:%d\n", x);
-    printf("Valor final de y:%d\n", y);
-    printf("Valor final de z:%d\n", z);
-    printf("Valor final de m:%d\n", m);
+    printf("Valor final de x: %d\n", x);
+    printf("Valor final de y: %d\n", y);
+    printf("Valor final de z: %d\n", z);
+    printf("Valor final de m: %d\n", m);
 
     return 0;
 }
