@@ -4,6 +4,7 @@
 int main()
 {
     int x;
+    printf("Traducción del programa 1.h\n");
      // Solicito valor para x
     printf("Ingrese un valor para x:\n");
     scanf("%d",&x);
@@ -12,10 +13,10 @@ int main()
         x = x - 1;
     }
 
-    printf("Valor final de x:%d\n", x);
+    printf("Valor final de x:%d\n\n", x);
     
     // Traducción del programa 1.i
-    int x;
+    printf("Traducción del programa 1.i\n");
      // Solicito valor para x
     printf("Ingrese un valor para x:\n");
     scanf("%d",&x);
