@@ -6,7 +6,7 @@ int main()
     printf("Ingrese un valor inicial para x:\n");
     scanf("%d",&x);
     x = 5;
-    printf("Valor final de x:%d\n", x);
+    printf("Valor final de x: %d\n", x);
     return 0;
 
 }
