@@ -37,3 +37,7 @@ int main()
 
     return 0;
 }
+
+/*
+Calcula el menor entre x,y,z
+*/
