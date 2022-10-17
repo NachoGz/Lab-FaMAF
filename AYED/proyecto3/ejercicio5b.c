@@ -9,7 +9,7 @@ int main()
     int y;
     int i;
     bool res;
-    int temp;º
+    int temp;
     printf("******PROGRAMA 1******\n");
     // Programa 1
     printf("Ingrese un valor para x:\n");
@@ -40,9 +40,10 @@ int main()
     scanf("%d",&i);
     printf("Ingrese un valor para res (0 para False y 1 para True):\n");
     scanf("%d",&temp);
-    res = temp;
+    res = true;
+    i = 2;
     cont = 1;
-    while (res && i < x){
+    while (res && (i < x)){
         res = res && ((x % i) != 0);
         i = i + 1;
         if (cont <= 4){
@@ -51,7 +52,14 @@ int main()
         }
     }
     printf("Valor final de x:%d\n", x);
-    printf("Valor final de y:%d\n", y);
     printf("Valor final de i:%d\n", i);
+    printf("Valor final de res:%d\n", res);
     return 0;
 }
+
+/*
+El programa 1 calcula la división entera entre x e y, donde el valor final de x es el resto de la división y el valor de i es el cociente.
+
+El programa 2 calcula si un número es primo, es decir, verfica, para todo número desde 2 a x(no inclusive), si x divide algun número.
+Si no divide a ninguno, entonces res es true, osea, x es primo. Si x no es primo, entonces res es false
+*/
