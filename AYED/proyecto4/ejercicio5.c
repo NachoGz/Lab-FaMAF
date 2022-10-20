@@ -1,12 +1,12 @@
 #include <stdio.h>
+#include <assert.h>
 
 void pedirArreglo(int a[], int n_max)
 {   
-    int i=0,x;
+    int i=0;
     while (i < n_max){
         printf("Ingrese el valor del arreglo en la posición %d: \n", i);
-        scanf("%d", &x);
-        a[i] = x;
+        scanf("%d", &a[i]);
         i = i + 1;
     }
 
@@ -27,12 +27,17 @@ void imprimeArreglo(int a[], int n_max)
 
 int main()
 {
-    int n_max, a[n_max];
+    
+    int n_max;
 
-    printf("Ingrese el tamaño del arreglo: \n");
+    printf("Ingrese el tamaño del arreglo (menor a 50): \n");
     scanf("%d", &n_max);
+
+    assert(n_max<50);
+    int a[50];
+
+    pedirArreglo(a, n_max);
     
-    pedirArreglo(a[n_max], n_max);
-    
+    imprimeArreglo(a, n_max);
     return 0;
 }
