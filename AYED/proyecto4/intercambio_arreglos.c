@@ -10,26 +10,28 @@ void intercambiar(int a[], int tam, int i, int j)
             a[i] = a[j];
             a[j] = aux;
         }
+        pos = pos + 1;
     }
     
 }
 
 int main()
 {
-    int a[N]={1,2,3,4,5}, i=0;
-    /*
+    int a[N], i=0, x;
+    
     while (i < N){
         printf("Ingrese el valor del arreglo en la posición %d: \n", i);
         scanf("%d", &a[i]);
         i = i + 1;
     }
     i = 0;
-    */
+    
     
     printf("El arreglo es: \n");
     while (i < N)
     {
-        printf("%d ", a[i]);
+        x = a[i];
+        printf("%d ", x);
         i = i + 1;
     }
     
