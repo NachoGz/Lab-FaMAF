@@ -8,8 +8,9 @@ bool existe_positivo(int a[], int tam)
     while (i < tam){
         if (a[i]>=0){
             return true;
-            i = i + 1;
+            
         }
+        i = i + 1;
     }
     return false;
 
@@ -23,6 +24,7 @@ bool todos_positivos(int a[], int tam)
         if (a[i] < 0){
             return false;
         }
+        i = i + 1;
     }
     return true;
 
