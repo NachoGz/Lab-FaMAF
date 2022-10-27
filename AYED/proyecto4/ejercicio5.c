@@ -30,11 +30,11 @@ int main()
     
     int n_max;
 
-    printf("Ingrese el tamaño del arreglo (menor a 50): \n");
+    printf("Ingrese el tamaño del arreglo: \n");
     scanf("%d", &n_max);
 
-    assert(n_max<50);
-    int a[50];
+    
+    int a[n_max];
 
     pedirArreglo(a, n_max);
     

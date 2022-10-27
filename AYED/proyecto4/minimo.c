@@ -16,7 +16,7 @@ int main()
     else {
         min = x;
     }
-    printf("Min: %d", min);
+    printf("El mínimo entre %d y %d es: %d\n",x,y,min);
     
     return 0;
 }

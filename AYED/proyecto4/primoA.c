@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdbool.h>
-#include <time.h>
-#include <math.h>
+
 
 bool esPrimo(int n)
 {
@@ -22,23 +21,6 @@ bool esPrimo(int n)
 
 }
 
-bool esPrimo_opt(int n)
-{
-    int i = 2; 
-    bool primo=true;
-    while (i<sqrt(n))
-    {
-        if ((n%i)!=0){
-            primo=true;
-        }
-        else{
-            return false;
-        }
-        i += 1;
-    }
-    return primo;
-
-}
 
 int nesimo_primo(int N)
 {   
@@ -59,26 +41,11 @@ int nesimo_primo(int N)
 
 int main()
 {
-    int n, primo, primo_opt;
-    clock_t start, end;
-    double cpu_time_used;
+    int n, primo;
     printf("Ingrese un número entero: \n");
     scanf("%d", &n);
     assert(n>0);
-    start = clock();
     primo = nesimo_primo(n);
     printf("El numero primo número %d es: %d\n", n, primo);
-    end = clock();
-    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-    printf("Tiempo tardado: %f\n", cpu_time_used);
-
-    printf("OPTIMIZADO\n");
-    
-    start = clock();
-    primo_opt = nesimo_primo(n);
-    printf("El numero primo número %d es: %d\n", n, primo_opt);
-    end = clock();
-    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-    printf("Tiempo tardado: %f\n", cpu_time_used);
     return 0;
 }

@@ -28,7 +28,7 @@ int main()
     i = 0;
     
     
-    printf("El arreglo es: \n");
+    printf("El arreglo original es: \n");
     while (i < N)
     {
         printf("%d ", a[i]);
@@ -38,11 +38,11 @@ int main()
     i = 0;
     
     /* Solicito valor de la primer posición*/
-    printf("Ingrese la primer posición: \n");
+    printf("Ingrese una de las posiciónes a intercambiar: \n");
     scanf("%d", &pos1);
 
     /* Solicito valor de la segunda posición*/
-    printf("Ingrese la segunda posición: \n");
+    printf("Ingrese la otra posición a intercambiar: \n");
     scanf("%d", &pos2);
     
     /* Verifico que las posiciones esten en el rango*/

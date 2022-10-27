@@ -19,11 +19,9 @@ struct datos_t stats(float a[], int tam)
         if (a[i]>tripla.maximo){
             tripla.maximo = a[i];
         }
-        else {
-            if (a[i]<tripla.minimo){
-                tripla.minimo = a[i];
+        if (a[i]<tripla.minimo){
+            tripla.minimo = a[i];
             }
-        }
         tripla.promedio = tripla.promedio + a[i];
         i = i + 1;
     }   

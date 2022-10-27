@@ -41,9 +41,8 @@ int main()
         i = i + 1;
     }
 
-    printf("--------------------MENU DE OPCIONES--------------------\n");
-    printf("1 - Verificar si TODOS los elementos del arreglo son positivos\n");
-    printf("2 - Verificar si EXISTE algún elemento del arreglo que sea positivo\n");
+    printf("Presione 1 para verificar si TODOS los elementos del arreglo son positivos\n");
+    printf("Presione 2 para verificar si EXISTE algún elemento del arreglo que sea positivo\n");
     
 
     printf("Seleccione la opción deseada: \n");

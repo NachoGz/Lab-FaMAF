@@ -40,7 +40,7 @@ int main()
     int n, primo;
     printf("Ingrese un número entero mayor a 0: \n");
     scanf("%d", &n);
-    while (n<0)
+    while (n<1)
     {   
         printf("El número entero debe ser mayor a 0. Ingrese otro número.\n");
         scanf("%d", &n);
