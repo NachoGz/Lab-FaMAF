@@ -28,31 +28,36 @@ void print_help(char *program_name) {
 unsigned int array_from_stdin(int array[], unsigned int max_size)
 {   
     //your code here!!!
-    int length;
-    char *line;
-    size_t lineSize = 0;
-    size_t characters;
+    unsigned int length;
+    char line[max_size];
+    
     printf("Ingrese el largo del array y el array separados por un espacio:\n");
-    characters = getline(&line, &lineSize, stdin);
+    fgets(line, sizeof(line), stdin);
+
     // itero cada caracter
-    // for (int i=0;i<lineSize;i++)
-    // {   
-    //     // busco el largo del array
-    //     if (i==0)
-    //     {
-    //         line[0] = length;
-    //     }
-    //     else
-    //     {
-    //         array[i-1] = line[i];
-    //     }
-    // }
-    printf("%d", characters[0]);
+    for (int i=0;i<max_size;i++)
+    {   
+        // indicador EOF
+        if (line[i] == -1)
+        {
+            break;
+        }
+        // busco el largo del array
+        if (i==0)
+        {
+            length = (unsigned int)line[0];
+        }
+        else
+        {
+            array[i-1] = (int)line[i];
+        }
+    }
     return length;
 }
 
 void array_dump(int a[], unsigned int length) {
     //your code here!!!
+    
     printf("\n[ ");
     for (int i=0;i<length;i++)
     {   
