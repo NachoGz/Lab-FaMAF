@@ -56,7 +56,11 @@ mybool array_is_sorted(int a[], unsigned int length)
     mybool sorted = true;
     for (unsigned int i=0; i<length-1; i++)
     {
-        sorted = sorted && (a[i] <= a[i+1]);
+        if (a[i] <= a[i+1])
+        {
+          sorted = false;
+          break
+        }
     }
     return sorted;
 }
