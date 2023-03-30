@@ -28,29 +28,23 @@ void print_help(char *program_name) {
 unsigned int array_from_stdin(int array[], unsigned int max_size)
 {   
     //your code here!!!
-    unsigned int length;
-    char line[max_size];
     
-    printf("Ingrese el largo del array y el array separados por un espacio:\n");
-    fgets(line, sizeof(line), stdin);
-
-    // itero cada caracter
-    for (int i=0;i<max_size;i++)
-    {   
-        // indicador EOF
-        if (line[i] == -1)
+    int length;
+    int nums;
+    int i=0;
+    
+    printf("Ingrese el input:\n");
+    while (scanf("%d", &nums) != EOF)
+    {
+        if (i == 0)
         {
-            break;
-        }
-        // busco el largo del array
-        if (i==0)
-        {
-            length = (unsigned int)line[0];
+            length = nums;
         }
         else
         {
-            array[i-1] = (int)line[i];
+            array[i-1] = nums;
         }
+        i += 1;
     }
     return length;
 }
