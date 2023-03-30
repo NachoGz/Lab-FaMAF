@@ -37,12 +37,12 @@ unsigned int array_from_file(int array[],
 
 void array_dump(int a[], unsigned int length) {
     //your code here!!!
-    printf("\n[ ");
+    printf("\n[");
     for (unsigned int i=0;i<length;i++)
     {   
         if (i==(length-1))
         {
-            printf("%d ", a[i]);
+            printf("%d", a[i]);
         }
         else
         {
@@ -54,15 +54,13 @@ void array_dump(int a[], unsigned int length) {
 mybool array_is_sorted(int a[], unsigned int length)
 {
     mybool sorted = true;
-    for (unsigned int i=0; i<length-1; i++)
+    if (length>0)
     {
-        if (a[i] <= a[i+1])
+        for (unsigned int i=0; i<length-1; i++)
         {
-          sorted = false;
-          break
+            sorted = sorted && (a[i] <= a[i+1]);
         }
     }
     return sorted;
 }
-
 
