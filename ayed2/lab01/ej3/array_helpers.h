@@ -5,49 +5,15 @@
 
 unsigned int array_from_file(int array[],
                              unsigned int max_size,
-                             const char *filepath) {
-    //your code here!!!
-    FILE* file;
-    unsigned int length;
-    //abro el archivo
-    file = fopen(filepath, "r");
+                             const char *filepath);
 
-    // itero cada caracter
-    for (unsigned int i=0;i<max_size;i++)
-    {   
+void array_dump(int a[], unsigned int length);
 
-        // indicador EOF
-        if (feof(file))
-        {
-            break;
-        }
-        // busco el largo del array
-        if (i==0)
-        {
-            fscanf(file, "%u", &length);
-        }
-        else
-        {
-            fscanf(file, "%d", &array[i-1]);
-        }
-    }
-    fclose(file);
-    return length;
-}
+bool array_is_sorted(int a[], unsigned int length);
+/*
+    Dado un array a[] y su tamaño length debe devolver
+    true si y sólo si los elementos del arreglo a[] 
+    están ordenados de manera ascendente, es decir si:
+    a[0] <= a[1] <= ... <= a[length - 1]
 
-void array_dump(int a[], unsigned int length) {
-    //your code here!!!
-    printf("\n[ ");
-    for (unsigned int i=0;i<length;i++)
-    {   
-        if (i==(length-1))
-        {
-            printf("%d ", a[i]);
-        }
-        else
-        {
-            printf("%d, ", a[i]);
-        }
-    }
-    printf("]\n");
-}
+*/
