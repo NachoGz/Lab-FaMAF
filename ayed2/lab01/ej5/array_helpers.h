@@ -1,6 +1,6 @@
 #include "mybool.h"
-#ifndef ARRAY_HELPERS_H
-#define ARRAY_HELPERS_H
+#ifndef _ARRAY_HELPERS_H_
+#define _ARRAY_HELPERS_H_
 
 
 unsigned int array_from_file(int array[],
