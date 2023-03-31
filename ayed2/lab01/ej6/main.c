@@ -1,13 +1,12 @@
 // gcc -Wall -Werror -Wextra -pedantic -std=c99 -c array_helpers.c
-// gcc -Wall -Werror -Wextra -pedantic -std=c99 -c mainEj6.c
-// gcc -Wall -Werror -Wextra -pedantic -std=c99 array_helpers.o mainEj6.o -o readerEj6
+// gcc -Wall -Werror -Wextra -pedantic -std=c99 -c main.c
+// gcc -Wall -Werror -Wextra -pedantic -std=c99 array_helpers.o main.o -o reader
 
 /* First, the standard lib includes, alphabetically ordered */
 #include <assert.h>
 #include "array_helpers.h" 
 #include <stdio.h>
 #include <stdlib.h>
-#include "mybool.h"
 
 /* Maximum allowed length of the array */
 #define MAX_SIZE 100000
@@ -36,7 +35,7 @@ char *parse_filepath(int argc, char *argv[])
   char *result = NULL;
   // Program takes exactly two arguments
   // (the program's name itself and the input-filepath)
-  mybool valid_args_count = (argc == 2);
+  bool valid_args_count = (argc == 2);
 
   if (!valid_args_count)
   {
