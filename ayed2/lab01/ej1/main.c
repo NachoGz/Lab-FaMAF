@@ -46,24 +46,23 @@ unsigned int array_from_file(int array[],
                              unsigned int max_size,
                              const char *filepath) {
     //your code here!!!
-    int display;
     FILE* file;
-    int length;
+    unsigned int length;
     //abro el archivo
     file = fopen(filepath, "r");
-
     // itero cada caracter
-    for (int i=0;i<max_size;i++)
+    for (unsigned int i=0;i<max_size;i++)
     {   
         // indicador EOF
         if (feof(file))
-        {
-            break;
+        { 
+           assert((i-2) == length);
+           break;
         }
         // busco el largo del array
         if (i==0)
         {
-            fscanf(file, "%d", &length);
+            fscanf(file, "%u", &length);
         }
         else
         {
@@ -76,12 +75,12 @@ unsigned int array_from_file(int array[],
 
 void array_dump(int a[], unsigned int length) {
     //your code here!!!
-    printf("\n[ ");
-    for (int i=0;i<length;i++)
+    printf("\n[");
+    for (unsigned int i=0;i<length;i++)
     {   
         if (i==(length-1))
         {
-            printf("%d ", a[i]);
+            printf("%d", a[i]);
         }
         else
         {
@@ -108,3 +107,4 @@ int main(int argc, char *argv[]) {
     
     return EXIT_SUCCESS;
 }
+// falta caso example-invalid.in y unsorted-100000.in
