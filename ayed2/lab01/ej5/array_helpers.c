@@ -18,7 +18,8 @@ unsigned int array_from_file(int array[],
     {   
         // indicador EOF
         if (feof(file))
-        {
+        {   
+            assert((i-2) == length);
             break;
         }
         // busco el largo del array
@@ -54,13 +55,11 @@ void array_dump(int a[], unsigned int length) {
 mybool array_is_sorted(int a[], unsigned int length)
 {
     mybool sorted = true;
-    if (length>0)
+    for (unsigned int i=0; i<length-1; i++)
     {
-        for (unsigned int i=0; i<length-1; i++)
-        {
-            sorted = sorted && (a[i] <= a[i+1]);
-        }
+        sorted = sorted && (a[i] <= a[i+1]);
     }
     return sorted;
 }
+
 
