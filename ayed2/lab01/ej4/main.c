@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../ej3/array_helpers.h"
+#include "array_helpers.h"
 
 /* Maximum allowed length of the array */
 #define MAX_SIZE 100000
@@ -55,13 +55,17 @@ int main(int argc, char *argv[]) {
     unsigned int length = array_from_file(array, MAX_SIZE, filepath);
     // /*dumping the array*/
     array_dump(array, length);
-    if (array_is_sorted(array, length))
+    if (length > 0)
     {
-        printf("El arreglo está ordenado.\n");
+        if (array_is_sorted(array, length))
+        {
+            printf("El arreglo está ordenado.\n");
+        }
+        else
+        {
+            printf("El arreglo no está ordenado.\n");
+        }
     }
-    else
-    {
-        printf("El arreglo no está ordenado.\n");
-    }
+    
     return EXIT_SUCCESS;
 }
