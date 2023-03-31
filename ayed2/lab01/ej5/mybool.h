@@ -1,5 +1,5 @@
-#ifndef mybool_h
-#define mybool_h
+#ifndef MYBOOL_H
+#define MYBOOL_H
 
 #define true 1
 #define false 0
