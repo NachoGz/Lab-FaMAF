@@ -33,7 +33,7 @@ unsigned int array_from_stdin(int array[], unsigned int max_size)
     int nums;
     int i=0;
     
-    printf("Ingrese el input:\n");
+    printf("Ingrese el input (presione CTRL+D para mandar la señal EOF):\n");
     while (scanf("%d", &nums) != EOF)
     {
         if (i == 0)
@@ -46,18 +46,19 @@ unsigned int array_from_stdin(int array[], unsigned int max_size)
         }
         i += 1;
     }
+    assert((i-1) == length);
     return length;
 }
 
 void array_dump(int a[], unsigned int length) {
     //your code here!!!
     
-    printf("\n[ ");
+    printf("\n[");
     for (int i=0;i<length;i++)
     {   
         if (i==(length-1))
         {
-            printf("%d ", a[i]);
+            printf("%d", a[i]);
         }
         else
         {
@@ -80,3 +81,5 @@ int main(void) {
     
     return EXIT_SUCCESS;
 }
+
+// falla caso example-invalid.in
