@@ -1,3 +1,7 @@
+// gcc -Wall -Werror -Wextra -pedantic -std=c99 -c array_helpers.c sort.c main.c
+// gcc -Wall -Werror -Wextra -pedantic -std=c99 -no-pie array_helpers.o sort.o sort_helpers.o main.o -o sorter
+
+
 /* First, the standard lib includes, alphabetically ordered */
 #include <assert.h>
 #include <stdio.h>
@@ -65,7 +69,7 @@ int main(int argc, char *argv[]) {
   array_dump(array, length);
 
   /* check if it is sorted */
-//   assert(array_is_sorted(array, length));
+  assert(array_is_sorted(array, length));
 
   /* check if it is a permutation of original */
   assert(array_is_permutation_of(copy, array, length));
