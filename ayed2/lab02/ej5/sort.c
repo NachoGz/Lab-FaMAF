@@ -8,7 +8,8 @@
 #include "sort.h"
 #include "fixstring.h"
 
-
+// a)
+/*
 static unsigned int partition(fixstring a[], unsigned int izq, unsigned int der) {
     int i, j, ppiv;
     ppiv = izq;
@@ -33,6 +34,35 @@ static unsigned int partition(fixstring a[], unsigned int izq, unsigned int der)
                 {
                     swap(a,i,j);
                 }
+            }
+        }
+    }
+    fstring_swap(a[ppiv], a[j]);
+    return j;
+}
+*/
+// b)
+static unsigned int partition(fixstring a[], unsigned int izq, unsigned int der) {
+    int i, j, ppiv;
+    ppiv = izq;
+    i = izq + 1;
+    j = der;
+
+    while (i <= j)
+    {
+        if (fstring_length(a[i]) <= fstring_length(a[ppiv]))
+        {
+            i += 1;
+        }
+        else
+        {
+            if (fstring_length(a[j]) >= fstring_length(a[ppiv]))
+            {
+                j -= 1;
+            }
+            else
+            {
+                swap(a,i,j);
             }
         }
     }
