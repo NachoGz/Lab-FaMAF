@@ -12,7 +12,7 @@ static void quick_sort_rec(int a[], unsigned int izq, unsigned int der) {
     if (der > izq)
     {   
         ppiv = partition(a, izq, der);
-        quick_sort_rec(a, izq, ppiv-1);
+        quick_sort_rec(a, izq, (ppiv == 0u) ? 0u : ppiv - 1u);
         quick_sort_rec(a, ppiv+1, der);
     }
 }
