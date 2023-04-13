@@ -26,19 +26,17 @@ void selection_sort(int a[], unsigned int length) {
 
 
 static void insert(int a[], unsigned int i) {
-    int j;
-    j = i;
-
-    while (j > 0 && a[j] < a[j-1])
+    while (i > 0 && goes_before(a[i], a[i-1]))
     {
-        swap(a, j-1, j);
-        j -= 1;
+        swap(a, i-1, i);
+        i -= 1;
     }
 }
 
 void insertion_sort(int a[], unsigned int length) {
     for (unsigned int i = 1u; i < length; ++i) {
         insert(a, i);
+        assert(array_is_sorted(a, i));
     }
 }
 
@@ -51,22 +49,19 @@ static unsigned int partition(int a[], unsigned int izq, unsigned int der) {
 
     while (i <= j)
     {
-        if (a[i] <= a[ppiv])
+        if (goes_before(a[i], a[ppiv]))
         {
             i += 1;
         }
         else
         {
-            if (a[j] >= a[ppiv])
+            if (goes_before(a[ppiv], a[j]))
             {
                 j -= 1;
             }
             else
             {
-                if (a[i] > a[ppiv] && a[j] < a[ppiv])
-                {
-                    swap(a,i,j);
-                }
+                swap(a,i,j);
             }
         }
     }
@@ -79,8 +74,7 @@ static void quick_sort_rec(int a[], unsigned int izq, unsigned int der) {
     if (der > izq)
     {   
         ppiv = partition(a, izq, der);
-        printf("%d", ppiv);
-        quick_sort_rec(a, izq, ppiv-1);
+        quick_sort_rec(a, izq, (ppiv == 0u) ? 0u : ppiv - 1u);
         quick_sort_rec(a, ppiv+1, der);
     }
 }
