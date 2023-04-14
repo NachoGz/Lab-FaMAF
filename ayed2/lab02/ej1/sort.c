@@ -8,12 +8,13 @@
 
 
 static void insert(int a[], unsigned int i) {
-    while (i > 0 && goes_before(a[i], a[i-1]))
-    {
-        swap(a, i-1, i);
-        i -= 1;
-    }
+    unsigned int j = i;
     
+    while (j > 0 && goes_before(a[j], a[j-1]))
+    {
+        swap(a, j-1 , j);
+        j--;
+    }
 }
 
 
