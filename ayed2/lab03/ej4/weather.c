@@ -5,18 +5,22 @@
 #include <stdlib.h>
 #include "weather.h"
 
-static const int AMOUNT_OF_WEATHER_VARS = 6 ;
+// static const int AMOUNT_OF_WEATHER_VARS = 6 ;
 
 Weather weather_from_file(FILE* file)
 {
     Weather weather;
-    int i=0;
     /* Completar aqui */
-    while (!feof(file) && i > 2)
+    
+    if (!feof(file))
     {
-      fscanf(file, "%d", weather._average_temp);
-      i++;
-      
+      fscanf(file, " %d %d %d %u %u %u ", &weather._average_temp, 
+                                          &weather._max_temp, 
+                                          &weather._min_temp, 
+                                          &weather._pressure, 
+                                          &weather._moisture, 
+                                          &weather._rainfall);
+
     }
     return weather;
 }
