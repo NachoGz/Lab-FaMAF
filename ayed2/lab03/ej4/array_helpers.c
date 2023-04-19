@@ -66,7 +66,7 @@ void array_from_file(WeatherTable array, const char *filepath)
         Weather weather = weather_from_file(file);
         
         /* Completar acá: Guardar la medición de clima en el arreglo multidimensional */
-        array[(1980 - k_year)*-1][k_month][k_day] = weather;
+        array[(1980 - k_year)*-1][(1 - k_month)*-1][(1 - k_day)*-1] = weather;
         
     }
     fclose(file);
