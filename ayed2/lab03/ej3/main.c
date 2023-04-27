@@ -55,13 +55,16 @@ unsigned int data_from_file(const char *path,
             letters[index] = letter;
             indexes[index] = index;
         }
+                            /*
         if (index > length)
         {
             length = index;
         }
+        */
+        length++;
     }
     fclose(file);
-    return length+1;
+    return length;
 }
 
 int main(int argc, char *argv[]) {
