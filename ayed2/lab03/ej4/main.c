@@ -83,15 +83,17 @@ int main(int argc, char *argv[]) {
     array_dump(array);
 
     /* menor temperatura mínima histórica registrada en la ciudad de Córdoba*/
+    
     int min = min_temp(array);
-    printf("La menor temperatura mínima histórica registrada en la ciudad de Córdoba: %d\n", min);
+    printf("\nLa menor temperatura mínima histórica registrada en la ciudad de Córdoba: %d\n", min);
 
     /* Arreglo que registra para cada año entre 1980 y 2016 la mayor temperatura máxima registrada durante ese año */
     int maximas_temps[YEARS];
     max_temp_año(array, maximas_temps);
     for (int year=0; year<YEARS; year++) {
-        printf("La mayor temperatura máxima del año %d es: %d\n", (1980 - year)*-1, maximas_temps[year]);
+        fprintf(stdout, "\nLa mayor temperatura máxima del año %d fue: %d\n", (1980 + year), maximas_temps[year]);
     }
+    printf("-----------------------------------------------------");
 
     /* Arreglo que registra para cada año entre 1980 y 2016 el mes de ese año en que se registró la mayor cantidad mensual de precipitaciones. */
 
@@ -99,8 +101,9 @@ int main(int argc, char *argv[]) {
     max_prec_mes(array, maximas_prec);
     for (int year=0; year<YEARS; year++) {
         for (month_t month = january; month <= december; ++month) {
-            printf("La mayor temperatura máxima del año %d y mes %d es: %d\n", (1980 - year)*-1, month, maximas_temps[year][month]);
-        }   
+            fprintf(stdout, "\nLa mayor precipitación del año %d y mes %d fue: %d\n", (1980 + year), month+1, maximas_prec[year][month]);
+        }
+        printf("-----------------------------------------------------\n");
     }
     return (EXIT_SUCCESS);
 }
