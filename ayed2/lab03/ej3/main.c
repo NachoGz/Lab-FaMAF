@@ -6,6 +6,31 @@
 
 #define MAX_SIZE 1000
 
+void print_help(char *program_name) {
+    /* Print the usage help of this program. */
+    printf("Usage: %s <input file path>\n\n"
+           "Loads an array given in a file in disk and prints it on the screen."
+           "\n\n",
+           program_name);
+}
+
+char *parse_filepath(int argc, char *argv[]) {
+    /* Parse the filepath given by command line argument. */
+    char *result = NULL;
+    // Program takes exactly two arguments
+    // (the program's name itself and the input-filepath)
+    bool valid_args_count = (argc == 2);
+
+    if (!valid_args_count) {
+        print_help(argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    result = argv[1];
+
+    return result;
+}
+
 static void dump(char a[], unsigned int length) {
     printf("\"");
     for (unsigned int j=0u; j < length; j++) {
@@ -24,31 +49,33 @@ unsigned int data_from_file(const char *path,
     file = fopen(path, "r");
     unsigned int index;
     char letter;
-    unsigned int length=0;
+    unsigned int cant_leidos = 0;
+    bool is_valid;
+
     while (!feof(file))
     {
-        fscanf(file, "%u", &index);
-        fscanf(file, "%c", &letter);
+        is_valid = fscanf(file, "%u -> *%c*", &index, &letter);
+        
+        if (!is_valid) {
+            printf("Error! Invalid format\n");
+            exit(EXIT_FAILURE);
+        }
+
         if (index > max_size) {
             printf("Error. La cantidad máxima de elementos a almacenar es %d\n", max_size);
             exit(EXIT_FAILURE);
         }
-        if (letter != '>' && letter != '*')
-        {
-            letters[index] = letter;
-            indexes[index] = index;
-        }
-        if (index > length)
-        {
-            length = index;
-        }
+
+        letters[index] = letter;
+        indexes[index] = index;
+        cant_leidos++;
     }
     fclose(file);
-    return length+1;
+    return cant_leidos;
 }
 
 int main(int argc, char *argv[]) {
-    // FILE *file;
+    FILE *file;
     unsigned int indexes[MAX_SIZE];
     // char letters[MAX_SIZE];
     char sorted[MAX_SIZE];
@@ -58,21 +85,19 @@ int main(int argc, char *argv[]) {
     // Debe guardarse aqui la cantidad de elementos leidos del archivo
 
     /* Parse the filepath given by command line argument. */
-    char *path = NULL;
-    // Program takes exactly two arguments
-    // (the program's name itself and the input-filepath)
-    bool valid_args_count = (argc == 2);
+    char *filepath = NULL;
+ 
+    filepath = parse_filepath(argc, argv);
 
-    if (!valid_args_count) {
-        printf("Usage: %s <input file path>\n\n", argv[0]);
+    file = fopen(filepath, "r");
+    if (file == NULL) {
+        fprintf(stderr, "File does not exist.\n");
         exit(EXIT_FAILURE);
     }
-
-    path = argv[1];
-
-    length = data_from_file(path, indexes, sorted, MAX_SIZE);
+    length = data_from_file(filepath, indexes, sorted, MAX_SIZE);
 
     dump(sorted, length);
 
     return EXIT_SUCCESS;
 }
+
