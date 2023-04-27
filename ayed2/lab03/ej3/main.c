@@ -25,19 +25,8 @@ unsigned int data_from_file(const char *path,
     unsigned int index;
     char letter;
     unsigned int length=0;
-    
-    if (file == null) {
-        printf("aaaa");
-        exit(EXIT_FAILURE);
-    }
     while (!feof(file))
-    {   
-        if (length >= max_size) {
-            printf("\nMax amount of letters reached");
-            exit(EXIT_FAILURE);
-        }
-        
-                            
+    {
         fscanf(file, "%u", &index);
         fscanf(file, "%c", &letter);
         if (index > max_size) {
@@ -49,16 +38,13 @@ unsigned int data_from_file(const char *path,
             letters[index] = letter;
             indexes[index] = index;
         }
-                            /*
         if (index > length)
         {
             length = index;
         }
-        */
-        length++;
     }
     fclose(file);
-    return length;
+    return length+1;
 }
 
 int main(int argc, char *argv[]) {
@@ -90,4 +76,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
