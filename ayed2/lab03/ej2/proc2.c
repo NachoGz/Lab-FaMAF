@@ -20,4 +20,6 @@ int main(void) {
 }
 
 // Resultado: 10. Coincide con valor del teorico
+// El parámetro *y de la función absolute() es de tipo in/out
+// C tiene disponibles los tres tipos: in, out y in/out
 
