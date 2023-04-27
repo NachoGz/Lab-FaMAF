@@ -118,5 +118,9 @@ int main(int argc, char *argv[]) {
 /*
 Funciona más rápido tanto para insertion sort y quick sort. Para insertion sort tarda 4,7 veces menos que sin punteros
 y para quick sort casi 3 veces menos (2.93). Falta responder ¿Por qué son más eficientes los intercambios con esta
-versión?
+versión? Porque cuando no utilizo punteros como parámetros, a la variable que yo pase como argumento se le hace una copia
+y esta copia se guarda en una dirección de memoria diferente (paso por valor). En cambio, si la variable que paso como 
+argumento es un puntero, esta apunta directamente a la dirección de memoria de la variable original (paso por referencia). 
+Por lo tanto, usar punteros como parámetros de cualquier función es más rápido porque estoy accediendo y modificando la 
+variable directamente, en vez de hacer una copia a la variable.
 */
