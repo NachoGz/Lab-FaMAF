@@ -31,7 +31,19 @@ unsigned int data_from_file(const char *path,
         exit(EXIT_FAILURE);
     }
     while (!feof(file))
-    {
+    {   
+        if (length >= max_size) {
+            printf("\nMax amount of letters reached");
+            exit(EXIT_FAILURE);
+        }
+        
+        is_correct = fscanf(file, "%u -> *%c*\n, &index, &letter);
+        
+        if (!is_correct) {
+            printf("\nIncompatible file format\n\n");
+            exit(EXIT_FAILURE);
+        }
+                            
         fscanf(file, "%u", &index);
         fscanf(file, "%c", &letter);
         if (index > max_size) {
