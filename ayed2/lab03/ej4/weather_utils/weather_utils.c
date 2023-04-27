@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "../array_helpers.h"
 #include "weather_utils.h"
+#include <limits.h>
 
 int min_temp(WeatherTable array) {
     int temp;
@@ -23,7 +24,7 @@ int min_temp(WeatherTable array) {
 
 void max_temp_año(WeatherTable a, int output[YEARS]) {
     int temp;
-    int max_temp = a[0][0][0]._max_temp;
+    int max_temp = INT_MIN;
     for (unsigned int year = 0u; year < YEARS; ++year)
     {
         for (month_t month = january; month <= december; ++month)
@@ -31,18 +32,19 @@ void max_temp_año(WeatherTable a, int output[YEARS]) {
             for (unsigned int day = 0u; day < DAYS; ++day)
             {   
                 temp = a[year][month][day]._max_temp;
-                if (max_temp > temp) {
+                if (max_temp < temp) {
                     max_temp = temp;
                 }
             }
         }
         output[year] = max_temp;
+        max_temp = INT_MIN;
     }
 }
 
 void max_prec_mes(WeatherTable a, int output[YEARS][MONTHS]) {
     int temp;
-    int max_prec = a[0][0][0]._rainfall;
+    int max_prec = INT_MIN;
     for (unsigned int year = 0u; year < YEARS; ++year)
     {
         for (month_t month = january; month <= december; ++month)
@@ -50,11 +52,12 @@ void max_prec_mes(WeatherTable a, int output[YEARS][MONTHS]) {
             for (unsigned int day = 0u; day < DAYS; ++day)
             {   
                 temp = a[year][month][day]._max_temp;
-                if (max_prec > temp) {
+                if (max_prec < temp) {
                     max_prec = temp;
                 }
             }
             output[year][month] = max_prec;
+            max_prec = INT_MIN;
         }
     }
 }
