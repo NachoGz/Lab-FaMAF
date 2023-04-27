@@ -25,6 +25,11 @@ unsigned int data_from_file(const char *path,
     unsigned int index;
     char letter;
     unsigned int length=0;
+    
+    if (file == null) {
+        printf("aaaa");
+        exit(EXIT_FAILURE);
+    }
     while (!feof(file))
     {
         fscanf(file, "%u", &index);
