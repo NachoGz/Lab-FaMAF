@@ -1,3 +1,5 @@
+// gcc -Wall -Werror -Wextra -pedantic -std=c99 main.c -o main.out
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -27,9 +29,14 @@ unsigned int data_from_file(const char *path,
     {
         fscanf(file, "%u", &index);
         fscanf(file, "%c", &letter);
+        if (index > max_size) {
+            printf("Error. La cantidad máxima de elementos a almacenar es %d\n", max_size);
+            exit(EXIT_FAILURE);
+        }
         if (letter != '>' && letter != '*')
         {
             letters[index] = letter;
+            indexes[index] = index;
         }
         if (index > length)
         {
@@ -41,9 +48,9 @@ unsigned int data_from_file(const char *path,
 }
 
 int main(int argc, char *argv[]) {
-    FILE *file;
+    // FILE *file;
     unsigned int indexes[MAX_SIZE];
-    char letters[MAX_SIZE];
+    // char letters[MAX_SIZE];
     char sorted[MAX_SIZE];
     unsigned int length=0; 
     //  .----------^
@@ -57,6 +64,7 @@ int main(int argc, char *argv[]) {
     bool valid_args_count = (argc == 2);
 
     if (!valid_args_count) {
+        printf("Usage: %s <input file path>\n\n", argv[0]);
         exit(EXIT_FAILURE);
     }
 
@@ -64,11 +72,8 @@ int main(int argc, char *argv[]) {
 
     length = data_from_file(path, indexes, sorted, MAX_SIZE);
 
-    /* -- completar -- */
-
     dump(sorted, length);
 
     return EXIT_SUCCESS;
 }
 
-;
