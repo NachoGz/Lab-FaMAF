@@ -101,6 +101,9 @@ list concat(list l, list l0) {
         }
         p->next = l0;   
     }
+    else {
+        l = l0;
+    }
     return l;
 }
 
@@ -110,33 +113,132 @@ list_elem list_index(list l, unsigned int n) {
     node_t * p = NULL;
     unsigned int i = 0;
 
-    if (!(is_empty(l))) {
-        p = l;
-        while (p != NULL)
-        {   
-            if (i == n) {
-                return p->value;
-            }
-            else {
-                p = p->next;
-                i += 1;
-            }
-        }   
+    p = l;
+    while (p != NULL)
+    {   
+        if (i == n) {
+            return p->value;
+        }
+        else {
+            p = p->next;
+            i += 1;
+        }
+    }   
+}
+
+
+list drop(list l, unsigned int n) {
+    node_t * p = NULL;
+    node_t * q = NULL;
+    unsigned int i = 0;
+
+    p = l;
+    
+    while ((p != NULL) && (i < n)) 
+    {
+        q = p;
+        p = p->next;
+        free(q);
+        i++;
     }
+    l = p;
+    return l;
 }
 
 
 list take(list l, unsigned int n) {
-    
+    node_t * p = NULL;
+    node_t * q = NULL;
+    unsigned int i = 0;
+    unsigned int pos = length(l) - n;
+    p = l;
+    while ((p != NULL)) 
+    {   
+        
+        i++;
+    }
+    return l;
 }
+
+
+list copy_list(list l1) {
+    node_t * p = NULL;
+    node_t * q = NULL;
+    list l2 = empty();
+
+    p = l1;
+    while ((p != NULL)) 
+    {   
+        l2 = addr(l2, p->value);
+        p = p->next;
+    }
+    return l2;
+
+}
+
+
+void print_list(list l) {
+    node_t * p = NULL;
+    
+    p = l;
+    
+    while (p != NULL)
+    {
+        printf("%d ", p->value);
+        p = p->next;
+    }
+    printf("\n");
+}
+
 
 int main() {
     list l = empty();
-    for (int i; i < 5; i++) {
-        l = addl(i, l);
+    for (int i=0; i < 5; i++) {
+        l = addr(l, i);
     }
+    printf("La lista es: ");
+    print_list(l);
+    printf("\n\n");
 
-    printf("Elemento a eliminar: %d", head(l));
+    printf("Elemento a eliminar: %d\n", head(l));
+    l = tail(l);
+
+    printf("La nueva lista es: ");
+    print_list(l);
+    printf("\n\n");
+    
+    printf("Agrego de nuevo el elemento\n");
+    l = addl(0, l);
+    printf("La nueva lista es: ");
+    print_list(l);
+    printf("\n\n");
+
+    printf("Agrego un nuevo elemento\n");
+    l = addr(l, 5);
+    printf("La nueva lista es: ");
+    print_list(l);
+    printf("\n\n");
+
+    printf("La nueva lista tiene una longitud de: %d\n", length(l));
+    printf("\n\n");
+
+    printf("El elemento en la posición 3 es: %d\n", list_index(l, 3));
+    printf("\n\n");
+
+    list l2 = empty();
+    l2 = copy_list(l);
+    printf("Elimino los primeros 3 elementos\n");
+    l2 = drop(l2, 3);
+    print_list(l2);
+    printf("\n\n");
+
+    list l3 = empty();
+    l3 = copy_list(l);
+    print_list(l3);
+    printf("Elimino los últimos 3 elementos\n");
+    l3 = take(l3, 3);
+    print_list(l3);
+    printf("\n\n");
     
     return 0;
 }
