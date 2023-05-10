@@ -123,7 +123,9 @@ list_elem list_index(list l, unsigned int n) {
             p = p->next;
             i += 1;
         }
-    }   
+    }
+    printf("n debe ser menor al largo de la lista");
+    exit(EXIT_FAILURE);   
 }
 
 
@@ -148,22 +150,26 @@ list drop(list l, unsigned int n) {
 
 list take(list l, unsigned int n) {
     node_t * p = NULL;
-    node_t * q = NULL;
     unsigned int i = 0;
     unsigned int pos = length(l) - n;
+    list l2 = empty();
+
     p = l;
     while ((p != NULL)) 
     {   
-        
+        if (i < pos) {
+            l2 = addr(l2, head(l));
+        }
+        p = p->next;
         i++;
+        l = tail(l);
     }
-    return l;
+    return l2;
 }
 
 
 list copy_list(list l1) {
     node_t * p = NULL;
-    node_t * q = NULL;
     list l2 = empty();
 
     p = l1;
@@ -189,7 +195,7 @@ void print_list(list l) {
     }
     printf("\n");
 }
-
+/* 
 
 int main() {
     list l = empty();
@@ -241,4 +247,4 @@ int main() {
     printf("\n\n");
     
     return 0;
-}
+} */
