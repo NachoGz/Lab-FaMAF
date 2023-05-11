@@ -23,3 +23,7 @@ int main(void) {
     return EXIT_SUCCESS;
 }
 
+/*
+La suma de los miembros no coincide con el total. El tamaño del campo name no depende del nombre que contiene sino que es un
+array de char de tamaño 30, por lo tanto siempre va a tener tamaño de 30 bytes independientemente del largo del nombre.
+*/
