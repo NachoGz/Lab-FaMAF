@@ -18,23 +18,16 @@ int main(void) {
     int *p=NULL;
     printf("before: ");
     print_array(arr, ARRAY_SIZE);
-    /* ---------------------------- Reescribir ---------------------------- */
-    //
-    // Se pueden agregar cosas antes del `for` de ser necesario
-    //
-    /* for (unsigned int i=0u; i < ARRAY_SIZE; i++) {
-        p = &arr[i];  // FIXME: Se usa operador &
-        *p = 0;       // FIXME: Se usa operador *
-    } */
+    p = arr; 
+
     for (unsigned int i=0u; i < ARRAY_SIZE; i++) {
-        p = arr; 
+        
         p[i] = 0;
     }
 
-    /* -------------------------------------------------------------------- */
+    
     printf("after : ");
     print_array(arr, ARRAY_SIZE);
 
     return EXIT_SUCCESS;
 }
-
