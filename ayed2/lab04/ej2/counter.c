@@ -9,8 +9,8 @@ struct _counter {
 };
 
 counter counter_init(void) {
-    counter c=NULL;
-    c = calloc(1, sizeof(unsigned int));
+    counter c = NULL;
+    c = malloc(sizeof(struct _counter));
     c->count = 0;
     return c;
 }
@@ -29,8 +29,8 @@ void counter_dec(counter c) {
 }
 
 counter counter_copy(counter c) {
-    counter copy=NULL;
-    copy = calloc(1, sizeof(unsigned int));
+    counter copy = NULL;
+    copy = malloc(sizeof(struct _counter));
     copy->count = c->count;
     return copy;
 }
