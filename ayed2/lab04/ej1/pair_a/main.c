@@ -20,8 +20,10 @@ int main(void) {
     // Se muestra q
     printf("q = ");
     show_pair(q);
-    // Se destruyen p y q
-    // p = pair_destroy(p);
-    // q = pair_destroy(q);
     return EXIT_SUCCESS;
 }
+
+/*
+No hay encapsulamiento porque el TAD puede ser accedido desde cualquier archivo que importe pair.h 
+ya que el TAD esta implementado ahí
+*/

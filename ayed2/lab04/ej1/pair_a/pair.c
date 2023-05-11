@@ -35,8 +35,8 @@ pair_t pair_swapped(pair_t p) {
 // POS: {pair_first(q) == pair_second(p) && pair_second(q) == pair_first(p)}
 
 
-// PRE: {p --> (x, y)}
+
 // pair_t pair_destroy(pair_t p) {
-    
+
 // }
-// POS: {pair_first(q) == pair_second(p) && pair_second(q) == pair_first(p)}
+
