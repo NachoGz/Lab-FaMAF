@@ -12,10 +12,7 @@ void print_data(data_t d) {
 }
 
 void set_name(name_t new_name, data_t *d) {
-    /* COMPLETAR */
-    // d -> name = new_name;
     strcpy((*d).name, new_name);
-    //(*d).name = new_name;
 }
 
 int main(void) {
@@ -28,4 +25,3 @@ int main(void) {
 
     return EXIT_SUCCESS;
 }
-
