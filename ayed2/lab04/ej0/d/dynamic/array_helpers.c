@@ -37,11 +37,6 @@ int * array_from_file(const char *filepath, size_t *length) {
     array = calloc(size, sizeof(int));
     *length = size;
 
-    //
-    // COMPLETAR: - Reservar memoria para array
-    //            - Cambiar el valor de *length para que contenga el tamaño del
-    //              arreglo.
-    //
     if (size > 0 && array == NULL) {
         fprintf(stderr, "Not enough memory\n");
         exit(EXIT_FAILURE);
@@ -52,7 +47,7 @@ int * array_from_file(const char *filepath, size_t *length) {
             fprintf(stderr, "Invalid array.\n");
             exit(EXIT_FAILURE);
         }
-       ++i;
+        i++;
     }
     fclose(file);
 
