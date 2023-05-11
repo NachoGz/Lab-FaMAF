@@ -10,7 +10,7 @@ struct s_pair_t {
 
 pair_t pair_new(int x, int y) {
     pair_t p=NULL;
-    p = calloc(2, sizeof(int));
+    p = malloc(sizeof(struct s_pair_t));
     p->fst = x;
     p->snd = y;
     
