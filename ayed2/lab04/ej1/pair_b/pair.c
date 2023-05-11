@@ -5,7 +5,7 @@
 
 pair_t pair_new(int x, int y) {
     pair_t p=NULL;
-    p = calloc(2, sizeof(int));
+    p = malloc(sizeof(struct s_pair_t));
     p->fst = x;
     p->snd = y;
     
@@ -32,7 +32,7 @@ int pair_second(pair_t p) {
 // PRE: {p --> (x, y)}
 pair_t pair_swapped(pair_t p) {    
     pair_t q=NULL;
-    q = calloc(2, sizeof(int));
+    q = malloc(sizeof(struct s_pair_t));
     q->fst = p->snd;
     q->snd = p->fst;
 
@@ -43,9 +43,8 @@ pair_t pair_swapped(pair_t p) {
 // POS: {pair_first(q) == pair_second(p) && pair_second(q) == pair_first(p)}
 
 
-// PRE: {p --> (x, y)}
 pair_t pair_destroy(pair_t p) {
     free(p);
-    return p;
+    return NULL;
 }
-// POS: {pair_first(q) == pair_second(p) && pair_second(q) == pair_first(p)}
+
