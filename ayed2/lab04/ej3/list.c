@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "list.h"
 
@@ -9,25 +10,21 @@ struct _node_t
     node_t * next;
 };
 
-// struct _list 
-// {
-//     node_t * pointer;
-// };
-
 
 list empty(void) {
     list l = NULL;
-    // l = calloc(1, sizeof(node_t *));
     return l;
 }
 
 
 list addl(list_elem e, list l) {
-    node_t * p = NULL;
-    p = calloc(1, sizeof(node_t));
+    list p = NULL;
+
+    p = malloc(sizeof(struct _node_t));
     p->value = e;
     p->next = l;
     l = p;
+
     return l;
 }
 
@@ -38,24 +35,30 @@ bool is_empty(list l) {
 
 
 list_elem head(list l) {
+    assert(!is_empty(l)); // Pre-condición
     return (l->value);
 }
 
 
 list tail(list l) {
-    node_t * p = NULL;
+    assert(!is_empty(l)); // Pre-condición
+
+    list p = NULL;
+
     p = l;
     l = l->next;
-    free(p);
+
+    p = destroy_list(p);
     return l;
 }
 
 
 list addr(list l, list_elem e) {
-    node_t * p = NULL;
-    node_t * q = NULL;
+    list p = NULL;
+    list q = NULL;
     
-    q = calloc(1, sizeof(node_t));
+
+    q = malloc(sizeof(struct _node_t));
     q->value = e;
     q->next = NULL;
 
@@ -75,7 +78,7 @@ list addr(list l, list_elem e) {
 
 
 unsigned int length(list l) {
-    node_t * p = NULL;
+    list p = NULL;
     unsigned int c = 0;
 
     if (!(is_empty(l))) {
@@ -91,7 +94,7 @@ unsigned int length(list l) {
 
 
 list concat(list l, list l0) {
-    node_t * p = NULL;
+    list p = NULL;
 
     if (!(is_empty(l))) {
         p = l;
@@ -108,48 +111,30 @@ list concat(list l, list l0) {
 }
 
 
-/* {PRE: length(l) > n} */
 list_elem list_index(list l, unsigned int n) {
-    node_t * p = NULL;
+    assert(length(l) > n); // Pre-condición
+    list p = NULL;
     unsigned int i = 0;
+    list_elem elem;
 
     p = l;
     while (p != NULL)
     {   
         if (i == n) {
-            return p->value;
+            elem = p->value;
+            break;
         }
         else {
             p = p->next;
             i += 1;
         }
     }
-    printf("n debe ser menor al largo de la lista");
-    exit(EXIT_FAILURE);   
-}
-
-
-list drop(list l, unsigned int n) {
-    node_t * p = NULL;
-    node_t * q = NULL;
-    unsigned int i = 0;
-
-    p = l;
-    
-    while ((p != NULL) && (i < n)) 
-    {
-        q = p;
-        p = p->next;
-        free(q);
-        i++;
-    }
-    l = p;
-    return l;
+    return elem;
 }
 
 
 list take(list l, unsigned int n) {
-    node_t * p = NULL;
+    list p = NULL;
     unsigned int i = 0;
     unsigned int pos = length(l) - n;
     list l2 = empty();
@@ -164,12 +149,27 @@ list take(list l, unsigned int n) {
         i++;
         l = tail(l);
     }
+    l = destroy_list(l);
     return l2;
 }
 
 
+list drop(list l, unsigned int n) {
+    unsigned int i = 0;
+
+    
+    while ((l != NULL) && (i < n)) 
+    {
+        tail(l);
+        l = l->next;
+        i++;
+    }
+    return l;
+}
+
+
 list copy_list(list l1) {
-    node_t * p = NULL;
+    list p = NULL;
     list l2 = empty();
 
     p = l1;
@@ -183,8 +183,23 @@ list copy_list(list l1) {
 }
 
 
+list destroy_list(list l) {
+    list p = NULL;
+    
+    while (p != NULL)
+    {   
+        p = l;
+        l = l->next;
+        free(p);
+    }
+
+    return NULL;
+}
+
+/* 
+
 void print_list(list l) {
-    node_t * p = NULL;
+    list p = NULL;
     
     p = l;
     
@@ -195,7 +210,7 @@ void print_list(list l) {
     }
     printf("\n");
 }
-/* 
+ 
 
 int main() {
     list l = empty();
@@ -247,4 +262,5 @@ int main() {
     printf("\n\n");
     
     return 0;
-} */
+}  
+ */

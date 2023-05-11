@@ -41,21 +41,19 @@ char *parse_filepath(int argc, char *argv[]) {
 
 float average(list l) {
     unsigned int len = length(l);
-    if (len > 0) {
-        int sum = 0;
-        node_t * p = NULL;
+    
+    int sum = 0;
+    list p = NULL;
 
-        p = l;
-        while (p != NULL)
-        {   
-            sum += p->value;
-            p = p->next;
-        }
-        return (sum / length(l));
+    p = l;
+    while (p != NULL)
+    {   
+        sum += p->value;
+        p = p->next;
     }
-    else {
-        return 0.0;
-    }
+    l = destroy_list(l);
+    return (sum / len);
+    
 }
 
 list array_to_list(int array[], unsigned int length) {
@@ -87,11 +85,11 @@ int main(int argc, char *argv[]) {
 
     /* transform from array to our list type */
     list l = array_to_list(array, length);
-
+    l = destroy_list(l);
     /* call the average function */
     printf("The average is: %.2f \n", average(l));
 
     return (EXIT_SUCCESS);
 }
 
-// PREGUNTAR SOBRE LA DECLARACIÓN DEL STRUCT EN MAIN.C Y LIST.C!!
+// 

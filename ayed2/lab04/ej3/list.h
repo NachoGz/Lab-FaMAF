@@ -47,7 +47,7 @@ list tail(list l);
 /**
  * @brief Agrega una elemento al final de una lista
  * @param[in] l lista de entra
- * @param[in] e elemeto que voy a agregar
+ * @param[in] e elemento que voy a agregar
 */
 list addr(list l, list_elem e);
 
@@ -91,5 +91,11 @@ list drop(list l, unsigned int n);
  * @param[in] l1 lista de entrada a ser copiada
 */
 list copy_list(list l1);
+
+/**
+ * @brief Libera memoria en caso de que sea necesario
+ * @param[in] l lista de entrada a ser destruida
+*/
+list destroy_list(list l);
 
 #endif
