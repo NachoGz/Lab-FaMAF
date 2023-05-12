@@ -73,6 +73,8 @@ list addr(list l, list_elem e) {
     else {
         l = q;
     }
+
+
     return l;
 }
 
@@ -178,6 +180,7 @@ list copy_list(list l1) {
         l2 = addr(l2, p->value);
         p = p->next;
     }
+
     return l2;
 
 }
@@ -185,8 +188,7 @@ list copy_list(list l1) {
 
 list destroy_list(list l) {
     list p = NULL;
-    
-    while (p != NULL)
+    while (l != NULL)
     {   
         p = l;
         l = l->next;
@@ -195,72 +197,3 @@ list destroy_list(list l) {
 
     return NULL;
 }
-
-/* 
-
-void print_list(list l) {
-    list p = NULL;
-    
-    p = l;
-    
-    while (p != NULL)
-    {
-        printf("%d ", p->value);
-        p = p->next;
-    }
-    printf("\n");
-}
- 
-
-int main() {
-    list l = empty();
-    for (int i=0; i < 5; i++) {
-        l = addr(l, i);
-    }
-    printf("La lista es: ");
-    print_list(l);
-    printf("\n\n");
-
-    printf("Elemento a eliminar: %d\n", head(l));
-    l = tail(l);
-
-    printf("La nueva lista es: ");
-    print_list(l);
-    printf("\n\n");
-    
-    printf("Agrego de nuevo el elemento\n");
-    l = addl(0, l);
-    printf("La nueva lista es: ");
-    print_list(l);
-    printf("\n\n");
-
-    printf("Agrego un nuevo elemento\n");
-    l = addr(l, 5);
-    printf("La nueva lista es: ");
-    print_list(l);
-    printf("\n\n");
-
-    printf("La nueva lista tiene una longitud de: %d\n", length(l));
-    printf("\n\n");
-
-    printf("El elemento en la posición 3 es: %d\n", list_index(l, 3));
-    printf("\n\n");
-
-    list l2 = empty();
-    l2 = copy_list(l);
-    printf("Elimino los primeros 3 elementos\n");
-    l2 = drop(l2, 3);
-    print_list(l2);
-    printf("\n\n");
-
-    list l3 = empty();
-    l3 = copy_list(l);
-    print_list(l3);
-    printf("Elimino los últimos 3 elementos\n");
-    l3 = take(l3, 3);
-    print_list(l3);
-    printf("\n\n");
-    
-    return 0;
-}  
- */

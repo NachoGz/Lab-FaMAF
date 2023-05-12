@@ -40,19 +40,24 @@ char *parse_filepath(int argc, char *argv[]) {
 
 
 float average(list l) {
-    unsigned int len = length(l);
-    
-    int sum = 0;
-    list p = NULL;
+    if (!is_empty(l)) {
+        int len = length(l);
+        int sum = 0;
+        list p = NULL; 
 
-    p = l;
-    while (p != NULL)
-    {   
-        sum += p->value;
-        p = p->next;
+        p = l;
+        while (p != NULL)
+        {   
+            sum += p->value;
+            p = p->next;
+        }
+        l = destroy_list(l);
+        return (sum/len);
     }
-    l = destroy_list(l);
-    return (sum / len);
+    else {
+        return 0.0;
+    }
+    
     
 }
 
@@ -85,9 +90,11 @@ int main(int argc, char *argv[]) {
 
     /* transform from array to our list type */
     list l = array_to_list(array, length);
-    l = destroy_list(l);
+   
     /* call the average function */
     printf("The average is: %.2f \n", average(l));
+
+    // l = destroy_list(l);
 
     return (EXIT_SUCCESS);
 }
