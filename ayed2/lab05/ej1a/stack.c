@@ -1,20 +1,23 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "stack.h"
+
  
-typedef struct _s_stack {
+struct _s_stack {
     stack_elem value;
     stack  next;
-} * stack;
+};
 
 stack stack_empty() {
     stack s = NULL;
+    return s;
 }
 
 
 stack stack_push(stack s, stack_elem e) {
     stack p = NULL;
-    p = calloc(1, sizeof(stack));
+
+    p = malloc(sizeof(struct _s_stack));
     p->value = e;
     p->next = s;
     return p;
@@ -54,13 +57,15 @@ bool stack_is_empty(stack s) {
     return (s == NULL);
 }
 
-/* 
+
 stack_elem *stack_to_array(stack s) {
     unsigned int size = stack_size(s);
-    int array[size];
+    int *array = NULL;
     unsigned int i = size - 1; 
     stack p = NULL;
 
+    array = calloc(size, sizeof(int));
+    p = s; 
     while (p != NULL)
     {
         array[i] = p->value;
@@ -70,7 +75,21 @@ stack_elem *stack_to_array(stack s) {
     
     return array;
 }
- */
+
+
+// stack stack_copy(stack s) {
+//     stack p = NULL;
+//     stack copy = stack_empty();
+    
+//     p = s;
+//     // copy = malloc(sizeof(struct _s_stack));
+//     while (p != NULL)
+//     {
+//         copy = stack_push(copy, p->value);
+//         p = p->next;
+//     }
+//     return copy;
+// }
 
 stack stack_destroy(stack s) {
     stack p = NULL;
