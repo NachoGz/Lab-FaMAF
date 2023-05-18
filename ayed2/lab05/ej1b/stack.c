@@ -8,6 +8,17 @@ struct _s_stack {
     stack  next;
     unsigned int length;
 };
+/*
+struct _stack {
+    unsigned int size;
+    struct stack_node *fst;
+};
+
+struct stack_node {
+    struct stack_node *next;
+    stack_elem elem;
+};
+*/
 
 
 stack stack_empty() {
