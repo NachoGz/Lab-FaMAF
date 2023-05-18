@@ -8,17 +8,6 @@ struct _s_stack {
     stack  next;
     unsigned int length;
 };
-/*
-struct _stack {
-    unsigned int size;
-    struct stack_node *fst;
-};
-
-struct stack_node {
-    struct stack_node *next;
-    stack_elem elem;
-};
-*/
 
 
 stack stack_empty() {
@@ -109,7 +98,6 @@ stack_elem *stack_to_array(stack s) {
 // }
 
 stack stack_destroy(stack s) {
-    assert(s != NULL);
     stack current = NULL;
     stack next = NULL;
     current = s;

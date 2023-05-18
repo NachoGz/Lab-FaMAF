@@ -23,35 +23,6 @@ stack stack_empty() {
 }
 
 
-// stack stack_empty() {
-//     stack empty_stack = NULL;
-//     return empty_stack;
-// }
-
-
-// stack stack_push(stack s, stack_elem e) {
-//     stack new_stack = NULL;
-//     new_stack = malloc(sizeof(struct _s_stack));
-//     if (!stack_is_empty(s) && (s->capacity == s->size)) { // me fijo si la pila esta llena
-//         s->capacity *= 2;
-//         s = realloc(s, sizeof(stack_elem));
-//     }
-
-//     if (!stack_is_empty(s)) { // me fijo si la pila esta vacía
-//         new_stack->size = s->size + 1;
-//     }
-//     else {
-//         new_stack->size = 1;
-//         new_stack->capacity = 10;
-//     }
-//     new_stack->elems = calloc(new_stack->capacity, sizeof(stack_elem));
-//     (new_stack->elems)[new_stack->size-1] = e;
-    
-
-//     return new_stack;
-// }
-
-
 stack stack_push(stack s, stack_elem e) {
     if (s->capacity == s->size) { // me fijo si la pila esta llena
         s->capacity *= 2;
@@ -86,8 +57,7 @@ stack_elem stack_top(stack s) {
 
 
 bool stack_is_empty(stack s) {
-    //return (s == NULL);
-    return (s->size == 0)
+    return (s->size == 0);
 }
 
 

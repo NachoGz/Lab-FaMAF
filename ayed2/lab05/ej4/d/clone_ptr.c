@@ -1,14 +1,19 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 #include <string.h>
 
-char *string_clone(const char *str, size_t length) {
-    char *output=malloc(sizeof(char)*strlen(str) + 1);
-    for (size_t i=0; i<length; i++) {
-        output[i] = str[i];
-    }
-    // clone[length] = '\0';
-    return output;
+
+char *string_clone(const char *str) {
+    char *clone=NULL;
+    /* COMPLETAR */
+    size_t len = strlen(str);
+    clone = malloc(sizeof(char)*len + 1); // agrego más uno porque strlen no cuenta en caracter \0
+    assert(clone != NULL);
+
+    strcpy(clone, str);
+
+    return clone;
 }
 
 
@@ -43,18 +48,15 @@ int main(void) {
          "galaxy...\n";
     char *copy=NULL;
 
-
-    // copy = string_clone(original, sizeof(original)/sizeof(char) - 1);
-    copy = string_clone(original, strlen(original));
+    copy = string_clone(original);
     printf("Original: %s\n", original);
     copy[0] = 'A';
-    copy[1] = ' ';  
+    copy[1] = ' ';
     copy[2] = 'l';
     copy[3] = 'o';
     copy[4] = 'n';
     copy[5] = 'g';
-    printf("Copia: %s\n", copy);
-
+    printf("Copia   : %s\n", copy);
     free(copy);
 
     return EXIT_SUCCESS;

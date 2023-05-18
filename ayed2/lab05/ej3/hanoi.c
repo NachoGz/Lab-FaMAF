@@ -49,6 +49,8 @@ void hanoi_print(hanoi_t hanoi) {
 hanoi_t hanoi_destroy(hanoi_t hanoi) {
     assert(hanoi != NULL);
     hanoi->target = stack_destroy(hanoi->target);
+    hanoi->aux = stack_destroy(hanoi->aux);
+    hanoi->source = stack_destroy(hanoi->source);
     free(hanoi);
     return NULL;
 }

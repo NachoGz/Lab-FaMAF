@@ -83,22 +83,7 @@ stack_elem *stack_to_array(stack s) {
 }
 
 
-// stack stack_copy(stack s) {
-//     stack p = NULL;
-//     stack copy = stack_empty();
-    
-//     p = s;
-//     // copy = malloc(sizeof(struct _s_stack));
-//     while (p != NULL)
-//     {
-//         copy = stack_push(copy, p->value);
-//         p = p->next;
-//     }
-//     return copy;
-// }
-
 stack stack_destroy(stack s) {
-    assert(s != NULL);
     stack current = NULL;
     stack next = NULL;
     current = s;
