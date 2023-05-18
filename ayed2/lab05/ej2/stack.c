@@ -9,7 +9,6 @@ struct _s_stack {
 };
 
 
-// preguntar por memory leak en esta función
 stack stack_empty() {
     stack empty_stack = NULL;
     
