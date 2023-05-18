@@ -30,7 +30,7 @@ hanoi_t hanoi_init(unsigned int disk_count) {
     hanoi->aux = stack_empty();
     hanoi->target = NULL;
     hanoi->disk_count = disk_count;
-    hanoi->source = NULL;
+    hanoi->source = stack_empty();
     for (unsigned int i = disk_count; i > 0; --i) {
         hanoi->source = stack_push(hanoi->source, i);
     }
