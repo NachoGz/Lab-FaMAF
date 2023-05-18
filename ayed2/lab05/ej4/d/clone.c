@@ -1,11 +1,18 @@
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <assert.h>
 #include <string.h>
+
 
 char *string_clone(const char *str) {
     char *clone=NULL;
     /* COMPLETAR */
+    size_t len = strlen(str);
+    clone = malloc(sizeof(char)*len + 1); // agrego más uno porque strlen no cuenta en caracter \0
+    assert(clone != NULL);
+
+    strcpy(clone, str);
+
     return clone;
 }
 
@@ -50,7 +57,7 @@ int main(void) {
     copy[4] = 'n';
     copy[5] = 'g';
     printf("Copia   : %s\n", copy);
-
+    free(copy);
 
     return EXIT_SUCCESS;
 }

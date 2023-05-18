@@ -8,6 +8,7 @@
 */
 size_t string_length(const char *str);
 
+
 /**
  * @brief Devuelve una nueva cadena(en memoria dinámica) que contiene aquellos caracteres de la cadena de input que son
  * distintos a un caracter que paso como parámetro

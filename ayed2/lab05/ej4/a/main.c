@@ -14,14 +14,17 @@ size_t string_length(const char *str) {
 
 
 char *string_filter(const char *str, char c) {
-    char filtered_string[string_length(str)];
+    char *filtered_string = malloc(sizeof(char)*string_length(str));
     unsigned int pos = 0;
+
     for (unsigned long i=0; i<string_length(str); i++) {
         if (*(str + i) != c) {
-            filtered_string[pos] = *(str + i);
+            *(filtered_string + pos) = *(str + i);
             pos++;
         }
     }
+
+    return filtered_string;
 }
 
 
