@@ -87,6 +87,7 @@ stack_elem stack_top(stack s) {
 
 bool stack_is_empty(stack s) {
     return (s == NULL);
+    // return (s->size == 0)
 }
 
 
