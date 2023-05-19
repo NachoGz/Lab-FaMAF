@@ -3,11 +3,12 @@
 #include <string.h>
 
 char *string_clone(const char *str, size_t length) {
-    char *output=malloc(sizeof(char)*strlen(str) + 1);
+    char *output = NULL;
+    output = malloc(sizeof(char)*strlen(str) + 1);
     for (size_t i=0; i<length; i++) {
         output[i] = str[i];
     }
-    // clone[length] = '\0';
+    
     return output;
 }
 
@@ -41,8 +42,8 @@ int main(void) {
          "races home aboard her starship, custodian of the stolen\n"
          "plans that can save her people and restore freedom to the\n"
          "galaxy...\n";
+    
     char *copy=NULL;
-
 
     // copy = string_clone(original, sizeof(original)/sizeof(char) - 1);
     copy = string_clone(original, strlen(original));

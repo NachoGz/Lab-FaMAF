@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "stack.h"
+#include <stdbool.h>
+
+#define CAPACITY 10
 
 struct _s_stack {
     stack_elem *elems;      // Arreglo de elementos
@@ -9,13 +12,18 @@ struct _s_stack {
 };
 
 
+bool invrep(stack s) {
+    return (s->size != 0);
+}
+
+
 stack stack_empty() {
     stack empty_stack = NULL;
     
     empty_stack = malloc(sizeof(struct _s_stack));
     assert(empty_stack != NULL);
     empty_stack->size = 0;
-    empty_stack->capacity = 10;
+    empty_stack->capacity = CAPACITY;
     empty_stack->elems = calloc(empty_stack->capacity, sizeof(stack_elem));
     assert((empty_stack->elems) != NULL);
     
@@ -38,10 +46,11 @@ stack stack_push(stack s, stack_elem e) {
 
 
 stack stack_pop(stack s) {
-    if (!stack_is_empty(s)) {
-        (s->elems)[s->size-1] = 0;
-        s->size--;
-    }
+    assert(invrep(s));
+    
+    (s->elems)[s->size-1] = 0;
+    s->size--;
+    
     return s;
 }
 
@@ -52,6 +61,7 @@ unsigned int stack_size(stack s) {
 
 
 stack_elem stack_top(stack s) {
+    assert(invrep(s));
     return (s->elems)[s->size-1];
 }
 
@@ -74,7 +84,6 @@ stack_elem *stack_to_array(stack s) {
 
 
 stack stack_destroy(stack s) {
-    assert(s != NULL);
     free(s->elems);
     free(s);
     return NULL;

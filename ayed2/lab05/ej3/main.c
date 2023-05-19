@@ -22,3 +22,16 @@ int main(int argc, char *argv[]) {
     hanoi = hanoi_destroy(hanoi);
     return 0;
 }
+
+/* 
+Bugs: el bug estaba en stack_size que daba error al pedir el length de un stack vacío ya que
+		la función no estaba definida para ese caso. Ya está solucionado.
+Valgrind:
+        memory leaks: el memory leak estaba en la función hanoi_destroy donde solo liberaba el 
+        puntero que apunta a la torre y no estaba liberando el stack hanoi->target. Por eso 	
+        faltaban siempre tantos free como la cantidad de discos.
+        Conditional jump or move depends on uninitialised value(s): hanoi->source no estaba 	 
+        inicializado en null en hanoi_init.
+		
+
+*/

@@ -14,7 +14,8 @@ size_t string_length(const char *str) {
 
 
 char *string_filter(const char *str, char c) {
-    char *filtered_string = malloc(sizeof(char)*string_length(str));
+    char *filtered_string = NULL;
+    filtered_string = malloc(sizeof(char)*string_length(str));
     unsigned int pos = 0;
 
     for (unsigned long i=0; i<string_length(str); i++) {
@@ -29,7 +30,9 @@ char *string_filter(const char *str, char c) {
 
 
 int main(void) {
-    char *some_str="h.o.l.a m.u.n.d.o.!";
+
+    char *some_str=NULL;
+    some_str = "h.o.l.a m.u.n.d.o.!";
     char *filtered=NULL;
 
     filtered = string_filter(some_str, '.');
