@@ -49,17 +49,6 @@ char *parse_filepath(int argc, char *argv[]) {
 }
 
 
-// void print_pila(stack s) {
-//     stack p = NULL;
-//     p = stack_copy(s);
-//     while (p != NULL)
-//     {
-//         printf("%d\n", stack_top(p));
-//         p = stack_pop(p);
-//     }
-    
-// }
-
 int main(int argc, char *argv[]) {
     char *filepath = NULL;
 
@@ -77,23 +66,16 @@ int main(int argc, char *argv[]) {
     int *new_array=NULL;
     new_array = calloc(length, sizeof(int));
     assert(new_array != NULL);
-
+    
     stack s = stack_empty();
 
-    for (unsigned int i=0; i < length; i++) {
+    for (int i=length - 1 ; i >= 0; i--) {
         s = stack_push(s, array[i]);
     }
-    unsigned int i = 0; 
-
-    while (!(stack_is_empty(s)))
-    {
-        new_array[i] = stack_top(s);
-        s = stack_pop(s);
-        i++;
-    }
-    // new_array = stack_to_array(s);
     
-    printf("Reversed: ");
+    new_array = stack_to_array(s);
+    
+    printf("\nReversed: ");
     array_dump(new_array, length);
     
     

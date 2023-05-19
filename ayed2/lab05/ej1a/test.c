@@ -30,9 +30,9 @@ int main() {
 
     s = stack_push(s, 1);
     s = stack_pop(s);
-    for (int i=0;i<5;i++) {
-        s = stack_push(s, i);
-    }
+    // for (int i=0;i<5;i++) {
+    //     s = stack_push(s, i);
+    // }
     
     printf("La pila es:\n\n");
     print_pila(s);

@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <assert.h>
+#include <stdbool.h>
 #include "stack.h"
 
  
@@ -14,34 +15,42 @@ stack stack_empty() {
 }
 
 
-stack stack_push(stack s, stack_elem e) {
-    stack p = NULL;
+bool invrep(stack s) {
+    return s != NULL;
+}
 
-    p = malloc(sizeof(struct _s_stack));
-    assert(p != NULL);
-    p->value = e;
-    p->next = s;
-    return p;
+
+stack stack_push(stack s, stack_elem e) {
+    stack new_stack = NULL;
+
+    new_stack = malloc(sizeof(struct _s_stack));
+    assert(new_stack != NULL);
+    new_stack->value = e;
+    new_stack->next = s;
+
+    return new_stack;
 }
 
 
 stack stack_pop(stack s) {
-    stack p = NULL;
-    p = s->next;
-    free(s);
-    s = NULL;
-    return p;
+    assert(invrep(s));
+    stack aux = NULL;
+    aux = s;
+    s = s->next;
+    free(aux);
+    aux = NULL;
+    return s;
 }
 
 
 unsigned int stack_size(stack s) {
     unsigned int c = 0;
-    stack p = NULL;
+    stack current = NULL;
     
-    p = s;
-    while (p != NULL)
+    current = s;
+    while (current != NULL)
     {   
-        p = p->next;
+        current = current->next;
         c++;
     }
     
@@ -50,6 +59,7 @@ unsigned int stack_size(stack s) {
 
 
 stack_elem stack_top(stack s) {
+    assert(invrep(s));
     return s->value;
 }
 
@@ -62,39 +72,22 @@ bool stack_is_empty(stack s) {
 stack_elem *stack_to_array(stack s) {
     unsigned int size = stack_size(s);
     int *array = NULL;
-    unsigned int i = size - 1; 
-    stack p = NULL;
+    if (!stack_is_empty(s)) {
+        array = calloc(size, sizeof(int));
+        assert(array != NULL);
 
-    array = calloc(size, sizeof(int));
-    p = s; 
-    while (p != NULL)
-    {
-        array[i] = p->value;
-        p = p->next;
-        i--;
+        for (int i=size - 1; i >= 0; i--) {
+            array[i] = stack_top(s);
+            s = stack_pop(s);
+        }   
     }
+    
     
     return array;
 }
 
 
-// stack stack_copy(stack s) {
-//     stack p = NULL;
-//     stack copy = stack_empty();
-    
-//     p = s;
-//     // copy = malloc(sizeof(struct _s_stack));
-//     while (p != NULL)
-//     {
-//         copy = stack_push(copy, p->value);
-//         p = p->next;
-//     }
-//     return copy;
-// }
-
 stack stack_destroy(stack s) {
-
-    assert(s != NULL);
     stack current = NULL;
     stack next = NULL;
     current = s;
