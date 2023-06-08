@@ -1,8 +1,8 @@
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -pedantic -std=c99 -g
-SOURCES = abb.c mainAlt.c
+CFLAGS = -Wall -Wextra -pedantic -std=c99 -g
+SOURCES = string.c main.c
 OBJECTS = $(SOURCES:.c=.o)
-TARGET = readtree
+TARGET = string
 
 .PHONY: clean
 

@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
         printf("\nÁrbol vacío\n");
     }
 
-    tree = abb_destroy(tree);
+    // tree = abb_destroy(tree);
     /*
      * Modificar e implementar con un ciclo una interfaz que permita al usuario
      * realizar una de las siguientes operaciones en cada iteración:
