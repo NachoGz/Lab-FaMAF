@@ -63,7 +63,6 @@ int main(int argc, char *argv[]) {
     queue_dump(q, stdout);
     end = clock();
 
-    printf("Elimino el primer elemento: %d\n", queue_first(q));
     q = queue_user_disscard(q);
 
     

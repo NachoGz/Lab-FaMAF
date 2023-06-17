@@ -120,8 +120,7 @@ dict_t on_remove(dict_t current) {
 }
 
 dict_t on_load(dict_t current) {
-    string filename
-            = get_input("Please enter the filename to load the dict from");
+    string filename = get_input("Please enter the filename to load the dict from");
     dict_t other = dict_from_file(filename);
     if (other == NULL) {
         printf("Can not load dict from filename %s\n", string_ref(filename));
@@ -173,31 +172,31 @@ int main(void) {
         option = print_menu();
         switch (option) {
             case ADD:
-
+                current = on_add(current);
                 break;
-            case REMOVE:
-
+            case REMOVE: // falla
+                current = on_remove(current);
                 break;
-            case REPLACE:
-
+            case REPLACE: // no funciona, no reemplaza sino que agrega
+                current = on_replace(current);
                 break;
             case DUMP:
-
+                on_dump(current);
                 break;
             case EMPTY:
-
+                current = on_empty(current);
                 break;
             case LOAD:
-
+                current = on_load(current);
                 break;
             case SEARCH:
-
+                on_search(current);
                 break;
             case SHOW:
-
+                on_dump(current);
                 break;
             case SIZE:
-
+                on_size(current);
                 break;
             case QUIT:
                 current = dict_destroy(current);

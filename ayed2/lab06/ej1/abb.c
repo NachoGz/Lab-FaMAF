@@ -18,19 +18,23 @@ static bool elem_less(abb_elem a, abb_elem b) {
     return a < b;
 }
 
+
 static bool invrep(abb tree) {
 
-    if (!abb_is_empty(tree) && (tree->left && tree->right != NULL)) {
-        if ((tree->left->elem < tree->elem) && (tree->right->elem > tree->elem)) {
-            invrep(tree->left);
-            invrep(tree->right);
-        }
+    if (abb_is_empty(tree)) {
+        return true;
+    }
+    if (tree->left && tree->right != NULL) {
+        if (elem_less(tree->left->elem, tree->elem) && elem_less(tree->elem, tree->right->elem)) {
+            return invrep(tree->left) && invrep(tree->right);        
+        } 
         else {
             return false;
         }
     }
 
     return true;
+    
 }
 
 abb abb_empty(void) {
@@ -44,17 +48,21 @@ abb abb_add(abb tree, abb_elem e) {
     assert(invrep(tree));
     if (abb_is_empty(tree)) {
         tree = malloc(sizeof(struct _s_abb));
+        assert(tree != NULL);
         tree->elem = e;
         tree->left = NULL;
         tree->right = NULL;
     }
-    else if (elem_less(e, tree->elem) || elem_eq(e, tree->elem)) {
+    if (elem_eq(e, tree->elem)) {
+        return tree;
+    }
+    else if (elem_less(e, tree->elem)) {
         tree->left = abb_add(tree->left, e);
     }
     else {
         tree->right = abb_add(tree->right, e);
     }
-
+    
     assert(invrep(tree) && abb_exists(tree, e));
     return tree;
 }
@@ -74,7 +82,7 @@ bool abb_exists(abb tree, abb_elem e) {
         else if (elem_less(e, tree->elem)) {
             exists = abb_exists(tree->left, e);
         }
-        else {
+        else if ((elem_less(tree->elem, e))) {
             exists = abb_exists(tree->right, e);
         }
 
@@ -96,12 +104,12 @@ unsigned int abb_length(abb tree) {
 }
 
 
-abb abb_minimo_nodo(abb tree) {
+abb abb_minimo_nodo(abb tree) { 
     assert(invrep(tree) && !abb_is_empty(tree));
-    // encuentro el nodo que esté más a la derecha
+    // encuentro el nodo que esté más a la izquierda
     abb current = tree;
-    while (current && current->right != NULL) {
-        current = current->right;
+    while (current && current->left != NULL) {
+        current = current->left;
     }
     return current;
 
@@ -110,7 +118,11 @@ abb abb_minimo_nodo(abb tree) {
 
 
 abb abb_remove(abb tree, abb_elem e) {
-    assert(invrep(tree) && !abb_is_empty(tree));
+    assert(invrep(tree));
+
+    if (abb_is_empty(tree)) {
+        return tree;
+    }
 
     if (elem_less(e, tree->elem)) {
         tree->left = abb_remove(tree->left, e);
@@ -133,6 +145,7 @@ abb abb_remove(abb tree, abb_elem e) {
         }
 
         // su el nodo tiene dos hijos
+        // obtengo el sucesor en orden
         abb aux = abb_minimo_nodo(tree->right);
 
         // Sustituyo el valor por ser eliminado por el sucesor
@@ -145,6 +158,7 @@ abb abb_remove(abb tree, abb_elem e) {
     assert(invrep(tree) && !abb_exists(tree, e));
     return tree;
 }
+
 
 
 abb_elem abb_root(abb tree) {
@@ -173,35 +187,39 @@ abb_elem abb_max(abb tree) {
 abb_elem abb_min(abb tree) {
     abb_elem min_e;
     assert(invrep(tree) && !abb_is_empty(tree));
-    abb current = tree;
 
-    // Busco la hoja que esté más a la izquierda
-    while (current && current->left != NULL) {
-        current = current->left;
-    }
-
-    min_e = current->elem;
+    min_e = abb_minimo_nodo(tree)->elem;
 
     assert(invrep(tree) && abb_exists(tree, min_e));
     return min_e;
 }
 
+// void abb_dump(abb tree) {
+//     assert(invrep(tree));
+//     if (tree != NULL) {
+//         abb_dump(tree->left);
+//         printf("%d ", tree->elem);
+//         abb_dump(tree->right);
+//     }
+// }
+
 void abb_dump(abb tree) {
     assert(invrep(tree));
     if (tree != NULL) {
-        abb_dump(tree->left);
         printf("%d ", tree->elem);
+        abb_dump(tree->left);
         abb_dump(tree->right);
     }
 }
+
 
 abb abb_destroy(abb tree) {
     assert(invrep(tree));
     if (tree != NULL) {
         abb_destroy(tree->left);
         abb_destroy(tree->right);
+        free(tree);
     }
-    free(tree);
     tree = NULL;    
     assert(tree == NULL);
     return tree;

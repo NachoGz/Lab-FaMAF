@@ -109,7 +109,10 @@ queue queue_disscard(queue q, unsigned int n) {
         i++;
     }
 
+    
     assert(invrep(q) && (queue_size(new_queue) == (queue_size(q) - 1)));
+
+    q = queue_destroy(q);
 
     return new_queue;
 }

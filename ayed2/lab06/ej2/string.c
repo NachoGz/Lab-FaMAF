@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "string.h"
+#include <assert.h>
 
 struct _s_string {
     char *content;
@@ -10,10 +11,11 @@ struct _s_string {
 
 string string_create(const char *word) {
     string str = NULL;
-    str = calloc(1, sizeof(struct _s_string));
+    str = malloc(sizeof(struct _s_string));
+    assert(str != NULL);
     str->length = strlen(word);
-    str->content = calloc(str->length, sizeof(char));
-    str->content = strncpy(str->content, word, str->length + 1);
+    str->content = calloc(str->length+1, sizeof(char));
+    str->content = strncpy(str->content, word, str->length);
     return (str);
 }
 
