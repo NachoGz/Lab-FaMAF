@@ -21,4 +21,10 @@ ip addr | grep ether | awk '{print $2}'
 mkdir succession && cd succession; for episode in {1..10}; do touch "fma_S01E$episode""_es.srt"; done
 for file in $(ls); do mv $file $(echo $file | awk -F "_es" '{print $1 $2}') ; done
 
-## Ejercicio 8
+## Ejercicio opcional
+### a)
+simplescreenrecorder --start-recording
+record-pause
+record-save
+quit
+### b)
