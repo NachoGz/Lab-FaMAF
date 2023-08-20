@@ -14,15 +14,10 @@ cat atpplayers.in | sort -nk 3
 # Ejercicio 6
 ip addr | grep ether | awk '{print $2}'
 # Ejercicio 7
-mkdir succession && cd succession; for episode in {1..10}; do touch "fma_S01E$episode""_es.srt"; done
-for file in $(ls); do mv $file $(echo $file | awk -F "_es" '{print $1 $2}') ; done
-cd ..
-# Ejercicio opcional
+mkdir succession; for episode in {1..10}; do touch succession/"fma_S01E$episode""_es.srt"; done
+for file in $(ls succession); do mv succession/$file succession/$(echo $file | awk -F "_es" '{print $1 $2}') ; done
+Ejercicio opcional
 # a)
-#simplescreenrecorder --start-recording
-#record-pause
-#record-save
-#quit
 ffmpeg -ss 00:00:04 -to 00:00:32 -i simplescreenrecorder-2023-08-20_10.27.10.mp4 -c copy cut_video.mp4
 # b)
 ffmpeg -i hola.flac -i chau.flac -filter_complex amix=inputs=2:duration=longest merged.flac
