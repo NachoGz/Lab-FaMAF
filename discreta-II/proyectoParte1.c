@@ -4,24 +4,29 @@
 #include <assert.h>
 #include <math.h>
 #include <stdbool.h>
+#include <strings.h>
+#include <string.h>
 
-#define MAX_LINE_LENGTH 100
+// compilacion: gcc -Wall -Wextra -O3 -std=c99
+// compilacion para grafos mas chicos: gcc -Wall -Wextra -O3 -std=c99 -DNDEBUG -fsanitize=address,undefined
 
-Grafo ConstruirGrafo() { // falta error checking 
+#define MAX_LINE_LENGTH 200
+
+Grafo ConstruirGrafo() { 
     // inicializo
     Grafo grafo = NULL;
-    
+
     grafo = calloc(1,sizeof(struct s_GrafoSt_));
     assert(grafo != NULL);
 
-    // leo de stdin
+    // leo la primera linea con info sobre el grafo
     char linea[MAX_LINE_LENGTH];
     u32 line_count = 0;
-
+    
     while (fgets(linea, sizeof(linea), stdin) != NULL) {
         if (linea[0] == 'p') {
             sscanf(linea, "p edge %u %u", &grafo->cv, &grafo->cl);
-
+            
             grafo->grados = calloc(grafo->cv, sizeof(u32));
             assert(grafo->grados != NULL);
 
@@ -69,21 +74,22 @@ Grafo ConstruirGrafo() { // falta error checking
             return NULL;
         }
     }
-    if (grafo->cl != line_count) {
-        return NULL;
-    }
+    // if (grafo->cl != line_count) {
+    //     return NULL;
+    // }
+    
     return grafo;
 }
 
 void DestruirGrafo(Grafo G) {
     free(G->grados);
     free(G->colores);
-    free(G->vecinos);
 
     for (u32 i = 0; i < G->cv; i++) {
         free(G->vecinos[i]);
     }
 
+    free(G->vecinos);
     free(G);
 }
 
@@ -150,6 +156,7 @@ int main(void) {
     } */
     printf("El valor de delta es: %u\n", Delta(G));
     
+    DestruirGrafo(G);
 }
 
 // 6. Funciones para asignar colores
