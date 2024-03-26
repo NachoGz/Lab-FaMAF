@@ -9,6 +9,8 @@
 
 // compilacion: gcc -Wall -Wextra -O3 -std=c99
 // compilacion para grafos mas chicos: gcc -Wall -Wextra -O3 -std=c99 -DNDEBUG -fsanitize=address,undefined
+// valgrind: valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose
+
 
 #define MAX_LINE_LENGTH 200
 
@@ -26,7 +28,7 @@ Grafo ConstruirGrafo() {
     while (fgets(linea, sizeof(linea), stdin) != NULL) {
         if (linea[0] == 'p') {
             sscanf(linea, "p edge %u %u", &grafo->cv, &grafo->cl);
-            
+
             grafo->grados = calloc(grafo->cv, sizeof(u32));
             assert(grafo->grados != NULL);
 
@@ -42,10 +44,11 @@ Grafo ConstruirGrafo() {
                 assert(grafo->vecinos[i] != NULL);
                 grafo->colores[i] = 0;
             }
-        }
+        } 
         else if (linea[0] == 'e') {
             u32 v,w;
             sscanf(linea, "e %u %u", &v, &w);
+            printf("vertices: %u %u\n", v, w);
             line_count++;
             if (line_count > grafo->cl) {
                 break;
@@ -55,6 +58,18 @@ Grafo ConstruirGrafo() {
             grafo->grados[w]++;
             
             // agrego a w como vecino de v y viceversa
+            /*  
+            if (grafo->vecinos[v] == NULL) {
+                printf("vertice: %u\n", v);
+                grafo->vecinos[v] = calloc(grafo->cv-1, sizeof(u32));
+                assert(grafo->vecinos[v] != NULL);
+            }
+            if (grafo->vecinos[w] == NULL) {
+                printf("vertice: %u\n", w);
+                grafo->vecinos[w] = calloc(grafo->cv-1, sizeof(u32));
+                assert(grafo->vecinos[w] != NULL);
+            } 
+            */
             grafo->vecinos[v][grafo->grados[v]-1] = w;
             grafo->vecinos[w][grafo->grados[w]-1] = v;
             
@@ -74,10 +89,7 @@ Grafo ConstruirGrafo() {
             return NULL;
         }
     }
-    // if (grafo->cl != line_count) {
-    //     return NULL;
-    // }
-    
+
     return grafo;
 }
 
@@ -140,23 +152,15 @@ u32 Vecino(u32 j, u32 i, Grafo G) {
 }
 
 int main(void) {
-    Grafo G = ConstruirGrafo();
-    assert(G != NULL);
+    long int position_before = ftell(stdin);
+    Grafo G1 = ConstruirGrafo();
+    assert(G1 != NULL);
 
-    printf("El grafo tiene %u vertices\n", NumeroDeVertices(G));
-    printf("El grafo tiene %u lados\n", NumeroDeLados(G));
+    printf("El grafo 1 tiene %u vertices\n", NumeroDeVertices(G1));
+    printf("El grafo 1 tiene %u lados\n", NumeroDeLados(G1));
+    printf("El valor de delta es: %u\n", Delta(G1));
 
-/*     for (u32 v = 0; v < G->cv; v++) {
-        printf("Los vecinos de %u son: ", v);
-        for (u32 n = 0; n < G->grados[v]; n++) {
-            // printf(" %u ", G->vecinos[v][n]);
-            printf(" %u ", Vecino(n, v, G));
-        }
-        printf("\n");
-    } */
-    printf("El valor de delta es: %u\n", Delta(G));
-    
-    DestruirGrafo(G);
+    DestruirGrafo(G1);
 }
 
 // 6. Funciones para asignar colores
