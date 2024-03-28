@@ -39,16 +39,11 @@ Grafo ConstruirGrafo() {
             assert(grafo->vecinos != NULL);
             grafo->delta = 0;
             
-            for (u32 i = 0; i < grafo->cv; i++) {
-                grafo->vecinos[i] = calloc(grafo->cv, sizeof(u32));
-                assert(grafo->vecinos[i] != NULL);
-                grafo->colores[i] = 0;
-            }
         } 
         else if (linea[0] == 'e') {
             u32 v,w;
             sscanf(linea, "e %u %u", &v, &w);
-            printf("vertices: %u %u\n", v, w);
+            // printf("vertices: %u %u\n", v, w);
             line_count++;
             if (line_count > grafo->cl) {
                 break;
@@ -56,23 +51,6 @@ Grafo ConstruirGrafo() {
             // incremento el grado de v y w
             grafo->grados[v]++;
             grafo->grados[w]++;
-            
-            // agrego a w como vecino de v y viceversa
-            /*  
-            if (grafo->vecinos[v] == NULL) {
-                printf("vertice: %u\n", v);
-                grafo->vecinos[v] = calloc(grafo->cv-1, sizeof(u32));
-                assert(grafo->vecinos[v] != NULL);
-            }
-            if (grafo->vecinos[w] == NULL) {
-                printf("vertice: %u\n", w);
-                grafo->vecinos[w] = calloc(grafo->cv-1, sizeof(u32));
-                assert(grafo->vecinos[w] != NULL);
-            } 
-            */
-            grafo->vecinos[v][grafo->grados[v]-1] = w;
-            grafo->vecinos[w][grafo->grados[w]-1] = v;
-            
 
             // busco el maximo grado, osea, delta
             if (grafo->grados[v] > grafo->delta) {
@@ -90,6 +68,30 @@ Grafo ConstruirGrafo() {
         }
     }
 
+    rewind(stdin);
+    while (fgets(linea, sizeof(linea), stdin) != NULL) {
+        if (linea[0] == 'e') {
+            u32 v,w;
+            sscanf(linea, "e %u %u", &v, &w);
+            // printf("vertices: %u %u\n", v, w);
+            line_count++;
+            if (line_count > grafo->cl) {
+                break;
+            }
+        if (grafo->vecinos[v] == NULL) {
+                // printf("vertice: %u\n", v);
+                grafo->vecinos[v] = calloc(grafo->delta, sizeof(u32));
+                assert(grafo->vecinos[v] != NULL);
+        }
+        if (grafo->vecinos[w] == NULL) {
+            grafo->vecinos[w] = calloc(grafo->delta, sizeof(u32));
+            assert(grafo->vecinos[w] != NULL);
+        } 
+        // agrego a w como vecino de v y viceversa
+        grafo->vecinos[v][grafo->grados[v]-1] = w;
+        grafo->vecinos[w][grafo->grados[w]-1] = v;       
+        }
+    }        
     return grafo;
 }
 
@@ -152,7 +154,6 @@ u32 Vecino(u32 j, u32 i, Grafo G) {
 }
 
 int main(void) {
-    long int position_before = ftell(stdin);
     Grafo G1 = ConstruirGrafo();
     assert(G1 != NULL);
 
