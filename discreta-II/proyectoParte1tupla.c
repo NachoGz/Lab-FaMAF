@@ -11,9 +11,6 @@
 // compilacion para grafos mas chicos: gcc -Wall -Wextra -O3 -std=c99 -DNDEBUG -fsanitize=address,undefined
 // valgrind: valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose
 
-
-#define MAX_LINE_LENGTH 200
-
 typedef struct s_tuple_ {
     u32 v1;
     u32 v2;
@@ -28,7 +25,6 @@ Grafo ConstruirGrafo() {
 
     u32 v,w;
     // leo la primera linea con info sobre el grafo
-    char linea[MAX_LINE_LENGTH];
     u32 line_count = 0;
     
     if (fscanf(stdin, "p edge %u %u\n", &grafo->cv, &grafo->cl) == 2) {
@@ -43,7 +39,6 @@ Grafo ConstruirGrafo() {
         grafo->delta = 0;
     } 
     else if (getchar() != 'c') {
-        printf("aaaaaaaa\n");
         return NULL;
     } 
 
@@ -73,56 +68,43 @@ Grafo ConstruirGrafo() {
             break;
         }
     }
+
+    printf("hasta aca bien\n");
+    printf("tam de temp: %lu\n", grafo->cl*sizeof(tuple));
+    for (u32 v = 0; v < grafo->cv; v++) {
+        grafo->vecinos[v] = calloc(grafo->delta, sizeof(u32));
+        assert(grafo->vecinos[v] != NULL);
+    }
+
+    printf("seguimos bien (?\n");
     
+    int c = 0;
     for (u32 i = 0; i < grafo->cl; i++) {
         u32 v1 = temp[i]->v1;
         u32 v2 = temp[i]->v2;
+        // printf("v1: %u, v2: %u\n", v1, v2);
         // aloco espacio solo para aquellos vertices que tengan vecinos
-        if (grafo->vecinos[v1] == NULL) {
-            grafo->vecinos[v1] = calloc(grafo->delta, sizeof(u32));
-            assert(grafo->vecinos[v1] != NULL);
-        }
+        // if (grafo->vecinos[v1] == NULL) {
+        //     c++;
+        //     grafo->vecinos[v1] = calloc(grafo->delta, sizeof(u32));
+        //     assert(grafo->vecinos[v1] != NULL);
+        // }
         
-        if (grafo->vecinos[v2] == NULL) {
-            grafo->vecinos[v2] = calloc(grafo->delta, sizeof(u32));
-            assert(grafo->vecinos[v2] != NULL);
-        } 
+        // if (grafo->vecinos[v2] == NULL) {
+        //     c++;
+        //     grafo->vecinos[v2] = calloc(grafo->delta, sizeof(u32));
+        //     assert(grafo->vecinos[v2] != NULL);
+        // } 
         
-        // agrego a w como vecino de v y viceversa
+        // // agrego a w como vecino de v y viceversa
         grafo->vecinos[v1][grafo->grados[v1]-1] = v2;
         grafo->vecinos[v2][grafo->grados[v2]-1] = v1;
+
+        free(temp[i]);
     }
-    /*
-    // vuelvo al principio del stream de stdin para leer de nuevo y asignar los vecinos --> solo funciona con redireccion
-    rewind(stdin);
-    line_count = 0;
-
-    while (fgets(linea, sizeof(linea), stdin) != NULL) {
-        if (linea[0] == 'e') {
-            sscanf(linea, "e %u %u", &v, &w);
-            line_count++;
-
-            // aloco espacio solo para aquellos vertices que tengan vecinos
-            if (grafo->vecinos[v] == NULL) {
-                grafo->vecinos[v] = calloc(grafo->delta, sizeof(u32));
-                assert(grafo->vecinos[v] != NULL);
-            }
-            
-            if (grafo->vecinos[w] == NULL) {
-                grafo->vecinos[w] = calloc(grafo->delta, sizeof(u32));
-                assert(grafo->vecinos[w] != NULL);
-            } 
-            
-            // agrego a w como vecino de v y viceversa
-            grafo->vecinos[v][grafo->grados[v]-1] = w;
-            grafo->vecinos[w][grafo->grados[w]-1] = v;
-
-            if (line_count >= grafo->cl) {
-                break;
-            }
-        }
-    }        
-    */
+    printf("listo c=%d\n", c);
+    free(temp);
+    
     return grafo;
 
 }
@@ -189,7 +171,7 @@ u32 Vecino(u32 j, u32 i, Grafo G) {
 int main(void) {
     Grafo G1 = ConstruirGrafo();
     assert(G1 != NULL);
-    printf("u32: %lu\n", sizeof(u32));
+
     printf("El grafo 1 tiene %u vertices\n", NumeroDeVertices(G1));
     printf("El grafo 1 tiene %u lados\n", NumeroDeLados(G1));
     printf("El valor de delta es: %u\n", Delta(G1));
