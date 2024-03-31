@@ -11,11 +11,6 @@
 // compilacion para grafos mas chicos: gcc -Wall -Wextra -O3 -std=c99 -DNDEBUG -fsanitize=address,undefined
 // valgrind: valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose
 
-typedef struct s_tuple_ {
-    u32 v1;
-    u32 v2;
-} * tuple;
-
 Grafo ConstruirGrafo() { 
     // inicializo
     Grafo grafo = NULL;
@@ -29,32 +24,60 @@ Grafo ConstruirGrafo() {
     
     if (fscanf(stdin, "p edge %u %u\n", &grafo->cv, &grafo->cl) == 2) {
         grafo->grados = calloc(grafo->cv, sizeof(u32));
-        assert(grafo->grados != NULL);
+        if (grafo->grados == NULL) {
+            fprintf(stderr, "Error alocando memoria para el campo grados\n");
+            free(grafo);
+            return NULL;
+        }
 
         grafo->colores = calloc(grafo->cv, sizeof(color));
-        assert(grafo->colores != NULL);
+        if (grafo->colores == NULL) {
+            fprintf(stderr, "Error alocando memoria para el campo colores\n");
+            free(grafo->grados);
+            free(grafo);
+            return NULL;
+        }
 
-        grafo->vecinos = calloc(grafo->cv, sizeof(u32 *));
-        assert(grafo->vecinos != NULL);
         grafo->delta = 0;
     } 
     else if (getchar() != 'c') {
         return NULL;
-    } 
+    }
 
-    tuple *temp = calloc(grafo->cl, sizeof(tuple));
+    //aloco espacio para la matriz
+    grafo->vecinos = calloc(grafo->cv, sizeof(bool *));
+    if (grafo->vecinos == NULL) {
+        fprintf(stderr, "Error alocando memoria para el campo vecinos\n");
+        free(grafo->grados);
+        free(grafo->colores);
+        free(grafo);
+        return NULL;
+    }
+
+    for (u32 i = 0; i < grafo->cv; i++) {
+        grafo->vecinos[i] = calloc(grafo->cv, sizeof(bool));
+        if (grafo->vecinos[i] == NULL) {
+            fprintf(stderr, "Error alocando memoria para el campo vecinos[%u]\n", i);
+            DestruirGrafo(grafo);
+            return NULL;
+        }
+    }
+    printf("todo bien\n");
     while (fscanf(stdin, "e %u %u\n", &v, &w) == 2) {
-        tuple tuple = calloc(1, sizeof(struct s_tuple_));
-        assert(tuple != NULL);
-        tuple->v1 = v;
-        tuple->v2 = w;
-        temp[line_count] = tuple;
-
         line_count++;
 
         // incremento el grado de v y w
         grafo->grados[v]++;
         grafo->grados[w]++;
+
+        // agrego a w como vecino de v y viceversa
+        if (!grafo->vecinos[v][w]) {
+            grafo->vecinos[v][w] = true;    
+        }
+
+        if (!grafo->vecinos[w][v]) {
+            grafo->vecinos[w][v] = true;    
+        }
 
         // busco el maximo grado, osea, delta
         if (grafo->grados[v] > grafo->delta) {
@@ -69,52 +92,19 @@ Grafo ConstruirGrafo() {
         }
     }
 
-    printf("hasta aca bien\n");
-    printf("tam de temp: %lu\n", grafo->cl*sizeof(tuple));
-    for (u32 v = 0; v < grafo->cv; v++) {
-        grafo->vecinos[v] = calloc(grafo->delta, sizeof(u32));
-        assert(grafo->vecinos[v] != NULL);
-    }
 
-    printf("seguimos bien (?\n");
-    
-    int c = 0;
-    for (u32 i = 0; i < grafo->cl; i++) {
-        u32 v1 = temp[i]->v1;
-        u32 v2 = temp[i]->v2;
-        // printf("v1: %u, v2: %u\n", v1, v2);
-        // aloco espacio solo para aquellos vertices que tengan vecinos
-        // if (grafo->vecinos[v1] == NULL) {
-        //     c++;
-        //     grafo->vecinos[v1] = calloc(grafo->delta, sizeof(u32));
-        //     assert(grafo->vecinos[v1] != NULL);
-        // }
-        
-        // if (grafo->vecinos[v2] == NULL) {
-        //     c++;
-        //     grafo->vecinos[v2] = calloc(grafo->delta, sizeof(u32));
-        //     assert(grafo->vecinos[v2] != NULL);
-        // } 
-        
-        // // agrego a w como vecino de v y viceversa
-        grafo->vecinos[v1][grafo->grados[v1]-1] = v2;
-        grafo->vecinos[v2][grafo->grados[v2]-1] = v1;
-
-        free(temp[i]);
-    }
-    printf("listo c=%d\n", c);
-    free(temp);
-    
     return grafo;
-
 }
 
 void DestruirGrafo(Grafo G) {
+    assert(G != NULL);
     free(G->grados);
     free(G->colores);
 
     for (u32 i = 0; i < G->cv; i++) {
-        free(G->vecinos[i]);
+        if (G->vecinos[i] != NULL) {
+            free(G->vecinos[i]);    
+        }
     }
 
     free(G->vecinos);
