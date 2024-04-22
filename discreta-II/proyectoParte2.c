@@ -113,13 +113,16 @@ u32 Greedy(Grafo G, u32* Orden) {
 
         // si estan todos los colores usados, "creo" uno nuevo
         if (used == 1) {
-            col++;            
+            col++;
+            cant_colores++;
         }
         
         AsignarColor(col, Orden[i], G);
+        /*
         if (col > cant_colores) {
             cant_colores = col;
         }
+        */
         free(colores_vecinos);
     }
 
