@@ -13,6 +13,63 @@
 // compilacion para grafos mas chicos: gcc -Wall -Wextra -O3 -std=c99 -DNDEBUG -fsanitize=address,undefined
 // valgrind: valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose
 
+
+void merge(u32 *arr, u32 l, u32 m, u32 r)
+{
+    u32 i, j, k;
+    u32 n1 = m - l + 1;
+    u32 n2 = r - m;
+
+    // Create temp arrays
+    u32 L[n1], R[n2];
+
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = l;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        }
+        else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(u32 *arr, u32 l, u32 r)
+{
+    if (l < r) {
+        u32 m = l + (r - l) / 2;
+
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+
+        merge(arr, l, m, r);
+    }
+}
+
+
 u32 Greedy(Grafo G, u32* Orden) {
     color cant_colores = 1;
     color col;
@@ -20,13 +77,13 @@ u32 Greedy(Grafo G, u32* Orden) {
             bool used;
 
     // u32 delta = Delta(G);
-    for (unsigned int i=0; i < NumeroDeVertices(G)-1; i++) {
+    for (u32 i=0; i < NumeroDeVertices(G)-1; i++) {
         if (Orden[i] > Orden[i+1]) {
             return (pow(2,32) - 1);
         }
     }
     
-    for (unsigned int i=0; i < NumeroDeVertices(G); i++) {
+    for (u32 i=0; i < NumeroDeVertices(G); i++) {
         col = 1;
         u32 grado = Grado(Orden[i], G);
         colores_vecinos = calloc(grado+1, sizeof(color));
@@ -69,6 +126,54 @@ u32 Greedy(Grafo G, u32* Orden) {
     return cant_colores;
 }
 
+// faltaria el error checking
+char GalDukat(Grafo G, u32* Orden) {
+    u32 idx = 0;
+    u32 start = 0;
+    // primero, divisibles por 4 
+    for (u32 i=0; i < NumeroDeVertices(G); i++) {
+        if ((Color(i, G) % 4) == 0) {
+            Orden[idx] = i;
+            idx++;
+        }
+    }
+    // Ordeno de mayor a menor
+    // a definir el sorting algorithm, probablement quicksort
+    mergeSort(Orden, start, idx-1);
+
+    // segundo, no divisibles por 4
+    start = idx;
+    for (u32 i=0; i < NumeroDeVertices(G); i++) {
+        if (((Color(i, G) % 4) != 0) && ((Color(i, G) % 2) == 0)) {
+            Orden[idx] = i;
+            idx++;
+        }
+    }
+
+    // Ordeno de mayor a menor
+    // a definir el sorting algorithm, probablement quicksort
+    mergeSort(Orden, start, idx-1);
+
+    // finalmente, los impares
+    start = idx;
+    for (u32 i=0; i < NumeroDeVertices(G); i++) {
+        if ((Color(i, G) % 2) != 0) {
+            Orden[idx] = i;
+            idx++;
+        }
+    }
+
+    // Ordeno de mayor a menor
+    // a definir el sorting algorithm, probablement quicksort
+    mergeSort(Orden, start, idx-1);
+
+    return '0';
+}
+
+char ElimGarak(Grafo G, u32 *Orden) {
+    
+}
+
 int main(void) {
     Grafo G = ConstruirGrafo();
 
@@ -86,5 +191,12 @@ int main(void) {
     for (u32 i=0; i< NumeroDeVertices(G); i++) {
         printf("color de %u: %u\n", i, colores_extraidos[i]);
     }
-}
+
+    GalDukat(G, Orden);
+    printf("Vertices ordenados con GalDukat\n");
+    for (u32 i=0; i < NumeroDeVertices(G); i++){
+        printf(" %u ", Orden[i]);
+    }
+    printf("\n");
+    }
 
