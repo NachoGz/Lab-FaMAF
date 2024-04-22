@@ -144,7 +144,6 @@ color Color(u32 i, Grafo G) {
 
 u32 Vecino(u32 j, u32 i, Grafo G) {
     if ((i >= G->cv) || (i < G->cv && j >= G->grados[i])) {
-        printf("j: %u\n", j);
         return pow(2,32) - 1;
     }
     else {
