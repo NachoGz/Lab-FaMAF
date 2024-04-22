@@ -18,7 +18,7 @@ typedef struct s_GrafoSt_ {
     u32 cl; // cantidad de lados
     u32 *grados; // array dinamico con el grados de cada vertice  
     color *colores; // array dinamico con el color de cada vertice
-    u32 delta; 
+    u32 delta;
     vecinos* vecinos; // array donde en vecinos[i] hay un puntero que apunta a las estructura vecinos que contiene un array dinamico y
     // el campo pos que dice el indice del primer lugar libre
 } GrafoSt;
