@@ -13,7 +13,13 @@
 // compilacion para grafos mas chicos: gcc -Wall -Wextra -O3 -std=c99 -DNDEBUG -fsanitize=address,undefined
 // valgrind: valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose
 
+typedef struct s_colorFreq {
+    u32 color;
+    u32 freq;
+} * colorFreq;
 
+
+// orden ascendente = 0, orden descendente = 1 
 void merge(u32 *arr, u32 l, u32 m, u32 r)
 {
     u32 i, j, k;
@@ -32,7 +38,7 @@ void merge(u32 *arr, u32 l, u32 m, u32 r)
     j = 0;
     k = l;
     while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
+        if (L[i] < R[j]) {
             arr[k] = L[i];
             i++;
         }
@@ -69,6 +75,60 @@ void mergeSort(u32 *arr, u32 l, u32 r)
     }
 }
 
+void mergeGarak(colorFreq *arr, u32 l, u32 m, u32 r)
+{
+    u32 i, j, k;
+    u32 n1 = m - l + 1;
+    u32 n2 = r - m;
+
+    // Create temp arrays
+    colorFreq L[n1], R[n2];
+
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = l;
+    while (i < n1 && j < n2) {
+        if (L[i]->freq < R[j]->freq) {
+            arr[k] = L[i];
+            i++;
+        }
+        else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSortGarak(colorFreq *arr, u32 l, u32 r)
+{
+    if (l < r) {
+        u32 m = l + (r - l) / 2;
+
+        mergeSortGarak(arr, l, m);
+        mergeSortGarak(arr, m + 1, r);
+
+        mergeGarak(arr, l, m, r);
+    }
+}
 
 u32 Greedy(Grafo G, u32* Orden) {
     color cant_colores = 1;
@@ -141,7 +201,6 @@ char GalDukat(Grafo G, u32* Orden) {
         }
     }
     // Ordeno de mayor a menor
-    // a definir el sorting algorithm, probablement quicksort
     mergeSort(Orden, start, idx-1);
 
     // segundo, no divisibles por 4
@@ -154,7 +213,6 @@ char GalDukat(Grafo G, u32* Orden) {
     }
 
     // Ordeno de mayor a menor
-    // a definir el sorting algorithm, probablement quicksort
     mergeSort(Orden, start, idx-1);
 
     // finalmente, los impares
@@ -167,14 +225,40 @@ char GalDukat(Grafo G, u32* Orden) {
     }
 
     // Ordeno de mayor a menor
-    // a definir el sorting algorithm, probablement quicksort
     mergeSort(Orden, start, idx-1);
-
+    
     return '0';
 }
 
+
 char ElimGarak(Grafo G, u32 *Orden) {
+    colorFreq *freq_colores = calloc(NumeroDeVertices(G), sizeof(struct s_colorFreq));
+    u32 max_color = 1;
     
+    for (u32 i=0; i < NumeroDeVertices(G); i++) {
+        u32 color = Color(i, G);
+        freq_colores[color] = calloc(1, sizeof(struct s_colorFreq));
+        freq_colores[color]->color = color;
+        freq_colores[color]->freq = 0;
+        if (color > max_color) {
+            max_color = color;
+        }
+    }
+    for (u32 i=0; i < NumeroDeVertices(G); i++) {
+        u32 color = Color(i, G);
+        freq_colores[color]->freq++;
+    }
+
+    mergeSortGarak(freq_colores, 1, max_color);
+
+    printf("Color: cantidad de vertices\n");
+    for (u32 i=1;i <= max_color; i++) {
+        printf("%u:%u\n", freq_colores[i]->color, freq_colores[i]->freq);
+    }
+    printf("\n");
+
+    free(freq_colores);
+    return '0';    
 }
 
 int main(void) {
@@ -186,20 +270,22 @@ int main(void) {
     }
 
     color colores = Greedy(G, Orden);
-    free(Orden);
+    
     color *colores_extraidos = calloc(NumeroDeVertices(G), sizeof(color)); 
     ExtraerColor(G, colores_extraidos);
     printf("colores usados para colorear el grado: %u\n", colores);
-    printf("--------------COLORES-------------\n");
-    for (u32 i=0; i< NumeroDeVertices(G); i++) {
-        printf("color de %u: %u\n", i, colores_extraidos[i]);
-    }
-
+    // printf("--------------COLORES-------------\n");
+    // for (u32 i=0; i< NumeroDeVertices(G); i++) {
+    //     printf("color de %u: %u\n", i, colores_extraidos[i]);
+    // }
     GalDukat(G, Orden);
-    printf("Vertices ordenados con GalDukat\n");
-    for (u32 i=0; i < NumeroDeVertices(G); i++){
-        printf(" %u ", Orden[i]);
-    }
+
+    // printf("Vertices ordenados con GalDukat\n");
+    // for (u32 i=0; i < NumeroDeVertices(G); i++){
+    //     printf(" %u ", Orden[i]);
+    // }
     printf("\n");
-    }
+    ElimGarak(G, Orden);
+    free(Orden);
+}
 
