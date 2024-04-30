@@ -36,10 +36,21 @@ typedef struct s_coloresGrados {
 u32 Greedy(Grafo G, u32* Orden) {
     color cant_colores = 1;
     color *colores_vecinos;
-    color *colores_asignados = calloc(NumeroDeVertices(G), sizeof(color));
+    u32 n = NumeroDeVertices(G);
+    color *colores_asignados = calloc(n, sizeof(color));
     color curr_color;
+    u32 cant_elemts = 0;
+
+    // chequeo biyeccion
+    for (u32 v = 0; v < n; v++) {
+        cant_elemts++;
+    }
     
-    for (u32 i=0; i < NumeroDeVertices(G); i++) {
+    // if (cant_elemts != n) {
+    //     return '1';
+    // }
+    
+    for (u32 i=0; i < n; i++) {
         u32 curr_vertice = Orden[i];
         if (Color(curr_vertice, G) == 0) {
             // obtengo los colores de los vecinos
@@ -79,7 +90,7 @@ u32 Greedy(Grafo G, u32* Orden) {
         }
         
     }
-
+    free(colores_asignados);
     return cant_colores;
 }
 
@@ -113,24 +124,25 @@ char GulDukat(Grafo G, u32* Orden) {
     u32 n = NumeroDeVertices(G);
     color *colores = calloc(n, sizeof(color));
     u32 cant_colores = 0;
+    
 
     ExtraerColor(G, colores);
     // me fijo cuantos colores se usaron
     for (u32 v = 0; v < n; v++) {
         cant_colores =  colores[v] > cant_colores ? colores[v] : cant_colores;
     }
-    printf("cant_colores= %u\n", cant_colores);
-    coloresGrados *colores_grados = calloc(cant_colores, sizeof(struct s_coloresGrados));
-    coloresGrados *colores_ordenados = calloc(cant_colores, sizeof(struct s_coloresGrados));
-    u32 *max_grados = calloc(cant_colores, sizeof(u32));
-    u32 *min_grados = calloc(cant_colores, sizeof(u32));
+
+    coloresGrados *colores_grados = calloc(cant_colores+1, sizeof(struct s_coloresGrados));
+    coloresGrados *colores_ordenados = calloc(cant_colores+1, sizeof(struct s_coloresGrados));
+    u32 *max_grados = calloc(cant_colores+1, sizeof(u32));
+    u32 *min_grados = calloc(cant_colores+1, sizeof(u32));
     
     // inicializo grados y ordenados
     for (u32 i=0; i <= cant_colores; i++) {
         colores_grados[i] = calloc(1, sizeof(struct s_coloresGrados));
         colores_grados[i]->vertices = calloc(n, sizeof(u32));
         colores_grados[i]->num_vertices = 0;
-        colores_ordenados[i] = calloc(1, sizeof(struct s_coloresGrados));
+        // colores_ordenados[i] = calloc(1, sizeof(coloresGrados));
     }
 
     // calculo M(x) para cada color
@@ -173,12 +185,11 @@ char GulDukat(Grafo G, u32* Orden) {
     }
     
     idx = 0;
+    cant_elemts = 0;
     // ordeno colores por bloques
     // primero, colores divisibles por 4
     for (color col = 1; col <= cant_colores; col++) {
         if ((col % 4) == 0 ) {
-            // colores_grados[idx]->color = col;
-            // colores_grados[idx]->grado = max_grados[col];
             colores_ordenados[idx] = colores_grados[col];
             cant_elemts++;
             idx++;
@@ -192,7 +203,7 @@ char GulDukat(Grafo G, u32* Orden) {
     cant_elemts = 0;
     start = idx;
 
-    for (color col = 1; col < cant_colores; col++) {
+    for (color col = 1; col <= cant_colores; col++) {
         if (((col % 2) == 0) && ((col % 4) != 0)) {
             colores_ordenados[idx] = colores_grados[col];
             idx++;
@@ -208,7 +219,7 @@ char GulDukat(Grafo G, u32* Orden) {
     start = idx;
     cant_elemts = 0;
 
-    for (color col = 1; col < cant_colores; col++) {
+    for (color col = 1; col <= cant_colores; col++) {
         if ((col % 2) != 0) {
             colores_ordenados[idx] = colores_grados[col];
             idx++;
@@ -227,6 +238,16 @@ char GulDukat(Grafo G, u32* Orden) {
             idx++;
         }
     }
+    free(colores);
+    // libero grados y ordenados
+    for (u32 i=0; i <= cant_colores; i++) {
+        free(colores_grados[i]->vertices);
+        free(colores_grados[i]);
+    }
+    free(colores_grados);
+    free(colores_ordenados);
+    free(max_grados);
+    free(min_grados);
     return '0';
 }
 
@@ -247,7 +268,7 @@ char ElimGarak(Grafo G, u32 *Orden) {
     colorFreq *freq_colores = calloc(Delta(G)+1, sizeof(struct s_colorFreq));
 
     // incializo colorFreq
-    for (color col=1; col <= Delta(G)+1; col++) {
+    for (color col=0; col <= Delta(G)+1; col++) {
         freq_colores[col] = calloc(1, sizeof(struct s_colorFreq));
         freq_colores[col]->color = col;
         freq_colores[col]->freq = 0;
@@ -267,7 +288,7 @@ char ElimGarak(Grafo G, u32 *Orden) {
     
     // primero pongo los vertices que no sean de color 1 y 2, pero guardo la pos de color 1 y 2
     // para luego agregarlos al final y evitar tener que hacer otro for anidado (aunque la complejidad de ambos aproaches sean iguales)
-    for (color col = 1; col <= Delta(G)+1; col++) {
+    for (color col = 0; col <= Delta(G)+1; col++) {
         if (freq_colores[col]->color == 1) {
             color1 = col;
         }
@@ -294,7 +315,7 @@ char ElimGarak(Grafo G, u32 *Orden) {
     }
 
     // destruyo freq_colores
-    for (color col=1; col <= Delta(G)+1; col++) {
+    for (color col=0; col <= Delta(G)+1; col++) {
         free(freq_colores[col]->vertices);
         free(freq_colores[col]);
     }
@@ -302,7 +323,7 @@ char ElimGarak(Grafo G, u32 *Orden) {
     free(freq_colores);
     return '0';
 }
-
+/* 
 // main para testear
 int main(void) {
     Grafo G = ConstruirGrafo();
@@ -343,9 +364,9 @@ int main(void) {
     DestruirGrafo(G);
 }
 
- 
-/* 
-int cmpGrado(const void * a, const void *b) {
+*/ 
+
+int cmpMayoraMenorGrado(const void * a, const void *b) {
  
         gradosVertices gradoA = *(gradosVertices *) a;
         gradosVertices gradoB = *(gradosVertices *) b;
@@ -354,58 +375,129 @@ int cmpGrado(const void * a, const void *b) {
         else if (gradoA->grado < gradoB->grado) return 1;
         else return 0;
 }
- */
-/*
+
+int cmpMenoraMayorGrado(const void * a, const void *b) {
+ 
+        gradosVertices gradoA = *(gradosVertices *) a;
+        gradosVertices gradoB = *(gradosVertices *) b;
+
+        if (gradoA->grado > gradoB->grado) return -1;
+        else if (gradoA->grado < gradoB->grado) return 1;
+        else return 0;
+}
+
+void decolorearGrafo(Grafo G) {
+    for (u32 v = 0; v < NumeroDeVertices(G); v++) {
+        AsignarColor(0, v, G);
+    }
+}
+
+
+
 int main(void) {
     Grafo G = ConstruirGrafo();
     u32 idx;
-    u32 *Orden = calloc(NumeroDeVertices(G), sizeof(u32));
-    color *colores_extraidos = calloc(NumeroDeVertices(G), sizeof(color)); 
+    u32 n = NumeroDeVertices(G);
+    u32 *Orden = calloc(n, sizeof(u32));
+    color *colores_extraidos = calloc(n, sizeof(color)); 
+    color min_colores = Delta(G);
+    
     color colores;
-
+    
 
     // orden natural
-    for (u32 i=0; i < NumeroDeVertices(G); i++){
-        Orden[i] = i;
+    for (u32 i=0; i < n; i++) {
+            Orden[i] = i;
     }
 
     colores = Greedy(G, Orden);
+    if (colores < min_colores) {
+        min_colores = colores;
+        ExtraerColor(G, colores_extraidos);
+    }
+    // printf("colores usados para colorear el grafo: %u\n", colores);
+
+    for (u32 i = 0; i < 50; i++) {
+        // colores = Greedy(G, Orden);
+        // printf("i: %u\n", i);
+        // ExtraerColor(G, colores_extraidos);
+        // printf("colores usados para colorear el grafo: %u\n", colores);
+
+        // printf("Orden natural:\n");
+        // printf("GulDukat\n");
+        GulDukat(G, Orden);
+
+        // decoloreo el grafo
+        decolorearGrafo(G);
+        
+        colores = Greedy(G, Orden);
+        if (colores < min_colores) {
+            min_colores = colores;
+            ExtraerColor(G, colores_extraidos);
+        }        
+        // printf("colores usados para colorear el grafo: %u\n", colores);
+
+        // printf("ElimGarak\n");
+        ElimGarak(G, Orden);
+        
+        // decoloreo el grafo
+        decolorearGrafo(G);
+        
+        colores = Greedy(G, Orden);
+        if (colores < min_colores) {
+            min_colores = colores;
+            ExtraerColor(G, colores_extraidos);
+        }
+        // printf("colores usados para colorear el grafo: %u\n", colores);
+
+    }
     
-    ExtraerColor(G, colores_extraidos);
-    printf("colores usados para colorear el grado: %u\n", colores);
-    printf("--------------COLORES-------------\n");
-    for (u32 i=0; i< NumeroDeVertices(G); i++) {
-        printf("color de %u: %u\n", i, colores_extraidos[i]);
-    }
-
-    GulDukat(G, Orden);
-
-    printf("Vertices ordenados con GalDukat\n");
-    for (u32 i=0; i < NumeroDeVertices(G); i++){
-        printf(" %u ", Orden[i]);
-    }
-    printf("\n");
-
     // orden natural inverso
     idx = 0;
-    for (int i=NumeroDeVertices(G)-1; i >= 0; i--){
+    for (int i=n-1; i >= 0; i--){
         Orden[idx] = i;
         idx++;
     }
-
     colores = Greedy(G, Orden);
-    
-    ExtraerColor(G, colores_extraidos);
-    printf("colores usados para colorear el grado: %u\n", colores);
-    printf("--------------COLORES-------------\n");
-    for (u32 i=0; i< NumeroDeVertices(G); i++) {
-        printf("color de %u: %u\n", i, colores_extraidos[i]);
+    if (colores < min_colores) {
+        min_colores = colores;
+        ExtraerColor(G, colores_extraidos);
+    }        
+    // printf("colores usados para colorear el grafo: %u\n", colores);
+
+    for (u32 i = 0; i < 50; i++) {
+
+        // printf("Orden natural inverso\n");
+        // printf("GulDukat\n");
+        GulDukat(G, Orden);
+
+        // decoloreo el grafo
+        decolorearGrafo(G);
+        colores = Greedy(G, Orden);
+        if (colores < min_colores) {
+            min_colores = colores;
+            ExtraerColor(G, colores_extraidos);
+        }
+        
+        // printf("colores usados para colorear el grafo: %u\n", colores);
+
+        // printf("ElimGarak\n");
+        ElimGarak(G, Orden);
+
+        // decoloreo el grafo
+        decolorearGrafo(G);
+        colores = Greedy(G, Orden);
+        if (colores < min_colores) {
+            min_colores = colores;
+            ExtraerColor(G, colores_extraidos);
+        }
+        // printf("colores usados para colorear el grafo: %u\n", colores);
     }
     
-
-    // primero pares decrecientes, 
+    // primero pares decrecientes, luego impares crecientes
+    // primero pares decrecientes
     idx = 0;
-    for (u32 i=0; i < NumeroDeVertices(G); i++){
+    for (u32 i=0; i < n; i++){
         if ((i % 2) == 0) {
             Orden[idx] = i;
             idx++;
@@ -414,7 +506,7 @@ int main(void) {
 
     // segundo impares crecientes
     // idx = 0;
-    for (u32 i=0; i < NumeroDeVertices(G); i++){
+    for (u32 i=0; i < n; i++){
         if ((i % 2) != 0) {
             Orden[idx] = i;
             idx++;
@@ -422,28 +514,154 @@ int main(void) {
     }
 
     colores = Greedy(G, Orden);
-    ExtraerColor(G, colores_extraidos);
-    printf("colores usados para colorear el grado: %u\n", colores);
-    printf("--------------COLORES-------------\n");
-    for (u32 i=0; i< NumeroDeVertices(G); i++) {
-        printf("color de %u: %u\n", i, colores_extraidos[i]);
+    if (colores < min_colores) {
+        min_colores = colores;
+        ExtraerColor(G, colores_extraidos);
     }
+    // printf("colores usados para colorear el grafo: %u\n", colores);
 
- 
-    // orden decreciente segun grado
-    gradosVertices *grados = calloc(NumeroDeVertices(G), sizeof(struct s_gradosVertices));
-    // incializo grados
-    for (u32 i = 0; i < NumeroDeVertices(G); i++) {
-        grados[i] = calloc(1, sizeof(struct s_gradosVertices));
-        grados[i]->vertice = i;
-        grados[i]->grado = Grado(i, G);
+    for (u32 i = 0; i < 50; i++) {
+        // printf("primero pares decrecientes, luego impares crecientes\n");
+        // printf("GulDukat\n");
+        GulDukat(G, Orden);
+
+        // decoloreo el grafo
+        decolorearGrafo(G);
+
+        colores = Greedy(G, Orden);
+        if (colores < min_colores) {
+            min_colores = colores;
+            ExtraerColor(G, colores_extraidos);
+        }
+        // printf("colores usados para colorear el grafo: %u\n", colores);
+
+        // printf("ElimGarak\n");
+        ElimGarak(G, Orden);
+
+        // decoloreo el grafo
+        decolorearGrafo(G);
+
+        colores = Greedy(G, Orden);
+        if (colores < min_colores) {
+            min_colores = colores;
+            ExtraerColor(G, colores_extraidos);
+        }
+        // printf("colores usados para colorear el grafo: %u\n", colores);
     }
     
-    qsort(Orden, NumeroDeVertices(G), sizeof(gradosVertices), &cmpGrado);
-    for (u32 i=0; i< NumeroDeVertices(G); i++) {
-        printf(" %u ", Orden[i]);
+   
+    
+    // orden decreciente segun grado
+    gradosVertices *gradosDecrecientes = calloc(n, sizeof(struct s_gradosVertices));
+
+    // incializo gradosDecrecientes
+    for (u32 i = 0; i < n; i++) {
+        gradosDecrecientes[i] = calloc(1, sizeof(struct s_gradosVertices));
+        gradosDecrecientes[i]->vertice = i;
+        gradosDecrecientes[i]->grado = Grado(i, G);
     }
-    printf("\n");
-    free(grados);
+    
+    qsort(gradosDecrecientes, n, sizeof(struct s_gradosVertices), &cmpMayoraMenorGrado);
+
+    for (u32 i = 0; i < n; i++) {
+        Orden[i] = gradosDecrecientes[i]->vertice;
+    }
+    
+    for (u32 v = 0; v < n; v++) {
+        free(gradosDecrecientes[v]);
+    }
+    
+    free(gradosDecrecientes);
+
+    // printf("Orden decreciente segun grado\n");
+    // printf("GulDukat\n");
+    for (u32 i = 0; i < 50; i++) {
+        GulDukat(G, Orden);
+
+        // decoloreo el grafo
+        decolorearGrafo(G);
+
+        colores = Greedy(G, Orden);
+        if (colores < min_colores) {
+            min_colores = colores;
+            ExtraerColor(G, colores_extraidos);
+        }
+        // printf("colores usados para colorear el grafo: %u\n", colores);
+
+        // printf("ElimGarak\n");
+        ElimGarak(G, Orden);
+
+        // decoloreo el grafo
+        decolorearGrafo(G);
+
+        colores = Greedy(G, Orden);
+        if (colores < min_colores) {
+            min_colores = colores;
+            ExtraerColor(G, colores_extraidos);
+        }
+        // printf("colores usados para colorear el grafo: %u\n", colores);
+    }
+
+    // orden creciente segun grado
+    gradosVertices *gradosCrecientes = calloc(n, sizeof(struct s_gradosVertices));
+
+    // incializo gradosCrecientes
+    for (u32 i = 0; i < n; i++) {
+        gradosCrecientes[i] = calloc(1, sizeof(struct s_gradosVertices));
+        gradosCrecientes[i]->vertice = i;
+        gradosCrecientes[i]->grado = Grado(i, G);
+    }
+    
+    qsort(gradosCrecientes, n, sizeof(struct s_gradosVertices), &cmpMenoraMayorGrado);
+
+    for (u32 i = 0; i < n; i++) {
+        Orden[i] = gradosCrecientes[i]->vertice;
+    }
+    
+    for (u32 v = 0; v < n; v++) {
+        free(gradosCrecientes[v]);
+    }
+    
+    free(gradosCrecientes);
+
+    for (u32 i = 0; i < 50; i++) {
+        GulDukat(G, Orden);
+
+        // decoloreo el grafo
+        decolorearGrafo(G);
+
+        colores = Greedy(G, Orden);
+        if (colores < min_colores) {
+            min_colores = colores;
+            ExtraerColor(G, colores_extraidos);
+        }
+        // printf("colores usados para colorear el grafo: %u\n", colores);
+
+        // printf("ElimGarak\n");
+        ElimGarak(G, Orden);
+
+        // decoloreo el grafo
+        decolorearGrafo(G);
+
+        colores = Greedy(G, Orden);
+        if (colores < min_colores) {
+            min_colores = colores;
+            ExtraerColor(G, colores_extraidos);
+        }
+        // printf("colores usados para colorear el grafo: %u\n", colores);
+    }
+    
+    // recoloreo el Grafo con el coloreo con menores colores
+    ImportarColores(colores_extraidos, G);
+    for (u32 i = 0; i < 500; i++) {
+        ElimGarak(G, Orden);
+        colores = Greedy(G, Orden);
+        // printf("colores usados para colorear el grafo: %u\n", colores);
+    }
+
+    printf("Listo!\n");
+    free(colores_extraidos);
+    free(Orden);
+    DestruirGrafo(G);
 }   
-*/  
+  
