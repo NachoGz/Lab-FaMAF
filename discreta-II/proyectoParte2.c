@@ -19,66 +19,70 @@ typedef struct s_colorFreq {
     u32 *vertices;
 } * colorFreq;
 
+typedef struct s_gradosVertices {
+    u32 vertice;
+    u32 grado;
+} * gradosVertices;
+
+typedef struct s_coloresGrados {
+    color color;
+    u32 grado;
+    u32 *vertices;
+    u32 num_vertices;
+} * coloresGrados;
+
 
 // falta verificar la biyeccion
 u32 Greedy(Grafo G, u32* Orden) {
     color cant_colores = 1;
-    color col;
     color *colores_vecinos;
-    bool used;
+    color *colores_asignados = calloc(NumeroDeVertices(G), sizeof(color));
     color curr_color;
-
-    // u32 delta = Delta(G);
-    // for (u32 i=0; i < NumeroDeVertices(G)-1; i++) {
-    //     if (Orden[i] > Orden[i+1]) {
-    //         return (pow(2,32) - 1);
-    //     }
-    // }
     
     for (u32 i=0; i < NumeroDeVertices(G); i++) {
-        col = 1;
-        u32 grado = Grado(Orden[i], G);
-        colores_vecinos = calloc(grado+1, sizeof(color));
+        u32 curr_vertice = Orden[i];
+        if (Color(curr_vertice, G) == 0) {
+            // obtengo los colores de los vecinos
+            u32 grado = Grado(Orden[i], G);
+            colores_vecinos = calloc(grado, sizeof(color));
+            for (u32 vecino = 0; vecino < grado; vecino++) {
+                u32 vecino_vertice = Vecino(vecino, curr_vertice, G);
+                color color_vecino = Color(vecino_vertice, G);
+                colores_vecinos[vecino] = color_vecino;
+            }
 
-        // obtengo los colores de los vecinos
-        for (u32 vecino=0; vecino < grado; vecino++) {
-            color color_vecino = Color(Vecino(vecino, Orden[i], G), G);
-            colores_vecinos[vecino] = color_vecino; 
-        }
-
-        curr_color = 1;
-        
-        for (curr_color=1; curr_color <= cant_colores; curr_color++) {
-            used = false;
-            
-            for (u32 vecino=0; vecino < grado; vecino++) {
-                if (colores_vecinos[vecino] == curr_color) {
-                    used = true;
-                    break;
+            curr_color = 1;
+            bool color_libre = false;
+            while (!color_libre) {
+                bool color_usado = false;
+                for (u32 vecino = 0; vecino < grado; vecino++) {
+                    if (colores_vecinos[vecino] == curr_color) {
+                        color_usado = true;
+                        break;
+                    }
+                }
+                if (!color_usado) {
+                    color_libre = true;
+                } 
+                else {
+                    curr_color++;
+                    if (curr_color > cant_colores) {
+                        cant_colores++;
+                    }
                 }
             }
-
-            // si encontre un color libre, corto
-            if (!used) {
-                break;
-            }
+            colores_asignados[curr_vertice] = curr_color;
+            
+            AsignarColor(curr_color, curr_vertice, G);
+        
+            free(colores_vecinos);
         }
         
-        // le asigno a col el ultimo color que se chequeo
-        col = curr_color;
-
-        // si estan todos los colores usados, "creo" uno nuevo
-        if (used == 1) {
-            // col++;
-            cant_colores++;
-        }
-        AsignarColor(col, Orden[i], G);
-       
-        free(colores_vecinos);
     }
 
     return cant_colores;
 }
+
 
 int cmpMayorMenor(const void * a, const void *b) {
  
@@ -90,53 +94,142 @@ int cmpMayorMenor(const void * a, const void *b) {
         else return 0;
 }
 
+int cmpMayorMenorGrado(const void * a, const void *b) {
+ 
+        coloresGrados gradoA = *(coloresGrados *) a;
+        coloresGrados gradoB = *(coloresGrados *) b;
+
+        if (gradoA->grado > gradoB->grado) return -1;
+        else if (gradoA->grado < gradoB->grado) return 1;
+        else return 0;
+}
+
+
 // faltaria el error checking
 char GulDukat(Grafo G, u32* Orden) {
     u32 idx = 0;
     u32 start = 0;
     u32 cant_elemts = 0;
+    u32 n = NumeroDeVertices(G);
+    color *colores = calloc(n, sizeof(color));
+    u32 cant_colores = 0;
 
-    // primero, divisibles por 4 
-    for (u32 i=0; i < NumeroDeVertices(G); i++) {
-        if ((Color(i, G) % 4) == 0) {
-            Orden[idx] = i;
-            idx++;
+    ExtraerColor(G, colores);
+    // me fijo cuantos colores se usaron
+    for (u32 v = 0; v < n; v++) {
+        cant_colores =  colores[v] > cant_colores ? colores[v] : cant_colores;
+    }
+    printf("cant_colores= %u\n", cant_colores);
+    coloresGrados *colores_grados = calloc(cant_colores, sizeof(struct s_coloresGrados));
+    coloresGrados *colores_ordenados = calloc(cant_colores, sizeof(struct s_coloresGrados));
+    u32 *max_grados = calloc(cant_colores, sizeof(u32));
+    u32 *min_grados = calloc(cant_colores, sizeof(u32));
+    
+    // inicializo grados y ordenados
+    for (u32 i=0; i <= cant_colores; i++) {
+        colores_grados[i] = calloc(1, sizeof(struct s_coloresGrados));
+        colores_grados[i]->vertices = calloc(n, sizeof(u32));
+        colores_grados[i]->num_vertices = 0;
+        colores_ordenados[i] = calloc(1, sizeof(struct s_coloresGrados));
+    }
+
+    // calculo M(x) para cada color
+    for (u32 v = 0; v < n; v++) {
+        color col = Color(v, G);
+        u32 grado = Grado(v, G);
+        max_grados[col] = grado > max_grados[col] ? grado : max_grados[col];
+    }
+
+    // calculo m(x) para cada color
+    for (u32 v = 0; v < n; v++) {
+        color col = Color(v, G);
+        min_grados[col] = Delta(G);
+    }
+
+    for (u32 v = 0; v < n; v++) {
+        color col = Color(v, G);
+        u32 grado = Grado(v, G);
+        min_grados[col] = grado > min_grados[col] ? grado : min_grados[col];
+    }
+
+    for (u32 v = 0; v < n; v++) {
+        color col = Color(v, G);
+        if (colores_grados[col]->color == 0) {
+            colores_grados[col]->color = col;
+            if ((col % 4) == 0 ) {
+                colores_grados[col]->grado = max_grados[col];
+            }
+            else if (((col % 2) == 0) && ((col % 4) != 0)) {
+                colores_grados[col]->grado = max_grados[col] + min_grados[col];
+            }
+            else {
+                colores_grados[col]->grado = min_grados[col];
+            }
             cant_elemts++;
+            idx++;
+        }
+        colores_grados[col]->vertices[colores_grados[col]->num_vertices] = v;
+        colores_grados[col]->num_vertices++;
+    }
+    
+    idx = 0;
+    // ordeno colores por bloques
+    // primero, colores divisibles por 4
+    for (color col = 1; col <= cant_colores; col++) {
+        if ((col % 4) == 0 ) {
+            // colores_grados[idx]->color = col;
+            // colores_grados[idx]->grado = max_grados[col];
+            colores_ordenados[idx] = colores_grados[col];
+            cant_elemts++;
+            idx++;
         }
     }
-    // Ordeno de mayor a menor
-    qsort(Orden + start, cant_elemts, sizeof(u32), &cmpMayorMenor);
 
-    // segundo, no divisibles por 4
+    // Ordeno de acuerdo M(x)
+    qsort(colores_ordenados + start, cant_elemts, sizeof(coloresGrados), &cmpMayorMenorGrado);
+
+    // segundo, pares no divisibles por 4
     cant_elemts = 0;
     start = idx;
-    for (u32 i=0; i < NumeroDeVertices(G); i++) {
-        if (((Color(i, G) % 4) != 0) && ((Color(i, G) % 2) == 0)) {
-            Orden[idx] = i;
+
+    for (color col = 1; col < cant_colores; col++) {
+        if (((col % 2) == 0) && ((col % 4) != 0)) {
+            colores_ordenados[idx] = colores_grados[col];
             idx++;
             cant_elemts++;
         }
     }
 
-    // Ordeno de mayor a menor
-    qsort((Orden + start), cant_elemts, sizeof(u32), &cmpMayorMenor);
+    // Ordeno de mayor a menor    
+    qsort(colores_ordenados + start, cant_elemts, sizeof(coloresGrados), &cmpMayorMenorGrado);
+
 
     // finalmente, los impares
     start = idx;
     cant_elemts = 0;
-    for (u32 i=0; i < NumeroDeVertices(G); i++) {
-        if ((Color(i, G) % 2) != 0) {
-            Orden[idx] = i;
+
+    for (color col = 1; col < cant_colores; col++) {
+        if ((col % 2) != 0) {
+            colores_ordenados[idx] = colores_grados[col];
             idx++;
             cant_elemts++;
         }
     }
-
+    u32 end = idx;
     // Ordeno de mayor a menor
-    qsort((Orden + start), cant_elemts, sizeof(u32), &cmpMayorMenor);
+    qsort(colores_ordenados + start, cant_elemts, sizeof(coloresGrados), &cmpMayorMenorGrado);
     
+    idx = 0;
+    // una vez que grados esta ordenado, populo orden con los vertices de grado
+    for (u32 i=0; i < end; i++) {
+        for (u32 v=0; v < colores_ordenados[i]->num_vertices; v++) {
+            Orden[idx] = colores_ordenados[i]->vertices[v];
+            idx++;
+        }
+    }
     return '0';
 }
+
 
 int cmpFreq(const void* a, const void* b) {
     colorFreq freqA = *(colorFreq *) a;
@@ -149,7 +242,6 @@ int cmpFreq(const void* a, const void* b) {
 
 
 char ElimGarak(Grafo G, u32 *Orden) {
-    // u32 max_color = 1;
     u32 idx = 0;
 
     colorFreq *freq_colores = calloc(Delta(G)+1, sizeof(struct s_colorFreq));
@@ -224,19 +316,21 @@ int main(void) {
     
     color *colores_extraidos = calloc(NumeroDeVertices(G), sizeof(color)); 
     ExtraerColor(G, colores_extraidos);
+
+    printf("--------------COLORES-------------\n");
+    for (u32 i=0; i< NumeroDeVertices(G); i++) {
+        printf("color de %u: %u\n", i, colores_extraidos[i]);
+    }
     printf("colores usados para colorear el grado: %u\n", colores);
+
     free(colores_extraidos);
-    // printf("--------------COLORES-------------\n");
-    // for (u32 i=0; i< NumeroDeVertices(G); i++) {
-    //     printf("color de %u: %u\n", i, colores_extraidos[i]);
-    // }
     GulDukat(G, Orden);
     printf("Terminado GulDukat\n");
-    // printf("Vertices ordenados con GalDukat (vertice:color) \n");
-    // for (u32 i=0; i < NumeroDeVertices(G); i++){
-    //     printf(" %u:%u ", Orden[i], Color(Orden[i], G));
-    // }
-    // printf("\n");
+    printf("Vertices ordenados con GalDukat (vertice:color) \n");
+    for (u32 i=0; i < NumeroDeVertices(G); i++){
+        printf(" %u:%u ", Orden[i], Color(Orden[i], G));
+    }
+    printf("\n");
     ElimGarak(G, Orden);
     printf("Terminado ElimGarak\n");
     // printf("Vertices ordenados con ElimGarak (vertice:color) \n");
@@ -249,8 +343,19 @@ int main(void) {
     DestruirGrafo(G);
 }
 
-
+ 
 /* 
+int cmpGrado(const void * a, const void *b) {
+ 
+        gradosVertices gradoA = *(gradosVertices *) a;
+        gradosVertices gradoB = *(gradosVertices *) b;
+
+        if (gradoA->grado > gradoB->grado) return -1;
+        else if (gradoA->grado < gradoB->grado) return 1;
+        else return 0;
+}
+ */
+/*
 int main(void) {
     Grafo G = ConstruirGrafo();
     u32 idx;
@@ -324,9 +429,21 @@ int main(void) {
         printf("color de %u: %u\n", i, colores_extraidos[i]);
     }
 
+ 
     // orden decreciente segun grado
-
-
-}
-
- */
+    gradosVertices *grados = calloc(NumeroDeVertices(G), sizeof(struct s_gradosVertices));
+    // incializo grados
+    for (u32 i = 0; i < NumeroDeVertices(G); i++) {
+        grados[i] = calloc(1, sizeof(struct s_gradosVertices));
+        grados[i]->vertice = i;
+        grados[i]->grado = Grado(i, G);
+    }
+    
+    qsort(Orden, NumeroDeVertices(G), sizeof(gradosVertices), &cmpGrado);
+    for (u32 i=0; i< NumeroDeVertices(G); i++) {
+        printf(" %u ", Orden[i]);
+    }
+    printf("\n");
+    free(grados);
+}   
+*/  
