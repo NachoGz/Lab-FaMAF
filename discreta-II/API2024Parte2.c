@@ -423,13 +423,8 @@ int main(void) {
         min_colores = colores;
         ExtraerColores(G, coloreo_minimo);
     }
-    // printf("colores usados para colorear el grafo: %u\n", colores);
 
     for (u32 i = 0; i < 50; i++) {
-        // colores = Greedy(G, Orden);
-
-        // printf("Orden natural:\n");
-        // printf("GulDukat\n");
         GulDukat(G, Orden);
 
         // decoloreo el grafo
@@ -453,8 +448,6 @@ int main(void) {
             min_colores = colores;
             ExtraerColores(G, coloreo_minimo);
         }
-        // printf("colores usados para colorear el grafo: %u\n", colores);
-
     }
     
     // orden natural inverso
@@ -472,12 +465,8 @@ int main(void) {
         min_colores = colores;
         ExtraerColores(G, coloreo_minimo);
     }        
-    // printf("colores usados para colorear el grafo: %u\n", colores);
 
     for (u32 i = 0; i < 50; i++) {
-
-        // printf("Orden natural inverso\n");
-        // printf("GulDukat\n");
         GulDukat(G, Orden);
 
         // decoloreo el grafo
@@ -490,9 +479,6 @@ int main(void) {
             ExtraerColores(G, coloreo_minimo);
         }
         
-        // printf("colores usados para colorear el grafo: %u\n", colores);
-
-        // printf("ElimGarak\n");
         ElimGarak(G, Orden);
 
         // decoloreo el grafo
@@ -533,11 +519,8 @@ int main(void) {
         min_colores = colores;
         ExtraerColores(G, coloreo_minimo);
     }
-    // printf("colores usados para colorear el grafo: %u\n", colores);
 
     for (u32 i = 0; i < 50; i++) {
-        // printf("primero pares decrecientes, luego impares crecientes\n");
-        // printf("GulDukat\n");
         GulDukat(G, Orden);
 
         // decoloreo el grafo
