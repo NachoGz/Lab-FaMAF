@@ -162,7 +162,7 @@ void AsignarColor(color x, u32 i, Grafo G) {
     }
 }
 
-void ExtraerColor(Grafo G, color* Color) {
+void ExtraerColores(Grafo G, color* Color) {
     for (u32 v = 0; v < G->cv; v++) {
         Color[v] = G->colores[v];
     }
