@@ -1,2 +1,2 @@
 # Lab-FaMAF
-programas hechos en la carrera de Ciencias de la Computación
+Trabajos de laboratorio realizados durante la carrera de Ciencias de la Computación.
