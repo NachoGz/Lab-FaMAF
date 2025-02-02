@@ -1,0 +1,49 @@
+file 48269 1715738604                                           
+version 2
+run FeedbackVersion-13-20240511-20:48:08-11935
+attr configname FeedbackVersion
+attr datetime 20240511-20:48:08
+attr datetimef 20240511-204808
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.75
+attr iterationvarsd genInterval=0.75
+attr iterationvarsf genInterval=0.75-
+attr measurement $genInterval=0.75
+attr network NetworkFV
+attr processid 11935
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 13
+attr seedset 13
+itervar genInterval 0.75
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.75)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1321 4990 1 2728 0 133.0876 305 1 1 305 305
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	6311 2202 1 2728 0 133.0876 105 0 12 260 1268
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	8513 2200 2 2729 0 133.0876 105 1 1 105 105
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	10713 6827 11 3237 1.127803725266 198.323932381 272 1 1 272 272
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	17540 6912 12 3238 1.127803725266 198.323932381 272 1 94 4835 282649
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	24452 4650 13 2727 1.127803725266 133.040603688743 178 1 178 15931 1895789
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	29102 4402 20 2734 1.227903725266 133.140703688743 178 1 3 195 237
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	33504 4403 24 2743 1.428003725266 133.340803688743 178 1 1 178 178
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	37907 5958 30 2746 1.528003725266 133.440803688743 178 0.4002 5.922048588441 197.58869678649 421.6475845303
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	43865 4404 30 2746 1.528003725266 133.440803688743 178 1 1 178 178

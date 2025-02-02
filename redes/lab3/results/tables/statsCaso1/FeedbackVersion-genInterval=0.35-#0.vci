@@ -1,0 +1,49 @@
+file 77320 1715738604                                           
+version 2
+run FeedbackVersion-5-20240511-20:45:11-11876
+attr configname FeedbackVersion
+attr datetime 20240511-20:45:11
+attr datetimef 20240511-204511
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.35
+attr iterationvarsd genInterval=0.35
+attr iterationvarsf genInterval=0.35-
+attr measurement $genInterval=0.35
+attr network NetworkFV
+attr processid 11876
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 5
+attr seedset 5
+itervar genInterval 0.35
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.35)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1318 5314 1 3778 0 109.7092 323 1 1 323 323
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	6632 2180 1 3778 0 109.7092 98 0 19 403 2679
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	8812 2174 2 3779 0 109.7092 98 1 1 98 98
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	10986 13561 6 4973 0.087856992192 198.615270682819 538 1 1 538 538
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	24547 13952 7 4974 0.087856992192 198.615270682819 538 1 249 31515 5177809
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	38499 7593 8 3777 0.087856992192 109.647240403752 289 1 289 41905 8087665
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	46092 7125 12 3784 0.187956992192 109.747340403752 289 1 1 289 289
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	53217 7127 18 3787 0.288056992192 109.847440403752 289 1 4 339 465
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	60344 9848 27 3793 0.488056992192 110.047440403752 289 0.4002 2.331742662191 178.38714399579 135.6224513463
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	70192 7128 27 3793 0.488056992192 110.047440403752 289 1 1 289 289

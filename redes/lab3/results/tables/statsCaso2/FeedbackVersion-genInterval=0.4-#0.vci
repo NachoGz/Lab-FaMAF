@@ -1,0 +1,49 @@
+file 105902 1715738604                                          
+version 2
+run FeedbackVersion-6-20240511-20:48:08-11935
+attr configname FeedbackVersion
+attr datetime 20240511-20:48:08
+attr datetimef 20240511-204808
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.4
+attr iterationvarsd genInterval=0.4
+attr iterationvarsf genInterval=0.4-
+attr measurement $genInterval=0.4
+attr network NetworkFV
+attr processid 11935
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 6
+attr seedset 6
+itervar genInterval 0.4
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.4)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1312 4232 1 6238 0 199.332 252 1 1 252 252
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	5544 1876 1 6238 0 199.332 82 0 29 663 8425
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	7420 1849 2 6239 0 199.332 82 1 1 82 82
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	9269 13001 10 6264 0.893448103126 199.925782339005 516 1 1 516 516
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	22270 13001 11 6265 0.893448103126 199.925782339005 516 1 8 733 1665
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	35271 13935 12 6266 0.893448103126 199.925782339005 516 1 516 133386 45929246
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	49206 12986 14 6250 0.993548103126 199.442502745061 515 1 6 638 1004
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	62192 12993 18 6260 1.193648103126 199.752629865912 515 1 1 515 515
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	75185 17719 21 6262 1.293648103126 199.852629865912 515 0.4002 3.680709853367 349.59516835678 354.64297866282
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	92904 12998 21 6262 1.293648103126 199.852629865912 515 1 1 515 515

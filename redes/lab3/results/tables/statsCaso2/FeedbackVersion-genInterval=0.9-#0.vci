@@ -1,0 +1,49 @@
+file 15618 1715738604                                           
+version 2
+run FeedbackVersion-16-20240511-20:48:08-11935
+attr configname FeedbackVersion
+attr datetime 20240511-20:48:08
+attr datetimef 20240511-204808
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.9
+attr iterationvarsd genInterval=0.9
+attr iterationvarsf genInterval=0.9-
+attr measurement $genInterval=0.9
+attr network NetworkFV
+attr processid 11935
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 16
+attr seedset 16
+itervar genInterval 0.9
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.9)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1315 417 1 265 0 12.9082 29 1 1 29 29
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	1732 144 1 265 0 12.9082 8 0 6 21 79
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	1876 144 2 266 0 12.9082 8 1 1 8 8
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	2020 5484 7 1506 0.22742065585 199.701604071237 223 1 1 223 223
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	7504 5785 8 1507 0.22742065585 199.701604071237 223 1 204 20931 2850755
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	13289 440 9 261 0.22742065585 12.669884653197 19 1 19 190 2470
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	13729 431 11 263 0.32752065585 12.769984653197 19 1 2 20 22
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	14160 432 15 271 0.52762065585 12.970084653197 19 1 1 19 19
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	14592 592 21 273 0.62762065585 13.070084653197 19 0.4002 2.075412041846 11.739909724719 10.621104385518
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	15184 434 21 273 0.62762065585 13.070084653197 19 1 1 19 19

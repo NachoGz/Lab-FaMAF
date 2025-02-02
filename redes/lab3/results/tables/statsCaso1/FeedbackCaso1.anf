@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<analysis version="2">
+    <inputs>
+        <input pattern="FeedbackVersion-genInterval=0.1-#0.sca"/>
+        <input pattern="FeedbackVersion-genInterval=0.1-#0.vec"/>
+        <input pattern="FeedbackVersion-genInterval=0.2-#0.sca"/>
+        <input pattern="FeedbackVersion-genInterval=0.2-#0.vec"/>
+        <input pattern="FeedbackVersion-genInterval=0.3-#0.sca"/>
+        <input pattern="FeedbackVersion-genInterval=0.3-#0.vec"/>
+        <input pattern="FeedbackVersion-genInterval=0.4-#0.sca"/>
+        <input pattern="FeedbackVersion-genInterval=0.4-#0.vec"/>
+        <input pattern="FeedbackVersion-genInterval=0.5-#0.sca"/>
+        <input pattern="FeedbackVersion-genInterval=0.5-#0.vec"/>
+        <input pattern="FeedbackVersion-genInterval=0.6-#0.sca"/>
+        <input pattern="FeedbackVersion-genInterval=0.6-#0.vec"/>
+        <input pattern="FeedbackVersion-genInterval=0.8-#0.sca"/>
+        <input pattern="FeedbackVersion-genInterval=0.8-#0.vec"/>
+        <input pattern="FeedbackVersion-genInterval=1-#0.sca"/>
+        <input pattern="FeedbackVersion-genInterval=1-#0.vec"/>
+    </inputs>
+    <charts/>
+</analysis>

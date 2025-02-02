@@ -1,0 +1,49 @@
+file 14615 1715738604                                           
+version 2
+run FeedbackVersion-18-20240511-20:48:08-11935
+attr configname FeedbackVersion
+attr datetime 20240511-20:48:08
+attr datetimef 20240511-204808
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=1
+attr iterationvarsd genInterval=1
+attr iterationvarsf genInterval=1-
+attr measurement $genInterval=1
+attr network NetworkFV
+attr processid 11935
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 18
+attr seedset 18
+itervar genInterval 1
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(1)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1303 752 1 287 0 17.0104 52 1 1 52 52
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	2055 357 1 287 0 17.0104 20 0 4 27 61
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	2412 357 2 288 0 17.0104 20 1 1 20 20
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	2769 4869 11 1450 1.05089196372 199.452493043558 197 1 1 197 197
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	7638 5125 12 1451 1.05089196372 199.452493043558 197 1 182 16678 2026172
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	12763 349 13 286 1.05089196372 16.987091475029 15 1 15 120 1240
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	13112 344 17 293 1.15099196372 17.087191475029 15 1 1 15 15
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	13456 345 27 296 1.35109196372 17.287291475029 15 1 1 15 15
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	13801 468 38 299 1.45109196372 17.387291475029 15 0.4002 2.895531848525 14.353009357828 23.114262236844
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	14269 346 38 299 1.45109196372 17.387291475029 15 1 1 15 15

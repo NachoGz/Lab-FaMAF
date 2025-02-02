@@ -1,0 +1,92 @@
+version 3
+run FeedbackVersion-4-20240511-20:45:11-11876
+attr configname FeedbackVersion
+attr datetime 20240511-20:45:11
+attr datetimef 20240511-204511
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.3
+attr iterationvarsd genInterval=0.3
+attr iterationvarsf genInterval=0.3-
+attr measurement $genInterval=0.3
+attr network NetworkFV
+attr processid 11876
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 4
+attr seedset 4
+itervar genInterval 0.3
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.3)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+par NetworkFV.nodeTx.out.channel typename "\"ned.DatarateChannel\""
+par NetworkFV.nodeTx.out.channel disabled false
+attr mutable ""
+par NetworkFV.nodeTx.out.channel delay 0.0001s
+attr mutable ""
+attr unit s
+par NetworkFV.nodeTx.out.channel datarate 1e+06bps
+attr mutable ""
+attr unit bps
+par NetworkFV.nodeTx.out.channel ber 0
+attr mutable ""
+par NetworkFV.nodeTx.out.channel per 0
+attr mutable ""
+par NetworkFV.queueZero.out.channel typename "\"ned.DatarateChannel\""
+par NetworkFV.queueZero.out.channel disabled false
+attr mutable ""
+par NetworkFV.queueZero.out.channel delay 0.0001s
+attr mutable ""
+attr unit s
+par NetworkFV.queueZero.out.channel datarate 1e+06bps
+attr mutable ""
+attr unit bps
+par NetworkFV.queueZero.out.channel ber 0
+attr mutable ""
+par NetworkFV.queueZero.out.channel per 0
+attr mutable ""
+par NetworkFV.nodeTx.gen typename "\"Generator\""
+par NetworkFV.nodeTx.gen generationInterval exponential(0.3)
+par NetworkFV.nodeTx.gen packetByteSize 12500
+par NetworkFV.nodeTx.queue typename "\"TransportTx\""
+par NetworkFV.nodeTx.queue bufferSize 2000000
+scalar NetworkFV.nodeTx.queue "Number of packets on TransportTx" 0
+scalar NetworkFV.nodeTx.queue "Number of packets sent - TransportTx" 660
+par NetworkFV.nodeTx typename "\"NodeTxFV\""
+par NetworkFV.queueZero typename "\"Queue\""
+par NetworkFV.queueZero bufferSize 200
+scalar NetworkFV.queueZero "Number of packets on queue" 0
+scalar NetworkFV.queueZero "Number of dropped packets" 0
+par NetworkFV.queueOne typename "\"Queue\""
+par NetworkFV.queueOne bufferSize 200
+scalar NetworkFV.queueOne "Number of packets on queue" 0
+scalar NetworkFV.queueOne "Number of dropped packets" 0
+par NetworkFV.nodeRx.queue.toApp.channel typename "\"ned.DatarateChannel\""
+par NetworkFV.nodeRx.queue.toApp.channel disabled false
+attr mutable ""
+par NetworkFV.nodeRx.queue.toApp.channel delay 0s
+attr mutable ""
+attr unit s
+par NetworkFV.nodeRx.queue.toApp.channel datarate 500000bps
+attr mutable ""
+attr unit bps
+par NetworkFV.nodeRx.queue.toApp.channel ber 0
+attr mutable ""
+par NetworkFV.nodeRx.queue.toApp.channel per 0
+attr mutable ""
+par NetworkFV.nodeRx.sink typename "\"Sink\""
+scalar NetworkFV.nodeRx.sink "Avg delay" 0.70615880541524
+scalar NetworkFV.nodeRx.sink "Number of packets" 659
+par NetworkFV.nodeRx.queue typename "\"TransportRx\""
+par NetworkFV.nodeRx.queue bufferSize 200
+scalar NetworkFV.nodeRx.queue "Number of packets on TransportRx" 0
+par NetworkFV.nodeRx typename "\"NodeRxFV\""
+par NetworkFV typename "\"NetworkFV\""
+

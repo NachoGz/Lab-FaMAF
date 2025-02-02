@@ -1,0 +1,49 @@
+file 71666 1715738604                                           
+version 2
+run FeedbackVersion-12-20240511-20:48:08-11935
+attr configname FeedbackVersion
+attr datetime 20240511-20:48:08
+attr datetimef 20240511-204808
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.7
+attr iterationvarsd genInterval=0.7
+attr iterationvarsf genInterval=0.7-
+attr measurement $genInterval=0.7
+attr network NetworkFV
+attr processid 11935
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 12
+attr seedset 12
+itervar genInterval 0.7
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.7)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1315 7205 1 4438 0 199.9328 426 1 1 426 426
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	8520 3140 1 4423 0 199.261653315727 140 0 14 430 2160
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	11660 3136 2 4425 0 199.261653315727 140 1 1 140 140
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	14796 7741 6 4436 0.117199895458 199.856637011309 308 1 1 308 308
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	22537 7741 7 4437 0.117199895458 199.856637011309 308 1 5 404 706
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	30278 8225 8 4439 0.117199895458 199.935778617737 307 1 307 47278 9691990
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	38503 7695 11 4440 0.217299895458 199.935878617737 306 1 2 319 345
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	46198 7671 15 4423 0.417399895458 199.261653315727 305 1 1 305 305
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	53869 10124 17 4430 0.517399895458 199.361653315727 305 0.4002 3.66263734705 207.60340269544 252.49701162529
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	63993 7673 17 4430 0.517399895458 199.361653315727 305 1 1 305 305

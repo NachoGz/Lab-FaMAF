@@ -1,0 +1,49 @@
+file 97198 1715738604                                           
+version 2
+run FeedbackVersion-7-20240511-20:48:08-11935
+attr configname FeedbackVersion
+attr datetime 20240511-20:48:08
+attr datetimef 20240511-204808
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.45
+attr iterationvarsd genInterval=0.45
+attr iterationvarsf genInterval=0.45-
+attr measurement $genInterval=0.45
+attr network NetworkFV
+attr processid 11935
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 7
+attr seedset 7
+itervar genInterval 0.45
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.45)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1318 5092 1 5801 0 199.4326 298 1 1 298 298
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	6410 2299 1 5801 0 199.4326 100 1 20 609 5513
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	8709 2282 2 5802 0 199.4326 100 1 1 100 100
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	10991 11640 6 5818 0.035719610161 199.791186829635 463 1 1 463 463
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	22631 11640 7 5819 0.035719610161 199.791186829635 463 1 5 543 743
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	34271 12445 8 5820 0.035719610161 199.791186829635 463 1 463 107416 33191544
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	46716 11630 10 5822 0.135819610161 199.891286829635 463 1 3 498 572
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	58346 11594 19 5824 0.335919610161 199.966691055416 462 1 1 462 462
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	69940 15688 22 5809 0.435919610161 199.559973559364 461 0.4002 2.122303263671 250.66999925803 159.93458891924
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	85628 11570 22 5809 0.435919610161 199.559973559364 461 1 1 461 461

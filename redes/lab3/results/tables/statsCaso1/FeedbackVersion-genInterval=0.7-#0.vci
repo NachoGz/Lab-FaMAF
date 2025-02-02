@@ -1,0 +1,49 @@
+file 25520 1715738604                                           
+version 2
+run FeedbackVersion-12-20240511-20:45:11-11876
+attr configname FeedbackVersion
+attr datetime 20240511-20:45:11
+attr datetimef 20240511-204511
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.7
+attr iterationvarsd genInterval=0.7
+attr iterationvarsf genInterval=0.7-
+attr measurement $genInterval=0.7
+attr network NetworkFV
+attr processid 11876
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 12
+attr seedset 12
+itervar genInterval 0.7
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.7)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1315 1920 1 696 0 29.8294 126 1 1 126 126
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	3235 798 1 696 0 29.8294 42 0 5 59 143
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	4033 798 2 697 0 29.8294 42 1 1 42 42
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	4831 7726 6 2365 0.117199895458 199.856637011309 308 1 1 308 308
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	12557 8158 7 2366 0.117199895458 199.856637011309 308 1 270 36650 6597638
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	20715 914 8 695 0.117199895458 29.803601894636 38 1 38 741 19019
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	21629 887 11 702 0.217299895458 29.903701894636 38 1 1 38 38
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	22516 887 14 708 0.317399895458 30.003801894636 38 1 1 38 38
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	23403 1229 17 711 0.517399895458 30.203801894636 38 0.4002 3.508086189015 35.951119421684 56.227791091882
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	24632 888 17 711 0.517399895458 30.203801894636 38 1 1 38 38

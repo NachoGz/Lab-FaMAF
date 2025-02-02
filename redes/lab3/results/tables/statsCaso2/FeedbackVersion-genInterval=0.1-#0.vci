@@ -1,0 +1,49 @@
+file 252073 1715738604                                          
+version 2
+run FeedbackVersion-0-20240511-20:48:08-11935
+attr configname FeedbackVersion
+attr datetime 20240511-20:48:08
+attr datetimef 20240511-204808
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.1
+attr iterationvarsd genInterval=0.1
+attr iterationvarsf genInterval=0.1-
+attr measurement $genInterval=0.1
+attr network NetworkFV
+attr processid 11935
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+itervar genInterval 0.1
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.1)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1312 100 1 11652 0 184.4226 7 1 1 7 7
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	1412 362 1 11640 0 183.99273593336 15 2 199 1105 171785
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	1774 346 2 11642 0 183.99273593336 15 1 1 15 15
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	2120 50408 6 12686 0.079587450457 199.995645792347 1979 1 1 1979 1979
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	52528 54158 7 12687 0.079587450457 199.995645792347 1979 1 930 923108 580007644
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	106686 29094 8 12682 0.079587450457 199.981007974417 1063 1 1063 565516 400950844
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	135780 27842 12 12683 0.179687450457 199.981107974417 1062 1 99 39144 2229564
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	163622 24963 21 12680 0.379787450457 199.881207974417 983 1 1 983 983
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	188585 38521 24 12684 0.479787450457 199.981207974417 983 0.4002 100.82752047838 50339.630289463 3400151.9249252
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	227106 24967 24 12684 0.479787450457 199.981207974417 983 1 1 983 983

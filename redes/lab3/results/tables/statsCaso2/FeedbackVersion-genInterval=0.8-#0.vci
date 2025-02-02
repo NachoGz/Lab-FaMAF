@@ -1,0 +1,49 @@
+file 20647 1715738604                                           
+version 2
+run FeedbackVersion-14-20240511-20:48:08-11935
+attr configname FeedbackVersion
+attr datetime 20240511-20:48:08
+attr datetimef 20240511-204808
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.8
+attr iterationvarsd genInterval=0.8
+attr iterationvarsf genInterval=0.8-
+attr measurement $genInterval=0.8
+attr network NetworkFV
+attr processid 11935
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 14
+attr seedset 14
+itervar genInterval 0.8
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.8)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1315 1037 1 558 0 28.3182 70 1 1 70 70
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	2352 430 1 558 0 28.3182 22 0 9 48 198
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	2782 430 2 559 0 28.3182 22 1 1 22 22
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	3212 6259 8 1780 0.577144061132 199.644920553788 251 1 1 251 251
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	9471 6581 9 1781 0.577144061132 199.644920553788 251 1 215 23293 3336165
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	16052 876 10 554 0.577144061132 28.099600402228 36 1 36 666 16206
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	16928 849 13 556 0.677244061132 28.199700402228 36 1 2 38 42
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	17777 851 17 564 0.877344061132 28.399800402228 36 1 1 36 36
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	18628 1167 19 566 0.977344061132 28.499800402228 36 0.4002 4.013212138222 39.337333565493 79.185128051769
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	19795 852 19 566 0.977344061132 28.499800402228 36 1 1 36 36

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<analysis version="2">
+    <inputs>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.1-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.1-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.15-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.15-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.2-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.2-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.25-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.25-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.3-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.3-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.35-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.35-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.4-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.4-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.45-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.45-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.5-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.5-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.55-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.55-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.6-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.6-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.65-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.65-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.7-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.7-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.75-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.75-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.8-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.8-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.85-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.85-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.9-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.9-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.95-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=0.95-#0.vec"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=1-#0.sca"/>
+        <input pattern="statsCaso2/FeedbackVersion-genInterval=1-#0.vec"/>
+    </inputs>
+    <charts/>
+</analysis>

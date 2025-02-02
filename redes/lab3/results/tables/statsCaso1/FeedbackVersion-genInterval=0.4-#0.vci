@@ -1,0 +1,49 @@
+file 38631 1715738604                                           
+version 2
+run FeedbackVersion-6-20240511-20:45:11-11876
+attr configname FeedbackVersion
+attr datetime 20240511-20:45:11
+attr datetimef 20240511-204511
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.4
+attr iterationvarsd genInterval=0.4
+attr iterationvarsf genInterval=0.4-
+attr measurement $genInterval=0.4
+attr network NetworkFV
+attr processid 11876
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 6
+attr seedset 6
+itervar genInterval 0.4
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.4)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1312 1348 1 885 0 27.8266 90 1 1 90 90
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	2660 603 1 885 0 27.8266 30 0 9 82 372
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	3263 603 2 886 0 27.8266 30 1 1 30 30
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	3866 12999 10 3113 0.893448103126 199.925782339005 516 1 1 516 516
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	16865 13797 11 3114 0.893448103126 199.925782339005 516 1 453 102941 31089555
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	30662 1529 12 884 0.893448103126 27.752647985214 63 1 63 2016 85344
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	32191 1476 14 891 0.993548103126 27.852747985214 63 1 1 63 63
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	33667 1476 18 894 1.093648103126 27.952847985214 63 1 3 73 97
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	35143 2015 21 900 1.293648103126 28.152847985214 63 0.4002 2.98621305488 47.385740986445 59.027191922557
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	37158 1473 21 900 1.293648103126 28.152847985214 63 1 1 63 63

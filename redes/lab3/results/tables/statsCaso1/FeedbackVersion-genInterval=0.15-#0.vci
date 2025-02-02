@@ -1,0 +1,49 @@
+file 140403 1715738604                                          
+version 2
+run FeedbackVersion-1-20240511-20:45:11-11876
+attr configname FeedbackVersion
+attr datetime 20240511-20:45:11
+attr datetimef 20240511-204511
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.15
+attr iterationvarsd genInterval=0.15
+attr iterationvarsf genInterval=0.15-
+attr measurement $genInterval=0.15
+attr network NetworkFV
+attr processid 11876
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 1
+attr seedset 1
+itervar genInterval 0.15
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.15)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1318 998 1 4233 0 69.2688 63 1 1 63 63
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	2316 523 1 4233 0 69.2688 23 2 60 558 19780
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	2839 505 2 4234 0 69.2688 23 1 1 23 23
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	3344 34038 6 7883 0.080940873977 199.676639131231 1350 1 1 1350 1350
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	37382 35652 7 7884 0.080940873977 199.676639131231 1350 1 861 372081 213133157
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	73034 12874 8 4363 0.080940873977 71.212947165639 489 1 489 119805 39096365
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	85908 12009 10 4371 0.181040873977 71.313047165639 489 1 1 489 489
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	97917 12635 14 4378 0.281140873977 71.413147165639 489 1 142 35613 3455825
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	110552 18230 17 5441 0.481140873977 99.87459256505 489 0.4002 28.699300665025 7343.056573545 144314.82186213
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	128782 11621 17 5441 0.481140873977 99.87459256505 489 1 1 489 489

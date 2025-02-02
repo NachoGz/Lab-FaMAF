@@ -1,0 +1,49 @@
+file 14308 1715738604                                           
+version 2
+run FeedbackVersion-15-20240511-20:45:11-11876
+attr configname FeedbackVersion
+attr datetime 20240511-20:45:11
+attr datetimef 20240511-204511
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.85
+attr iterationvarsd genInterval=0.85
+attr iterationvarsf genInterval=0.85-
+attr measurement $genInterval=0.85
+attr network NetworkFV
+attr processid 11876
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 15
+attr seedset 15
+itervar genInterval 0.85
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.85)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1321 184 1 50 0 3.2012 16 1 1 16 16
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	1505 64 1 50 0 3.2012 5 0 2 4 6
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	1569 64 2 51 0 3.2012 5 1 1 5 5
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	1633 6034 18 1746 1.605878513779 196.092024422169 244 1 1 244 244
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	7667 6410 19 1747 1.605878513779 196.092024422169 244 1 242 29405 4753487
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	14077 44 20 46 1.605878513779 3.033670692803 2 1 2 3 5
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	14121 44 22 48 1.705978513779 3.133770692803 2 1 1 2 2
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	14165 44 26 59 1.806078513779 3.233870692803 2 1 1 2 2
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	14209 54 37 62 2.006078513779 3.433870692803 2 0.4002 0.4002 0.8004 0.32032008
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	14263 45 37 62 2.006078513779 3.433870692803 2 1 1 2 2

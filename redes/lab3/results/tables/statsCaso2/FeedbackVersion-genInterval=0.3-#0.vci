@@ -1,0 +1,49 @@
+file 131406 1715738604                                          
+version 2
+run FeedbackVersion-4-20240511-20:48:08-11935
+attr configname FeedbackVersion
+attr datetime 20240511-20:48:08
+attr datetimef 20240511-204808
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.3
+attr iterationvarsd genInterval=0.3
+attr iterationvarsf genInterval=0.3-
+attr measurement $genInterval=0.3
+attr network NetworkFV
+attr processid 11935
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 4
+attr seedset 4
+itervar genInterval 0.3
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.3)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1312 2882 1 7451 0 199.532 172 1 1 172 172
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	4194 1315 1 7451 0 199.532 57 0 49 789 16739
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	5509 1279 2 7452 0 199.532 57 1 1 57 57
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	6788 16642 11 7462 1.023645695755 199.938502006517 660 1 1 660 660
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	23430 16642 12 7463 1.023645695755 199.938502006517 660 1 8 966 2180
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	40072 17866 13 7464 1.023645695755 199.938502006517 660 1 660 218130 96049910
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	57938 16629 15 7449 1.123745695755 199.430559625138 659 1 7 1083 2627
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	74567 16649 23 7457 1.323845695755 199.630659625138 659 1 1 659 659
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	91216 23539 34 7459 1.423845695755 199.730659625138 659 0.4002 2.277773797295 495.30442974336 483.37346712342
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	114755 16651 34 7459 1.423845695755 199.730659625138 659 1 1 659 659

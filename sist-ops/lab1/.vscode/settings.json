@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "builtin.h": "c",
+        "strings.h": "c",
+        "command.h": "c",
+        "parser.h": "c",
+        "execute.h": "c",
+        "parsing.h": "c",
+        "string.h": "c",
+        "gmacros.h": "c",
+        "glib.h": "c",
+        "gqueue.h": "c",
+        "assert.h": "c",
+        "syscall_mock.h": "c",
+        "signal.h": "c",
+        "features.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}

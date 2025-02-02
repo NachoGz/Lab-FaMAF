@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+        "defs.h": "c",
+        "types.h": "c",
+        "semaphore.h": "c",
+        "proc.h": "c",
+        "spinlock.h": "c",
+        "riscv.h": "c",
+        "syscall.h": "c",
+        "stat.h": "c",
+        "stddef.h": "c",
+        "memlayout.h": "c",
+        "fs.h": "c",
+        "sleeplock.h": "c",
+        "param.h": "c",
+        "user.h": "c"
+    }
+}

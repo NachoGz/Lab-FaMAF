@@ -1,0 +1,49 @@
+file 141636 1715738604                                          
+version 2
+run FeedbackVersion-4-20240511-20:45:11-11876
+attr configname FeedbackVersion
+attr datetime 20240511-20:45:11
+attr datetimef 20240511-204511
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.3
+attr iterationvarsd genInterval=0.3
+attr iterationvarsf genInterval=0.3-
+attr measurement $genInterval=0.3
+attr network NetworkFV
+attr processid 11876
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 4
+attr seedset 4
+itervar genInterval 0.3
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.3)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1312 8618 1 7985 0 199.9984 506 1 1 506 506
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	9930 3613 1 7977 0 199.7982 158 0 21 826 6438
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	13543 3594 2 7978 0 199.7982 158 1 1 158 158
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	17137 16651 11 7982 1.023645695755 199.938502006517 660 1 1 660 660
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	33788 16651 12 7983 1.023645695755 199.938502006517 660 1 6 932 1836
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	50439 17872 13 7984 1.023645695755 199.938502006517 660 1 660 218130 96049910
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	68311 16637 15 7969 1.123745695755 199.430559625138 659 1 1 659 659
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	84948 16639 23 7972 1.223845695755 199.530659625138 659 1 8 1093 2917
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	101587 23410 34 7975 1.423845695755 199.730659625138 659 0.4002 2.068462936019 465.35865276864 414.02788258554
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	124997 16639 34 7975 1.423845695755 199.730659625138 659 1 1 659 659

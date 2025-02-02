@@ -1,0 +1,49 @@
+file 38531 1715738604                                           
+version 2
+run FeedbackVersion-10-20240511-20:45:11-11876
+attr configname FeedbackVersion
+attr datetime 20240511-20:45:11
+attr datetimef 20240511-204511
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.6
+attr iterationvarsd genInterval=0.6
+attr iterationvarsf genInterval=0.6-
+attr measurement $genInterval=0.6
+attr network NetworkFV
+attr processid 11876
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 10
+attr seedset 10
+itervar genInterval 0.6
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.6)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1315 2727 1 1410 0 49.0478 174 1 1 174 174
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	4042 1075 1 1410 0 49.0478 50 0 7 123 415
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	5117 1075 2 1411 0 49.0478 50 1 1 50 50
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	6192 9837 10 3060 0.885260666985 199.727727709099 391 1 1 391 391
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	16029 10321 11 3061 0.885260666985 199.727727709099 391 1 296 44064 8688772
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	26350 2359 12 1409 0.885260666985 49.011430500819 95 1 95 4560 290320
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	28709 2273 14 1416 0.985360666985 49.111530500819 95 1 1 95 95
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	30982 2275 18 1419 1.085460666985 49.211630500819 95 1 2 97 101
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	33257 3001 29 1422 1.285460666985 49.411630500819 95 0.4002 1.341288247519 49.258339346717 29.513287291306
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	36258 2273 29 1422 1.285460666985 49.411630500819 95 1 1 95 95

@@ -1,0 +1,49 @@
+file 61321 1715738604                                           
+version 2
+run FeedbackVersion-10-20240511-20:48:08-11935
+attr configname FeedbackVersion
+attr datetime 20240511-20:48:08
+attr datetimef 20240511-204808
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.6
+attr iterationvarsd genInterval=0.6
+attr iterationvarsf genInterval=0.6-
+attr measurement $genInterval=0.6
+attr network NetworkFV
+attr processid 11935
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 10
+attr seedset 10
+itervar genInterval 0.6
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.6)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1315 3444 1 3292 0 126.3834 210 1 1 210 210
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	4759 1450 1 3292 0 126.3834 65 0 19 314 2472
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	6209 1442 2 3293 0 126.3834 65 1 1 65 65
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	7651 9827 10 3962 0.885260666985 199.727727709099 391 1 1 391 391
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	17478 9995 11 3963 0.885260666985 199.727727709099 391 1 138 9902 886044
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	27473 6658 12 3287 0.885260666985 126.232654991494 253 1 253 32131 5430139
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	34131 6260 14 3291 0.985360666985 126.332754991494 253 1 3 278 330
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	40391 6263 23 3303 1.185460666985 126.632854991494 253 1 1 253 253
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	46654 8402 29 3306 1.285460666985 126.732854991494 253 0.4002 2.102653367964 147.88716290182 110.5198913965
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	55056 6265 29 3306 1.285460666985 126.732854991494 253 1 1 253 253

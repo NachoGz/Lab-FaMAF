@@ -1,0 +1,49 @@
+file 84215 1715738604                                           
+version 2
+run FeedbackVersion-9-20240511-20:45:11-11876
+attr configname FeedbackVersion
+attr datetime 20240511-20:45:11
+attr datetimef 20240511-204511
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.55
+attr iterationvarsd genInterval=0.55
+attr iterationvarsf genInterval=0.55-
+attr measurement $genInterval=0.55
+attr network NetworkFV
+attr processid 11876
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 9
+attr seedset 9
+itervar genInterval 0.55
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.55)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1318 11105 1 5012 0 178.3778 654 1 1 654 654
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	12423 4643 1 5012 0 178.3778 212 0 10 449 1639
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	17066 4641 2 5013 0 178.3778 212 1 1 212 212
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	21707 9220 6 5258 0.005735589651 199.944430365898 368 1 1 368 368
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	30927 9254 7 5259 0.005735589651 199.944430365898 368 1 43 1490 28824
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	40181 8657 8 5011 0.005735589651 178.326118145579 325 1 325 52975 11495575
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	48838 8116 10 5018 0.105835589651 178.426218145579 325 1 1 325 325
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	56954 8117 14 5021 0.205935589651 178.526318145579 325 1 3 350 408
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	65071 11021 23 5030 0.405935589651 178.726318145579 325 0.4002 4.362624647312 259.65820867544 351.59417609061
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	76092 8123 23 5030 0.405935589651 178.726318145579 325 1 1 325 325

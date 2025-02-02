@@ -1,0 +1,40 @@
+file 48588 1715738604                                           
+version 2
+run BaseVersion-11-20240511-20:48:36-11938
+attr configname BaseVersion
+attr datetime 20240511-20:48:36
+attr datetimef 20240511-204836
+attr experiment BaseVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.65
+attr iterationvarsd genInterval=0.65
+attr iterationvarsf genInterval=0.65-
+attr measurement $genInterval=0.65
+attr network Network
+attr processid 11938
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 11
+attr seedset 11
+itervar genInterval 0.65
+config network Network
+config sim-time-limit 200s
+config Network.nodeTx.gen.generationInterval exponential(0.65)
+config Network.nodeTx.gen.packetByteSize 12500
+config Network.nodeTx.queue.bufferSize 200
+config Network.nodeRx.queue.bufferSize 200
+config Network.queue.bufferSize 200
+
+vector 0 Network.nodeTx.gen packetGen ETV
+0	1042 7552 1 3172 0.129206927313 198.116224312097 302 1 1 302 302
+vector 1 Network.nodeTx.queue bufferSize ETV
+1	8594 7552 2 3173 0.129206927313 198.116224312097 302 1 3 310 328
+vector 2 Network.queue bufferSize ETV
+2	16146 7558 9 3178 0.229306927313 198.292367846925 302 1 3 318 354
+vector 3 Network.nodeRx.queue bufferSize ETV
+3	23704 7560 16 3185 0.429406927313 198.592467846925 302 1 1 302 302
+vector 4 Network.nodeRx.sink Delay ETV
+4	31264 9763 18 3187 0.529406927313 198.692467846925 302 0.4002 1.098396517321 135.60067006564 64.297827796724
+vector 5 Network.nodeRx.sink packetUsed ETV
+5	41027 7561 18 3187 0.529406927313 198.692467846925 302 1 1 302 302

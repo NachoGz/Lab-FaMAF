@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<analysis version="2">
+    <inputs>
+        <input pattern="tables/statsCaso1/*.vec"/>
+        <input pattern="tables/statsCaso1/*.sca"/>
+        <input pattern="tables/statsCaso2/*.vec"/>
+        <input pattern="tables/statsCaso2/*.sca"/>
+    </inputs>
+    <charts/>
+</analysis>

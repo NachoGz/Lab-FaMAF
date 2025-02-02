@@ -1,0 +1,49 @@
+file 81099 1715738604                                           
+version 2
+run FeedbackVersion-9-20240511-20:48:08-11935
+attr configname FeedbackVersion
+attr datetime 20240511-20:48:08
+attr datetimef 20240511-204808
+attr experiment FeedbackVersion
+attr inifile omnetpp.ini
+attr iterationvars $genInterval=0.55
+attr iterationvarsd genInterval=0.55
+attr iterationvarsf genInterval=0.55-
+attr measurement $genInterval=0.55
+attr network NetworkFV
+attr processid 11935
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 9
+attr seedset 9
+itervar genInterval 0.55
+config network NetworkFV
+config sim-time-limit 200s
+config NetworkFV.nodeTx.gen.generationInterval exponential(0.55)
+config NetworkFV.nodeTx.gen.packetByteSize 12500
+config NetworkFV.queueOne.bufferSize 200
+config NetworkFV.nodeRx.queue.bufferSize 200
+config NetworkFV.nodeTx.queue.bufferSize 2000000
+config NetworkFV.queueZero.bufferSize 200
+
+vector 0 NetworkFV.nodeRx.queue PacketsLost ETV
+0	1318 6268 1 4944 0 199.7328 368 1 1 368 368
+vector 1 NetworkFV.nodeRx.queue PacketsAsked ETV
+1	7586 2757 1 4919 0 198.815535449916 121 0 16 490 3248
+vector 2 NetworkFV.queueOne bufferSize ETV
+2	10343 2748 2 4921 0 198.815535449916 121 1 1 121 121
+vector 3 NetworkFV.nodeTx.gen packetGen ETV
+3	13091 9211 6 4951 0.005735589651 199.944430365898 368 1 1 368 368
+vector 4 NetworkFV.nodeTx.queue BufferSize ETV
+4	22302 9211 7 4952 0.005735589651 199.944430365898 368 1 8 564 1378
+vector 5 NetworkFV.nodeTx.queue PacketsSent ETV
+5	31513 9820 8 4950 0.005735589651 199.844522721704 367 1 367 67528 16544360
+vector 6 NetworkFV.queueZero bufferSize ETV
+6	41333 9196 10 4954 0.105835589651 199.944622721704 367 1 4 404 492
+vector 7 NetworkFV.nodeRx.queue BufferSize ETV
+7	50529 9153 17 4936 0.305935589651 199.427717772119 365 1 1 365 365
+vector 8 NetworkFV.nodeRx.sink Delay ETV
+8	59682 12263 23 4939 0.405935589651 199.527717772119 365 0.4002 3.598802650229 263.95353165648 318.78384175189
+vector 9 NetworkFV.nodeRx.sink packetUsed ETV
+9	71945 9154 23 4939 0.405935589651 199.527717772119 365 1 1 365 365
